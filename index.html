@@ -3,229 +3,323 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>HistoryTest.online - Free Mock Test</title>
+<title>HistoryTest.online - Free Mock Tests</title>
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial, sans-serif;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f3f6fb;
-    color:#172033;
+  background:#f3f6fb;
+  color:#172033;
 }
 
 .header{
-    background:#172554;
-    color:white;
-    padding:18px 5%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+  background:#172554;
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
 }
 
 .logo{
-    font-size:24px;
-    font-weight:bold;
+  font-size:24px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 .logo span{
-    color:#38bdf8;
+  color:#38bdf8;
 }
 
 .timer{
-    background:#dc2626;
-    padding:10px 18px;
-    border-radius:8px;
-    font-weight:bold;
+  background:#dc2626;
+  padding:10px 18px;
+  border-radius:8px;
+  font-weight:bold;
+  display:none;
 }
 
 .container{
-    max-width:1100px;
-    margin:25px auto;
-    padding:0 15px;
+  max-width:1100px;
+  margin:25px auto;
+  padding:0 15px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#172554,#2563eb);
+  color:white;
+  padding:38px 28px;
+  border-radius:16px;
+  margin-bottom:22px;
+}
+
+.hero h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  font-size:17px;
+  line-height:1.6;
+}
+
+.section-title{
+  margin:25px 0 14px;
+  font-size:24px;
+}
+
+.nav{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.nav button{
+  background:white;
+  color:#172554;
+  border:1px solid #d5dbe7;
+  padding:10px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.nav button:hover{
+  background:#eff6ff;
+  border-color:#2563eb;
+}
+
+.tests{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.card{
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p{
+  color:#64748b;
+  margin-bottom:16px;
+  line-height:1.5;
+}
+
+.start{
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:11px 18px;
+  border-radius:7px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.start:hover{
+  background:#1d4ed8;
+}
+
+.subjects{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.subject{
+  background:white;
+  padding:18px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+  font-weight:bold;
+  text-align:center;
 }
 
 .test-info{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    margin-bottom:20px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
 .test-info h1{
-    margin-bottom:8px;
-    font-size:25px;
+  margin-bottom:8px;
+  font-size:25px;
 }
 
 .layout{
-    display:grid;
-    grid-template-columns:1fr 280px;
-    gap:20px;
+  display:grid;
+  grid-template-columns:1fr 280px;
+  gap:20px;
 }
 
 .question-box,
-.palette{
-    background:white;
-    border-radius:12px;
-    padding:22px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
+.palette,
+.result{
+  background:white;
+  border-radius:12px;
+  padding:22px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
 .question-number{
-    color:#2563eb;
-    font-weight:bold;
-    margin-bottom:12px;
+  color:#2563eb;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
 .question{
-    font-size:20px;
-    line-height:1.5;
-    margin-bottom:20px;
+  font-size:20px;
+  line-height:1.5;
+  margin-bottom:20px;
 }
 
 .option{
-    border:1px solid #d5dbe7;
-    padding:14px;
-    margin:10px 0;
-    border-radius:8px;
-    cursor:pointer;
-    transition:.2s;
+  border:1px solid #d5dbe7;
+  padding:14px;
+  margin:10px 0;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.2s;
 }
 
 .option:hover{
-    background:#eff6ff;
-    border-color:#2563eb;
+  background:#eff6ff;
+  border-color:#2563eb;
 }
 
 .option.selected{
-    background:#dbeafe;
-    border-color:#2563eb;
+  background:#dbeafe;
+  border-color:#2563eb;
 }
 
 .buttons{
-    display:flex;
-    justify-content:space-between;
-    margin-top:25px;
+  display:flex;
+  justify-content:space-between;
+  margin-top:25px;
+  gap:10px;
 }
 
 button{
-    border:none;
-    padding:11px 20px;
-    border-radius:7px;
-    cursor:pointer;
-    font-size:15px;
-    font-weight:bold;
+  border:none;
+  padding:11px 20px;
+  border-radius:7px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:bold;
 }
 
 .prev{
-    background:#64748b;
-    color:white;
+  background:#64748b;
+  color:white;
 }
 
 .next{
-    background:#2563eb;
-    color:white;
+  background:#2563eb;
+  color:white;
 }
 
 .submit{
-    background:#16a34a;
-    color:white;
-    width:100%;
-    margin-top:20px;
-}
-
-.palette h3{
-    margin-bottom:15px;
-}
-
-.numbers{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:8px;
-}
-
-.num{
-    height:40px;
-    border:1px solid #cbd5e1;
-    background:white;
-    border-radius:6px;
-    cursor:pointer;
-}
-
-.num.active{
-    background:#2563eb;
-    color:white;
-}
-
-.num.answered{
-    background:#16a34a;
-    color:white;
+  background:#16a34a;
+  color:white;
+  width:100%;
+  margin-top:20px;
 }
 
 .result{
-    display:none;
-    background:white;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
+  display:none;
 }
 
 .result h2{
-    color:#16a34a;
-    margin-bottom:20px;
+  color:#16a34a;
+  margin-bottom:20px;
 }
 
 .score{
-    font-size:30px;
-    font-weight:bold;
-    margin-bottom:20px;
+  font-size:30px;
+  font-weight:bold;
+  margin-bottom:20px;
 }
 
 .review{
-    margin-top:25px;
+  margin-top:25px;
 }
 
 .review-item{
-    border-top:1px solid #ddd;
-    padding:15px 0;
+  border-top:1px solid #ddd;
+  padding:15px 0;
 }
 
 .correct{
-    color:#16a34a;
-    font-weight:bold;
+  color:#16a34a;
+  font-weight:bold;
 }
 
 .wrong{
-    color:#dc2626;
-    font-weight:bold;
+  color:#dc2626;
+  font-weight:bold;
+}
+
+.home-btn{
+  background:#172554;
+  color:white;
+  margin-bottom:15px;
+}
+
+.footer{
+  text-align:center;
+  color:#64748b;
+  padding:30px 10px;
 }
 
 @media(max-width:750px){
-    .layout{
-        grid-template-columns:1fr;
-    }
 
-    .header{
-        padding:15px;
-    }
+  .tests{
+    grid-template-columns:1fr;
+  }
 
-    .logo{
-        font-size:19px;
-    }
+  .subjects{
+    grid-template-columns:1fr 1fr;
+  }
 
-    .timer{
-        padding:8px 12px;
-    }
+  .layout{
+    grid-template-columns:1fr;
+  }
 
-    .question{
-        font-size:18px;
-    }
+  .header{
+    padding:15px;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .timer{
+    padding:8px 12px;
+  }
+
+  .question{
+    font-size:18px;
+  }
+
+  .hero h1{
+    font-size:26px;
+  }
 }
 </style>
 </head>
@@ -233,354 +327,963 @@ button{
 <body>
 
 <header class="header">
-    <div class="logo">
-        HistoryTest<span>.online</span>
-    </div>
 
-    <div class="timer" id="timer">
-        10:00
-    </div>
+  <div class="logo" onclick="showHome()">
+    HistoryTest<span>.online</span>
+  </div>
+
+  <div class="timer" id="timer">
+    10:00
+  </div>
+
 </header>
+
 
 <div class="container">
 
-<div class="test-info">
-    <h1>UPSC History Mock Test – 01</h1>
-    <p>कुल प्रश्न: 10 &nbsp; | &nbsp; समय: 10 मिनट</p>
+<!-- ================= HOME PAGE ================= -->
+
+<section id="homePage">
+
+  <div class="hero">
+
+    <h1>HistoryTest.online</h1>
+
+    <p>
+      UPSC और प्रतियोगी परीक्षाओं के लिए Free Online Mock Tests.
+    </p>
+
+  </div>
+
+
+  <div class="nav">
+
+    <button onclick="filterTests('all')">
+      🏠 All Tests
+    </button>
+
+    <button onclick="filterTests('history')">
+      🏛️ History
+    </button>
+
+    <button onclick="filterTests('polity')">
+      📜 Polity
+    </button>
+
+    <button onclick="filterTests('geography')">
+      🌍 Geography
+    </button>
+
+    <button onclick="filterTests('science')">
+      🔬 Science
+    </button>
+
+    <button onclick="filterTests('current')">
+      📰 Current Affairs
+    </button>
+
+  </div>
+
+
+  <h2 class="section-title">
+    🔥 Available Tests
+  </h2>
+
+
+  <div class="tests" id="testList">
+
+
+    <!-- TEST 01 -->
+
+    <div class="card" data-subject="history">
+
+      <h3>
+        UPSC History Mock Test – 01
+      </h3>
+
+      <p>
+        10 प्रश्न • 10 मिनट<br>
+        प्राचीन, मध्यकालीन और आधुनिक इतिहास के मिश्रित प्रश्न।
+      </p>
+
+      <button class="start" onclick="startTest()">
+        Start Test →
+      </button>
+
+    </div>
+
+
+    <!-- TEST 02 -->
+
+    <div class="card" data-subject="history">
+
+      <h3>
+        UPSC History Mock Test – 02
+      </h3>
+
+      <p>
+        जल्द उपलब्ध होगा। इस test में questions बाद में जोड़े जाएंगे।
+      </p>
+
+      <button
+        class="start"
+        onclick="alert('यह Test अभी तैयार किया जा रहा है।')">
+
+        Coming Soon
+
+      </button>
+
+    </div>
+
+
+    <!-- POLITY -->
+
+    <div class="card" data-subject="polity">
+
+      <h3>
+        UPSC Polity Mock Test – 01
+      </h3>
+
+      <p>
+        भारतीय राजव्यवस्था के महत्वपूर्ण प्रश्न।
+      </p>
+
+      <button
+        class="start"
+        onclick="alert('यह Test अभी तैयार किया जा रहा है।')">
+
+        Coming Soon
+
+      </button>
+
+    </div>
+
+
+    <!-- GEOGRAPHY -->
+
+    <div class="card" data-subject="geography">
+
+      <h3>
+        UPSC Geography Mock Test – 01
+      </h3>
+
+      <p>
+        भौतिक और भारतीय भूगोल के महत्वपूर्ण प्रश्न।
+      </p>
+
+      <button
+        class="start"
+        onclick="alert('यह Test अभी तैयार किया जा रहा है।')">
+
+        Coming Soon
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <h2 class="section-title">
+    📚 Subjects
+  </h2>
+
+
+  <div class="subjects">
+
+    <div class="subject">
+      🏛️ History
+    </div>
+
+    <div class="subject">
+      📜 Polity
+    </div>
+
+    <div class="subject">
+      🌍 Geography
+    </div>
+
+    <div class="subject">
+      🔬 Science & Tech
+    </div>
+
+    <div class="subject">
+      🌱 Environment
+    </div>
+
+    <div class="subject">
+      📰 Current Affairs
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= TEST PAGE ================= -->
+
+<section id="testPage" style="display:none">
+
+
+  <button
+    class="home-btn"
+    onclick="showHome()">
+
+    ← Back to Home
+
+  </button>
+
+
+  <div class="test-info">
+
+    <h1>
+      UPSC History Mock Test – 01
+    </h1>
+
+    <p>
+      कुल प्रश्न: 10 &nbsp; | &nbsp; समय: 10 मिनट
+    </p>
+
+  </div>
+
+
+  <div id="testArea">
+
+    <div class="layout">
+
+
+      <!-- QUESTION -->
+
+      <div class="question-box">
+
+        <div
+          class="question-number"
+          id="questionNumber">
+        </div>
+
+
+        <div
+          class="question"
+          id="question">
+        </div>
+
+
+        <div id="options"></div>
+
+
+        <div class="buttons">
+
+          <button
+            class="prev"
+            onclick="previousQuestion()">
+
+            ← Previous
+
+          </button>
+
+
+          <button
+            class="next"
+            onclick="nextQuestion()">
+
+            Next →
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- PALETTE -->
+
+      <div class="palette">
+
+        <h3>
+          Question Palette
+        </h3>
+
+        <div
+          class="numbers"
+          id="numbers">
+        </div>
+
+
+        <button
+          class="submit"
+          onclick="submitTest()">
+
+          Submit Test
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- RESULT -->
+
+  <div class="result" id="result">
+
+    <h2>
+      🎉 Test Completed!
+    </h2>
+
+
+    <div
+      class="score"
+      id="score">
+    </div>
+
+
+    <div id="resultStats"></div>
+
+
+    <div class="review">
+
+      <h3>
+        Answer Review
+      </h3>
+
+      <div id="review"></div>
+
+    </div>
+
+
+    <button
+      class="start"
+      style="margin-top:20px"
+      onclick="showHome()">
+
+      ← Back to Home
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<div class="footer">
+
+  © 2026 HistoryTest.online • Free Mock Tests
+
 </div>
 
-<div id="testArea">
-
-<div class="layout">
-
-<div class="question-box">
-
-<div class="question-number" id="questionNumber">
-    प्रश्न 1 / 10
 </div>
 
-<div class="question" id="question">
-</div>
-
-<div id="options"></div>
-
-<div class="buttons">
-    <button class="prev" onclick="previousQuestion()">← Previous</button>
-    <button class="next" onclick="nextQuestion()">Next →</button>
-</div>
-
-</div>
-
-<div class="palette">
-
-<h3>Question Palette</h3>
-
-<div class="numbers" id="numbers"></div>
-
-<button class="submit" onclick="submitTest()">
-    Submit Test
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="result" id="result">
-
-<h2>🎉 Test Completed!</h2>
-
-<div class="score" id="score"></div>
-
-<div id="resultStats"></div>
-
-<div class="review">
-    <h3>Answer Review</h3>
-    <div id="review"></div>
-</div>
-
-</div>
-
-</div>
 
 <script>
+
+/* ================= QUESTIONS ================= */
 
 const questions = [
 
 {
-q:"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?",
-options:["हड़प्पा","मोहनजोदड़ो","लोथल","कालीबंगा"],
-answer:2,
-explanation:"लोथल गुजरात में स्थित सिंधु सभ्यता का महत्वपूर्ण बंदरगाह था।"
+  q:"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?",
+
+  options:[
+    "हड़प्पा",
+    "मोहनजोदड़ो",
+    "लोथल",
+    "कालीबंगा"
+  ],
+
+  answer:2,
+
+  explanation:
+  "लोथल गुजरात में स्थित सिंधु सभ्यता का महत्वपूर्ण बंदरगाह था।"
 },
 
-{
-q:"मौर्य साम्राज्य की स्थापना किसने की थी?",
-options:["अशोक","चंद्रगुप्त मौर्य","बिंदुसार","कनिष्क"],
-answer:1,
-explanation:"चंद्रगुप्त मौर्य ने लगभग 322 ईसा पूर्व मौर्य साम्राज्य की स्थापना की।"
-},
 
 {
-q:"अशोक किस वंश से संबंधित थे?",
-options:["गुप्त","मौर्य","कुषाण","चोल"],
-answer:1,
-explanation:"सम्राट अशोक मौर्य वंश के महान शासक थे।"
+  q:"मौर्य साम्राज्य की स्थापना किसने की थी?",
+
+  options:[
+    "अशोक",
+    "चंद्रगुप्त मौर्य",
+    "बिंदुसार",
+    "कनिष्क"
+  ],
+
+  answer:1,
+
+  explanation:
+  "चंद्रगुप्त मौर्य ने लगभग 322 ईसा पूर्व मौर्य साम्राज्य की स्थापना की।"
 },
 
-{
-q:"पानीपत का प्रथम युद्ध किस वर्ष हुआ था?",
-options:["1526","1556","1761","1757"],
-answer:0,
-explanation:"प्रथम पानीपत का युद्ध 1526 में बाबर और इब्राहिम लोदी के बीच हुआ।"
-},
 
 {
-q:"प्लासी का युद्ध किस वर्ष हुआ?",
-options:["1757","1764","1857","1748"],
-answer:0,
-explanation:"प्लासी का युद्ध 1757 में हुआ था।"
+  q:"अशोक किस वंश से संबंधित थे?",
+
+  options:[
+    "गुप्त",
+    "मौर्य",
+    "कुषाण",
+    "चोल"
+  ],
+
+  answer:1,
+
+  explanation:
+  "सम्राट अशोक मौर्य वंश के महान शासक थे।"
 },
 
-{
-q:"भारतीय राष्ट्रीय कांग्रेस की स्थापना किस वर्ष हुई?",
-options:["1885","1905","1919","1942"],
-answer:0,
-explanation:"भारतीय राष्ट्रीय कांग्रेस की स्थापना 1885 में हुई।"
-},
 
 {
-q:"भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?",
-options:["1919","1930","1942","1947"],
-answer:2,
-explanation:"भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।"
+  q:"पानीपत का प्रथम युद्ध किस वर्ष हुआ था?",
+
+  options:[
+    "1526",
+    "1556",
+    "1761",
+    "1757"
+  ],
+
+  answer:0,
+
+  explanation:
+  "प्रथम पानीपत का युद्ध 1526 में बाबर और इब्राहिम लोदी के बीच हुआ।"
 },
 
-{
-q:"दांडी मार्च किस आंदोलन से संबंधित था?",
-options:["असहयोग आंदोलन","सविनय अवज्ञा आंदोलन","भारत छोड़ो आंदोलन","स्वदेशी आंदोलन"],
-answer:1,
-explanation:"दांडी मार्च 1930 के सविनय अवज्ञा आंदोलन का महत्वपूर्ण हिस्सा था।"
-},
 
 {
-q:"भारतीय संविधान कब अपनाया गया?",
-options:["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],
-answer:2,
-explanation:"भारतीय संविधान को 26 नवंबर 1949 को अपनाया गया।"
+  q:"प्लासी का युद्ध किस वर्ष हुआ?",
+
+  options:[
+    "1757",
+    "1764",
+    "1857",
+    "1748"
+  ],
+
+  answer:0,
+
+  explanation:
+  "प्लासी का युद्ध 1757 में हुआ था।"
 },
 
+
 {
-q:"भारत गणराज्य कब बना?",
-options:["15 अगस्त 1947","26 नवंबर 1949","26 जनवरी 1950","2 अक्टूबर 1950"],
-answer:2,
-explanation:"26 जनवरी 1950 को भारत गणराज्य बना और संविधान लागू हुआ।"
+  q:"भारतीय राष्ट्रीय कांग्रेस की स्थापना किस वर्ष हुई?",
+
+  options:[
+    "1885",
+    "1905",
+    "1919",
+    "1942"
+  ],
+
+  answer:0,
+
+  explanation:
+  "भारतीय राष्ट्रीय कांग्रेस की स्थापना 1885 में हुई।"
+},
+
+
+{
+  q:"भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?",
+
+  options:[
+    "1919",
+    "1930",
+    "1942",
+    "1947"
+  ],
+
+  answer:2,
+
+  explanation:
+  "भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।"
+},
+
+
+{
+  q:"दांडी मार्च किस आंदोलन से संबंधित था?",
+
+  options:[
+    "असहयोग आंदोलन",
+    "सविनय अवज्ञा आंदोलन",
+    "भारत छोड़ो आंदोलन",
+    "स्वदेशी आंदोलन"
+  ],
+
+  answer:1,
+
+  explanation:
+  "दांडी मार्च 1930 के सविनय अवज्ञा आंदोलन का महत्वपूर्ण हिस्सा था।"
+},
+
+
+{
+  q:"भारतीय संविधान कब अपनाया गया?",
+
+  options:[
+    "15 अगस्त 1947",
+    "26 जनवरी 1950",
+    "26 नवंबर 1949",
+    "2 अक्टूबर 1950"
+  ],
+
+  answer:2,
+
+  explanation:
+  "भारतीय संविधान को 26 नवंबर 1949 को अपनाया गया।"
+},
+
+
+{
+  q:"भारत गणराज्य कब बना?",
+
+  options:[
+    "15 अगस्त 1947",
+    "26 नवंबर 1949",
+    "26 जनवरी 1950",
+    "2 अक्टूबर 1950"
+  ],
+
+  answer:2,
+
+  explanation:
+  "26 जनवरी 1950 को भारत गणराज्य बना और संविधान लागू हुआ।"
 }
 
 ];
 
+
+/* ================= VARIABLES ================= */
+
 let currentQuestion = 0;
-let selectedAnswers = Array(questions.length).fill(null);
 
-function loadQuestion(){
-
-    const q = questions[currentQuestion];
-
-    document.getElementById("questionNumber").innerText =
-        `प्रश्न ${currentQuestion + 1} / ${questions.length}`;
-
-    document.getElementById("question").innerText = q.q;
-
-    const optionsDiv = document.getElementById("options");
-    optionsDiv.innerHTML = "";
-
-    q.options.forEach((option,index)=>{
-
-        const div = document.createElement("div");
-
-        div.className = "option";
-
-        if(selectedAnswers[currentQuestion] === index){
-            div.classList.add("selected");
-        }
-
-        div.innerText =
-            `${String.fromCharCode(65+index)}) ${option}`;
-
-        div.onclick = ()=>{
-            selectedAnswers[currentQuestion] = index;
-            loadQuestion();
-        };
-
-        optionsDiv.appendChild(div);
-
-    });
-
-    updatePalette();
-}
-
-function nextQuestion(){
-
-    if(currentQuestion < questions.length-1){
-        currentQuestion++;
-        loadQuestion();
-    }
-
-}
-
-function previousQuestion(){
-
-    if(currentQuestion > 0){
-        currentQuestion--;
-        loadQuestion();
-    }
-
-}
-
-function updatePalette(){
-
-    const numbers = document.getElementById("numbers");
-
-    numbers.innerHTML = "";
-
-    questions.forEach((q,index)=>{
-
-        const btn = document.createElement("button");
-
-        btn.className = "num";
-
-        btn.innerText = index+1;
-
-        if(index === currentQuestion){
-            btn.classList.add("active");
-        }
-
-        if(selectedAnswers[index] !== null){
-            btn.classList.add("answered");
-        }
-
-        btn.onclick = ()=>{
-            currentQuestion = index;
-            loadQuestion();
-        };
-
-        numbers.appendChild(btn);
-
-    });
-
-}
+let selectedAnswers =
+  Array(questions.length).fill(null);
 
 let time = 600;
 
-const timerInterval = setInterval(()=>{
+let timerInterval = null;
 
-    if(time <= 0){
 
-        clearInterval(timerInterval);
+/* ================= HOME ================= */
 
-        submitTest();
+function showHome(){
 
-        return;
+  if(timerInterval)
+    clearInterval(timerInterval);
+
+  document.getElementById("homePage")
+    .style.display="block";
+
+  document.getElementById("testPage")
+    .style.display="none";
+
+  document.getElementById("timer")
+    .style.display="none";
+
+  window.scrollTo(0,0);
+}
+
+
+/* ================= START TEST ================= */
+
+function startTest(){
+
+  currentQuestion=0;
+
+  selectedAnswers =
+    Array(questions.length).fill(null);
+
+  time=600;
+
+
+  document.getElementById("homePage")
+    .style.display="none";
+
+  document.getElementById("testPage")
+    .style.display="block";
+
+  document.getElementById("result")
+    .style.display="none";
+
+  document.getElementById("testArea")
+    .style.display="block";
+
+  document.getElementById("timer")
+    .style.display="block";
+
+
+  startTimer();
+
+  loadQuestion();
+
+  window.scrollTo(0,0);
+}
+
+
+/* ================= TIMER ================= */
+
+function startTimer(){
+
+  if(timerInterval)
+    clearInterval(timerInterval);
+
+  updateTimer();
+
+
+  timerInterval=setInterval(()=>{
+
+    if(time<=0){
+
+      clearInterval(timerInterval);
+
+      submitTest();
+
+      return;
     }
 
     time--;
 
-    const minutes =
-        Math.floor(time/60).toString().padStart(2,"0");
+    updateTimer();
 
-    const seconds =
-        (time%60).toString().padStart(2,"0");
+  },1000);
+}
 
-    document.getElementById("timer").innerText =
-        `${minutes}:${seconds}`;
 
-},1000);
+function updateTimer(){
 
+  const minutes =
+    Math.floor(time/60)
+    .toString()
+    .padStart(2,"0");
+
+  const seconds =
+    (time%60)
+    .toString()
+    .padStart(2,"0");
+
+
+  document.getElementById("timer")
+    .innerText =
+    `${minutes}:${seconds}`;
+}
+
+
+/* ================= LOAD QUESTION ================= */
+
+function loadQuestion(){
+
+  const q =
+    questions[currentQuestion];
+
+
+  document.getElementById("questionNumber")
+    .innerText =
+    `प्रश्न ${currentQuestion+1} / ${questions.length}`;
+
+
+  document.getElementById("question")
+    .innerText=q.q;
+
+
+  const optionsDiv =
+    document.getElementById("options");
+
+
+  optionsDiv.innerHTML="";
+
+
+  q.options.forEach((option,index)=>{
+
+    const div =
+      document.createElement("div");
+
+
+    div.className="option";
+
+
+    if(
+      selectedAnswers[currentQuestion]===index
+    ){
+
+      div.classList.add("selected");
+
+    }
+
+
+    div.innerText =
+      `${String.fromCharCode(65+index)}) ${option}`;
+
+
+    div.onclick=()=>{
+
+      selectedAnswers[currentQuestion]=index;
+
+      loadQuestion();
+
+    };
+
+
+    optionsDiv.appendChild(div);
+
+  });
+
+
+  updatePalette();
+}
+
+
+/* ================= NEXT ================= */
+
+function nextQuestion(){
+
+  if(currentQuestion < questions.length-1){
+
+    currentQuestion++;
+
+    loadQuestion();
+
+    window.scrollTo(0,0);
+
+  }
+
+}
+
+
+/* ================= PREVIOUS ================= */
+
+function previousQuestion(){
+
+  if(currentQuestion > 0){
+
+    currentQuestion--;
+
+    loadQuestion();
+
+    window.scrollTo(0,0);
+
+  }
+
+}
+
+
+/* ================= PALETTE ================= */
+
+function updatePalette(){
+
+  const numbers =
+    document.getElementById("numbers");
+
+
+  numbers.innerHTML="";
+
+
+  questions.forEach((q,index)=>{
+
+    const btn =
+      document.createElement("button");
+
+
+    btn.className="num";
+
+    btn.innerText=index+1;
+
+
+    if(index===currentQuestion){
+
+      btn.classList.add("active");
+
+    }
+
+
+    if(selectedAnswers[index]!==null){
+
+      btn.classList.add("answered");
+
+    }
+
+
+    btn.onclick=()=>{
+
+      currentQuestion=index;
+
+      loadQuestion();
+
+      window.scrollTo(0,0);
+
+    };
+
+
+    numbers.appendChild(btn);
+
+  });
+
+}
+
+
+/* ================= SUBMIT ================= */
 
 function submitTest(){
 
+  if(timerInterval)
     clearInterval(timerInterval);
 
-    let correct = 0;
-    let wrong = 0;
-    let unanswered = 0;
 
-    questions.forEach((q,index)=>{
+  let correct=0;
 
-        if(selectedAnswers[index] === null){
+  let wrong=0;
 
-            unanswered++;
+  let unanswered=0;
 
-        }else if(selectedAnswers[index] === q.answer){
 
-            correct++;
+  questions.forEach((q,index)=>{
 
-        }else{
+    if(selectedAnswers[index]===null){
 
-            wrong++;
+      unanswered++;
 
-        }
+    }
 
-    });
+    else if(
+      selectedAnswers[index]===q.answer
+    ){
 
-    const percentage =
-        ((correct/questions.length)*100).toFixed(1);
+      correct++;
 
-    document.getElementById("testArea").style.display="none";
+    }
 
-    document.getElementById("result").style.display="block";
+    else{
 
-    document.getElementById("score").innerText =
-        `${correct} / ${questions.length}`;
+      wrong++;
 
-    document.getElementById("resultStats").innerHTML = `
-        <p>✅ सही उत्तर: ${correct}</p>
-        <p>❌ गलत उत्तर: ${wrong}</p>
-        <p>⚪ अनुत्तरित: ${unanswered}</p>
-        <p>📊 प्रतिशत: ${percentage}%</p>
+    }
+
+  });
+
+
+  const percentage =
+    ((correct/questions.length)*100)
+    .toFixed(1);
+
+
+  document.getElementById("testArea")
+    .style.display="none";
+
+
+  document.getElementById("result")
+    .style.display="block";
+
+
+  document.getElementById("timer")
+    .style.display="none";
+
+
+  document.getElementById("score")
+    .innerText =
+    `${correct} / ${questions.length}`;
+
+
+  document.getElementById("resultStats")
+    .innerHTML=`
+
+      <p>✅ सही उत्तर: ${correct}</p>
+
+      <p>❌ गलत उत्तर: ${wrong}</p>
+
+      <p>⚪ अनुत्तरित: ${unanswered}</p>
+
+      <p>📊 प्रतिशत: ${percentage}%</p>
+
     `;
 
-    const review = document.getElementById("review");
 
-    review.innerHTML="";
+  const review =
+    document.getElementById("review");
 
-    questions.forEach((q,index)=>{
 
-        let userAnswer =
-            selectedAnswers[index] === null
-            ? "Attempt नहीं किया"
-            : q.options[selectedAnswers[index]];
+  review.innerHTML="";
 
-        let correctAnswer =
-            q.options[q.answer];
 
-        let status =
-            selectedAnswers[index] === q.answer
-            ? `<span class="correct">सही</span>`
-            : `<span class="wrong">गलत</span>`;
+  questions.forEach((q,index)=>{
 
-        review.innerHTML += `
-        <div class="review-item">
+    const userAnswer =
+      selectedAnswers[index]===null
+      ?
+      "Attempt नहीं किया"
+      :
+      q.options[selectedAnswers[index]];
 
-            <b>Q${index+1}. ${q.q}</b>
 
-            <p>आपका उत्तर: ${userAnswer}</p>
+    const correctAnswer =
+      q.options[q.answer];
 
-            <p>सही उत्तर: <b>${correctAnswer}</b></p>
 
-            <p>${status}</p>
+    const status =
+      selectedAnswers[index]===q.answer
+      ?
+      '<span class="correct">सही</span>'
+      :
+      '<span class="wrong">गलत</span>';
 
-            <p>💡 ${q.explanation}</p>
 
-        </div>
-        `;
+    review.innerHTML+=`
+
+      <div class="review-item">
+
+        <b>
+          Q${index+1}. ${q.q}
+        </b>
+
+        <p>
+          आपका उत्तर: ${userAnswer}
+        </p>
+
+        <p>
+          सही उत्तर:
+          <b>${correctAnswer}</b>
+        </p>
+
+        <p>
+          ${status}
+        </p>
+
+        <p>
+          💡 ${q.explanation}
+        </p>
+
+      </div>
+
+    `;
+
+  });
+
+
+  window.scrollTo(0,0);
+}
+
+
+/* ================= FILTER TESTS ================= */
+
+function filterTests(subject){
+
+  document
+    .querySelectorAll("#testList .card")
+    .forEach(card=>{
+
+      card.style.display =
+        (
+          subject==="all" ||
+          card.dataset.subject===subject
+        )
+        ?
+        "block"
+        :
+        "none";
 
     });
 
 }
-
-loadQuestion();
 
 </script>
 
