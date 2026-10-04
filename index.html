@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HistoryTest.online - Free Mock Test</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+.header{
+    background:#172554;
+    color:white;
+    padding:18px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#38bdf8;
+}
+
+.timer{
+    background:#dc2626;
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.test-info{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.test-info h1{
+    margin-bottom:8px;
+    font-size:25px;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    gap:20px;
+}
+
+.question-box,
+.palette{
+    background:white;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.question-number{
+    color:#2563eb;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.question{
+    font-size:20px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.option{
+    border:1px solid #d5dbe7;
+    padding:14px;
+    margin:10px 0;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    background:#eff6ff;
+    border-color:#2563eb;
+}
+
+.option.selected{
+    background:#dbeafe;
+    border-color:#2563eb;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+button{
+    border:none;
+    padding:11px 20px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.prev{
+    background:#64748b;
+    color:white;
+}
+
+.next{
+    background:#2563eb;
+    color:white;
+}
+
+.submit{
+    background:#16a34a;
+    color:white;
+    width:100%;
+    margin-top:20px;
+}
+
+.palette h3{
+    margin-bottom:15px;
+}
+
+.numbers{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+
+.num{
+    height:40px;
+    border:1px solid #cbd5e1;
+    background:white;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.num.active{
+    background:#2563eb;
+    color:white;
+}
+
+.num.answered{
+    background:#16a34a;
+    color:white;
+}
+
+.result{
+    display:none;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.result h2{
+    color:#16a34a;
+    margin-bottom:20px;
+}
+
+.score{
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.review{
+    margin-top:25px;
+}
+
+.review-item{
+    border-top:1px solid #ddd;
+    padding:15px 0;
+}
+
+.correct{
+    color:#16a34a;
+    font-weight:bold;
+}
+
+.wrong{
+    color:#dc2626;
+    font-weight:bold;
+}
+
+@media(max-width:750px){
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        padding:15px;
+    }
+
+    .logo{
+        font-size:19px;
+    }
+
+    .timer{
+        padding:8px 12px;
+    }
+
+    .question{
+        font-size:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        HistoryTest<span>.online</span>
+    </div>
+
+    <div class="timer" id="timer">
+        10:00
+    </div>
+</header>
+
+<div class="container">
+
+<div class="test-info">
+    <h1>UPSC History Mock Test – 01</h1>
+    <p>कुल प्रश्न: 10 &nbsp; | &nbsp; समय: 10 मिनट</p>
+</div>
+
+<div id="testArea">
+
+<div class="layout">
+
+<div class="question-box">
+
+<div class="question-number" id="questionNumber">
+    प्रश्न 1 / 10
+</div>
+
+<div class="question" id="question">
+</div>
+
+<div id="options"></div>
+
+<div class="buttons">
+    <button class="prev" onclick="previousQuestion()">← Previous</button>
+    <button class="next" onclick="nextQuestion()">Next →</button>
+</div>
+
+</div>
+
+<div class="palette">
+
+<h3>Question Palette</h3>
+
+<div class="numbers" id="numbers"></div>
+
+<button class="submit" onclick="submitTest()">
+    Submit Test
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="result" id="result">
+
+<h2>🎉 Test Completed!</h2>
+
+<div class="score" id="score"></div>
+
+<div id="resultStats"></div>
+
+<div class="review">
+    <h3>Answer Review</h3>
+    <div id="review"></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+q:"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?",
+options:["हड़प्पा","मोहनजोदड़ो","लोथल","कालीबंगा"],
+answer:2,
+explanation:"लोथल गुजरात में स्थित सिंधु सभ्यता का महत्वपूर्ण बंदरगाह था।"
+},
+
+{
+q:"मौर्य साम्राज्य की स्थापना किसने की थी?",
+options:["अशोक","चंद्रगुप्त मौर्य","बिंदुसार","कनिष्क"],
+answer:1,
+explanation:"चंद्रगुप्त मौर्य ने लगभग 322 ईसा पूर्व मौर्य साम्राज्य की स्थापना की।"
+},
+
+{
+q:"अशोक किस वंश से संबंधित थे?",
+options:["गुप्त","मौर्य","कुषाण","चोल"],
+answer:1,
+explanation:"सम्राट अशोक मौर्य वंश के महान शासक थे।"
+},
+
+{
+q:"पानीपत का प्रथम युद्ध किस वर्ष हुआ था?",
+options:["1526","1556","1761","1757"],
+answer:0,
+explanation:"प्रथम पानीपत का युद्ध 1526 में बाबर और इब्राहिम लोदी के बीच हुआ।"
+},
+
+{
+q:"प्लासी का युद्ध किस वर्ष हुआ?",
+options:["1757","1764","1857","1748"],
+answer:0,
+explanation:"प्लासी का युद्ध 1757 में हुआ था।"
+},
+
+{
+q:"भारतीय राष्ट्रीय कांग्रेस की स्थापना किस वर्ष हुई?",
+options:["1885","1905","1919","1942"],
+answer:0,
+explanation:"भारतीय राष्ट्रीय कांग्रेस की स्थापना 1885 में हुई।"
+},
+
+{
+q:"भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?",
+options:["1919","1930","1942","1947"],
+answer:2,
+explanation:"भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।"
+},
+
+{
+q:"दांडी मार्च किस आंदोलन से संबंधित था?",
+options:["असहयोग आंदोलन","सविनय अवज्ञा आंदोलन","भारत छोड़ो आंदोलन","स्वदेशी आंदोलन"],
+answer:1,
+explanation:"दांडी मार्च 1930 के सविनय अवज्ञा आंदोलन का महत्वपूर्ण हिस्सा था।"
+},
+
+{
+q:"भारतीय संविधान कब अपनाया गया?",
+options:["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],
+answer:2,
+explanation:"भारतीय संविधान को 26 नवंबर 1949 को अपनाया गया।"
+},
+
+{
+q:"भारत गणराज्य कब बना?",
+options:["15 अगस्त 1947","26 नवंबर 1949","26 जनवरी 1950","2 अक्टूबर 1950"],
+answer:2,
+explanation:"26 जनवरी 1950 को भारत गणराज्य बना और संविधान लागू हुआ।"
+}
+
+];
+
+let currentQuestion = 0;
+let selectedAnswers = Array(questions.length).fill(null);
+
+function loadQuestion(){
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("questionNumber").innerText =
+        `प्रश्न ${currentQuestion + 1} / ${questions.length}`;
+
+    document.getElementById("question").innerText = q.q;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach((option,index)=>{
+
+        const div = document.createElement("div");
+
+        div.className = "option";
+
+        if(selectedAnswers[currentQuestion] === index){
+            div.classList.add("selected");
+        }
+
+        div.innerText =
+            `${String.fromCharCode(65+index)}) ${option}`;
+
+        div.onclick = ()=>{
+            selectedAnswers[currentQuestion] = index;
+            loadQuestion();
+        };
+
+        optionsDiv.appendChild(div);
+
+    });
+
+    updatePalette();
+}
+
+function nextQuestion(){
+
+    if(currentQuestion < questions.length-1){
+        currentQuestion++;
+        loadQuestion();
+    }
+
+}
+
+function previousQuestion(){
+
+    if(currentQuestion > 0){
+        currentQuestion--;
+        loadQuestion();
+    }
+
+}
+
+function updatePalette(){
+
+    const numbers = document.getElementById("numbers");
+
+    numbers.innerHTML = "";
+
+    questions.forEach((q,index)=>{
+
+        const btn = document.createElement("button");
+
+        btn.className = "num";
+
+        btn.innerText = index+1;
+
+        if(index === currentQuestion){
+            btn.classList.add("active");
+        }
+
+        if(selectedAnswers[index] !== null){
+            btn.classList.add("answered");
+        }
+
+        btn.onclick = ()=>{
+            currentQuestion = index;
+            loadQuestion();
+        };
+
+        numbers.appendChild(btn);
+
+    });
+
+}
+
+let time = 600;
+
+const timerInterval = setInterval(()=>{
+
+    if(time <= 0){
+
+        clearInterval(timerInterval);
+
+        submitTest();
+
+        return;
+    }
+
+    time--;
+
+    const minutes =
+        Math.floor(time/60).toString().padStart(2,"0");
+
+    const seconds =
+        (time%60).toString().padStart(2,"0");
+
+    document.getElementById("timer").innerText =
+        `${minutes}:${seconds}`;
+
+},1000);
+
+
+function submitTest(){
+
+    clearInterval(timerInterval);
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    questions.forEach((q,index)=>{
+
+        if(selectedAnswers[index] === null){
+
+            unanswered++;
+
+        }else if(selectedAnswers[index] === q.answer){
+
+            correct++;
+
+        }else{
+
+            wrong++;
+
+        }
+
+    });
+
+    const percentage =
+        ((correct/questions.length)*100).toFixed(1);
+
+    document.getElementById("testArea").style.display="none";
+
+    document.getElementById("result").style.display="block";
+
+    document.getElementById("score").innerText =
+        `${correct} / ${questions.length}`;
+
+    document.getElementById("resultStats").innerHTML = `
+        <p>✅ सही उत्तर: ${correct}</p>
+        <p>❌ गलत उत्तर: ${wrong}</p>
+        <p>⚪ अनुत्तरित: ${unanswered}</p>
+        <p>📊 प्रतिशत: ${percentage}%</p>
+    `;
+
+    const review = document.getElementById("review");
+
+    review.innerHTML="";
+
+    questions.forEach((q,index)=>{
+
+        let userAnswer =
+            selectedAnswers[index] === null
+            ? "Attempt नहीं किया"
+            : q.options[selectedAnswers[index]];
+
+        let correctAnswer =
+            q.options[q.answer];
+
+        let status =
+            selectedAnswers[index] === q.answer
+            ? `<span class="correct">सही</span>`
+            : `<span class="wrong">गलत</span>`;
+
+        review.innerHTML += `
+        <div class="review-item">
+
+            <b>Q${index+1}. ${q.q}</b>
+
+            <p>आपका उत्तर: ${userAnswer}</p>
+
+            <p>सही उत्तर: <b>${correctAnswer}</b></p>
+
+            <p>${status}</p>
+
+            <p>💡 ${q.explanation}</p>
+
+        </div>
+        `;
+
+    });
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
