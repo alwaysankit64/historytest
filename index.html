@@ -2025,7 +2025,55 @@ function searchTests(){
     });
 
 }
+/* =========================================
+   SSC YEAR SYSTEM
+========================================= */
 
+let selectedSSCExam = "";
+
+
+function openSSCYears(exam){
+
+    selectedSSCExam = exam;
+
+    document.getElementById("homePage").style.display="none";
+
+    document.getElementById("testPage").style.display="none";
+
+    document.getElementById("resultPage").style.display="none";
+
+    document.getElementById("sscYearPage").style.display="block";
+
+    document.getElementById("sscExamTitle").innerText =
+        "SSC " + exam + " – Previous Year Questions";
+
+    window.scrollTo(0,0);
+}
+
+
+function closeSSCYears(){
+
+    document.getElementById("sscYearPage").style.display="none";
+
+    document.getElementById("homePage").style.display="block";
+
+    document.getElementById("sscSection")
+    .scrollIntoView({behavior:"smooth"});
+
+}
+
+
+function openYear(year){
+
+    alert(
+        "SSC " +
+        selectedSSCExam +
+        " " +
+        year +
+        " PYQ section तैयार किया जा रहा है।"
+    );
+
+}
 </script>
 
 </body>
