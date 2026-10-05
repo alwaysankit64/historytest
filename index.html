@@ -2,15 +2,14 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>HistoryTest.online | Government Exam Test Series</title>
+<title>HistoryTest.online | Government Exam Test Portal</title>
 
 <meta name="description"
-content="UPSC, UPPCS, BPSC, SSC, Railway, PET, Banking, Police, Defence और Teaching Exams के Free Mock Tests और Practice Sets.">
+content="UPSC, UPPCS, BPSC, SSC, Railway, PET और अन्य सरकारी परीक्षाओं के Free Practice Tests और Full Tests.">
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -28,14 +27,6 @@ button{
     border:0;
 }
 
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
 .container{
     width:92%;
     max-width:1250px;
@@ -51,7 +42,6 @@ header{
     position:sticky;
     top:0;
     z-index:99;
-    box-shadow:0 3px 15px #0002;
 }
 
 .nav{
@@ -80,7 +70,17 @@ header{
 }
 
 .nav button:hover{
-    background:#fff2;
+    background:#ffffff22;
+}
+
+/* PAGES */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
 }
 
 /* HERO */
@@ -89,12 +89,12 @@ header{
     background:linear-gradient(135deg,#182848,#4b6cb7);
     color:#fff;
     text-align:center;
-    padding:75px 0;
+    padding:70px 0;
 }
 
 .hero h1{
-    font-size:46px;
-    margin-bottom:15px;
+    font-size:44px;
+    margin-bottom:12px;
 }
 
 .hero h1 span{
@@ -102,14 +102,14 @@ header{
 }
 
 .hero p{
-    max-width:800px;
-    margin:0 auto 25px;
+    max-width:850px;
+    margin:0 auto 24px;
     line-height:1.7;
     font-size:18px;
 }
 
 .search{
-    max-width:700px;
+    max-width:750px;
     margin:auto;
     background:#fff;
     padding:5px;
@@ -132,7 +132,7 @@ header{
     border-radius:8px;
 }
 
-/* COMMON */
+/* SECTION */
 
 .section{
     padding:45px 0;
@@ -163,16 +163,16 @@ header{
 .stat{
     background:#fff;
     border-radius:14px;
-    box-shadow:0 5px 20px #00000012;
+    box-shadow:0 5px 20px #0001;
     text-align:center;
-    padding:23px;
+    padding:22px;
 }
 
 .stat h2{
     color:#4b6cb7;
 }
 
-/* CARDS */
+/* GRIDS */
 
 .grid{
     display:grid;
@@ -180,17 +180,25 @@ header{
     gap:18px;
 }
 
-.card{
+.card,
+.test-card,
+.subject-card,
+.year-card,
+.question-box,
+.palette-box,
+.result-box{
     background:#fff;
-    padding:22px;
     border-radius:14px;
-    box-shadow:0 5px 20px #00000012;
+    box-shadow:0 5px 20px #0001;
+}
+
+.card{
+    padding:22px;
     transition:.2s;
 }
 
 .card:hover{
     transform:translateY(-3px);
-    box-shadow:0 10px 25px #0002;
 }
 
 .icon{
@@ -232,12 +240,13 @@ header{
 
 .card .btn,
 .subject-card .btn,
-.year-card .btn{
+.year-card .btn,
+.test-card .btn{
     width:100%;
     margin-top:14px;
 }
 
-/* FILTER */
+/* FILTERS */
 
 .filters{
     display:flex;
@@ -259,7 +268,7 @@ header{
     color:#fff;
 }
 
-/* TEST CARDS */
+/* TEST GRID */
 
 .test-grid{
     display:grid;
@@ -268,10 +277,7 @@ header{
 }
 
 .test-card{
-    background:#fff;
     padding:20px;
-    border-radius:14px;
-    box-shadow:0 5px 20px #00000012;
 }
 
 .test-card h3{
@@ -286,12 +292,7 @@ header{
     margin:9px 0;
 }
 
-.test-card .btn{
-    width:100%;
-    margin-top:10px;
-}
-
-/* PAGE HEAD */
+/* PAGE HEADER */
 
 .page-head{
     background:linear-gradient(135deg,#182848,#4b6cb7);
@@ -313,9 +314,6 @@ header{
 }
 
 .year-card{
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 5px 20px #00000012;
     text-align:center;
     padding:25px;
 }
@@ -329,9 +327,6 @@ header{
 }
 
 .subject-card{
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 5px 20px #00000012;
     text-align:center;
     padding:25px;
 }
@@ -340,7 +335,18 @@ header{
     font-size:42px;
 }
 
-/* TEST ENGINE */
+/* NOTE */
+
+.note{
+    background:#fff8d9;
+    border-left:5px solid #ffd43b;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+/* TEST PAGE */
 
 .test-top{
     background:#182848;
@@ -376,9 +382,6 @@ header{
 
 .question-box,
 .palette-box{
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 5px 20px #00000012;
     padding:25px;
 }
 
@@ -410,6 +413,8 @@ header{
     margin-right:9px;
 }
 
+/* ACTIONS */
+
 .actions{
     display:flex;
     gap:8px;
@@ -417,6 +422,8 @@ header{
     margin-top:20px;
     flex-wrap:wrap;
 }
+
+/* PALETTE */
 
 .palette{
     display:grid;
@@ -444,9 +451,6 @@ header{
 /* RESULT */
 
 .result-box{
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 5px 20px #00000012;
     max-width:800px;
     margin:55px auto;
     padding:35px;
@@ -473,15 +477,14 @@ header{
     border-radius:10px;
 }
 
-/* NOTE */
+/* EMPTY */
 
-.note{
-    background:#fff8d9;
-    border-left:5px solid #ffd43b;
-    padding:15px;
-    border-radius:8px;
-    margin-bottom:20px;
-    line-height:1.6;
+.empty{
+    background:#fff;
+    padding:30px;
+    text-align:center;
+    border-radius:14px;
+    color:#667085;
 }
 
 /* FOOTER */
@@ -557,11 +560,12 @@ footer p{
         padding:12px;
     }
 }
-
 </style>
 </head>
 
 <body>
+
+<!-- HEADER -->
 
 <header>
 
@@ -590,7 +594,7 @@ Mock Tests
 </header>
 
 
-<!-- HOME PAGE -->
+<!-- HOME -->
 
 <div id="homePage" class="page active">
 
@@ -600,20 +604,20 @@ Mock Tests
 
 <h1>
 Government Exam
-<span>Test Series</span>
+<span>Test Portal</span>
 </h1>
 
 <p>
 UPSC, UPPCS, BPSC, SSC, Railway, PET, Banking,
-Police, Defence और Teaching Exams की तैयारी के लिए
-Free Mock Tests और Practice Sets.
+Police, Defence और Teaching की तैयारी —
+Subject Test, Practice Test और Full Test एक ही जगह।
 </p>
 
 <div class="search">
 
 <input
 id="searchInput"
-placeholder="Exam या Subject खोजें..."
+placeholder="Exam, Subject या Test खोजें..."
 oninput="searchTests()"
 >
 
@@ -628,36 +632,74 @@ Search
 </section>
 
 
+<!-- STATS -->
+
 <div class="container">
 
 <div class="stats">
 
 <div class="stat">
-<h2>12+</h2>
-<p>Exam Categories</p>
+
+<h2 id="examCount">
+12+
+</h2>
+
+<p>
+Exam Categories
+</p>
+
 </div>
+
 
 <div class="stat">
-<h2>10</h2>
-<p>Years</p>
+
+<h2>
+10
+</h2>
+
+<p>
+Years
+</p>
+
 </div>
+
 
 <div class="stat">
-<h2>100+</h2>
-<p>Practice Questions</p>
+
+<h2 id="testCount">
+0
+</h2>
+
+<p>
+Tests Available
+</p>
+
 </div>
+
 
 <div class="stat">
-<h2>FREE</h2>
-<p>Platform</p>
-</div>
+
+<h2>
+FREE
+</h2>
+
+<p>
+Platform
+</p>
 
 </div>
 
 </div>
 
+</div>
 
-<section id="examSection" class="section">
+
+<!-- EXAMS -->
+
+<section
+id="examSection"
+class="section"
+>
 
 <div class="container">
 
@@ -669,28 +711,42 @@ Government Exams
 अपना Exam चुनें
 </p>
 
-<div id="examGrid" class="grid"></div>
+<div
+id="examGrid"
+class="grid"
+></div>
 
 </div>
 
 </section>
 
 
-<section id="testSection" class="section">
+<!-- TEST LIBRARY -->
+
+<section
+id="testSection"
+class="section"
+>
 
 <div class="container">
 
 <h2 class="title">
-Free Mock Tests
+All Mock Tests
 </h2>
 
 <p class="sub">
-Practice करें और अपना Score देखें
+Practice, Subject और Full Tests
 </p>
 
-<div class="filters" id="filters"></div>
+<div
+id="filters"
+class="filters"
+></div>
 
-<div id="testGrid" class="test-grid"></div>
+<div
+id="testGrid"
+class="test-grid"
+></div>
 
 </div>
 
@@ -701,23 +757,14 @@ Practice करें और अपना Score देखें
 
 <div class="container">
 
-<h2 class="title">
-About HistoryTest.online
-</h2>
+<div class="note">
 
-<p class="sub">
-एक ही जगह पर Government Exam Practice
-</p>
+<b>महत्वपूर्ण:</b>
 
-<div class="card">
-
-<p style="line-height:1.8">
-
-यह platform Government Exam preparation के लिए बनाया गया है।
-Official PYQ और Practice Set को अलग-अलग label किया जाएगा।
-अभी उपलब्ध questions को Practice Set के रूप में रखा गया है।
-
-</p>
+इस version में उपलब्ध questions को
+Practice Set के रूप में रखा गया है।
+Verified Official PYQ को बिना source verification
+के Official PYQ नहीं कहा गया है।
 
 </div>
 
@@ -730,36 +777,39 @@ Official PYQ और Practice Set को अलग-अलग label किया �
 
 <!-- EXAM PAGE -->
 
-<div id="examPage" class="page">
+<div
+id="examPage"
+class="page"
+>
 
 <div class="page-head">
 
 <div class="container">
 
-<button class="btn dark" onclick="home()">
+<button
+class="btn dark"
+onclick="home()"
+>
 ← Home
 </button>
 
 <h1 id="examTitle"></h1>
 
 <p>
-Year या Practice Test चुनें
+Practice या Year-wise Test चुनें
 </p>
 
 </div>
 
 </div>
 
+
 <div class="container section">
 
-<div class="note">
-
-पहले <b>Year Wise</b> चुनकर 2016–2025 में से वर्ष चुन सकते हैं।
-फिर Subject-wise test खुलेगा।
-
-</div>
-
-<div id="examOptions" class="grid"></div>
+<div
+id="examOptions"
+class="grid"
+></div>
 
 </div>
 
@@ -768,29 +818,46 @@ Year या Practice Test चुनें
 
 <!-- YEAR PAGE -->
 
-<div id="yearPage" class="page">
+<div
+id="yearPage"
+class="page"
+>
 
 <div class="page-head">
 
 <div class="container">
 
-<button class="btn dark" onclick="openExam(selectedExam)">
+<button
+class="btn dark"
+onclick="openExam(selectedExam)"
+>
 ← Back
 </button>
 
 <h1 id="yearTitle"></h1>
 
 <p>
-2016–2025
+2016 – 2025
 </p>
 
 </div>
 
 </div>
 
+
 <div class="container section">
 
-<div id="yearGrid" class="years"></div>
+<div class="note">
+
+Year चुनने के बाद Subject-wise
+Practice Test शुरू कर सकते हैं।
+
+</div>
+
+<div
+id="yearGrid"
+class="years"
+></div>
 
 </div>
 
@@ -799,13 +866,19 @@ Year या Practice Test चुनें
 
 <!-- SUBJECT PAGE -->
 
-<div id="subjectPage" class="page">
+<div
+id="subjectPage"
+class="page"
+>
 
 <div class="page-head">
 
 <div class="container">
 
-<button class="btn dark" onclick="openYears()">
+<button
+class="btn dark"
+onclick="openYears()"
+>
 ← Back
 </button>
 
@@ -819,9 +892,13 @@ Subject-wise Tests
 
 </div>
 
+
 <div class="container section">
 
-<div id="subjectGrid" class="subjects"></div>
+<div
+id="subjectGrid"
+class="subjects"
+></div>
 
 </div>
 
@@ -830,7 +907,10 @@ Subject-wise Tests
 
 <!-- TEST PAGE -->
 
-<div id="testPage" class="page">
+<div
+id="testPage"
+class="page"
+>
 
 <div class="test-top">
 
@@ -839,34 +919,59 @@ Subject-wise Tests
 <b id="runningTitle"></b>
 
 <span class="timer">
-⏱ <span id="timer">00:00</span>
+
+⏱
+
+<span id="timer">
+00:00
+</span>
+
 </span>
 
 </div>
 
 </div>
 
+
 <div class="test-layout">
 
 <div class="question-box">
 
-<div class="qnum" id="qnum"></div>
+<div
+class="qnum"
+id="qnum"
+></div>
 
-<div class="qtext" id="qtext"></div>
+<div
+class="qtext"
+id="qtext"
+></div>
 
-<div id="options"></div>
+<div
+id="options"
+></div>
+
 
 <div class="actions">
 
-<button class="btn dark" onclick="prevQ()">
+<button
+class="btn dark"
+onclick="prevQ()"
+>
 ← Previous
 </button>
 
-<button class="btn" onclick="nextQ()">
+<button
+class="btn"
+onclick="nextQ()"
+>
 Next →
 </button>
 
-<button class="btn red" onclick="submitTest()">
+<button
+class="btn red"
+onclick="submitTest()"
+>
 Submit
 </button>
 
@@ -881,7 +986,10 @@ Submit
 Questions
 </h3>
 
-<div id="palette" class="palette"></div>
+<div
+id="palette"
+class="palette"
+></div>
 
 </div>
 
@@ -890,9 +998,12 @@ Questions
 </div>
 
 
-<!-- RESULT PAGE -->
+<!-- RESULT -->
 
-<div id="resultPage" class="page">
+<div
+id="resultPage"
+class="page"
+>
 
 <div class="container">
 
@@ -902,33 +1013,61 @@ Questions
 Test Completed 🎉
 </h1>
 
-<div id="score" class="score">
+<div
+id="score"
+class="score"
+>
 0/0
 </div>
+
 
 <div class="result-grid">
 
 <div class="result-stat">
-<b id="correct">0</b>
+
+<b id="correct">
+0
+</b>
+
 <br>
+
 Correct
+
 </div>
 
+
 <div class="result-stat">
-<b id="wrong">0</b>
+
+<b id="wrong">
+0
+</b>
+
 <br>
+
 Wrong
+
 </div>
+
 
 <div class="result-stat">
-<b id="skip">0</b>
+
+<b id="skip">
+0
+</b>
+
 <br>
+
 Unattempted
-</div>
 
 </div>
 
-<button class="btn" onclick="home()">
+</div>
+
+
+<button
+class="btn"
+onclick="home()"
+>
 Go Home
 </button>
 
@@ -938,6 +1077,8 @@ Go Home
 
 </div>
 
+
+<!-- FOOTER -->
 
 <footer>
 
@@ -958,11 +1099,12 @@ Free Government Exam Practice Platform
 
 <script>
 
-/* =========================
-   HISTORYTEST.ONLINE ENGINE
-   ========================= */
+/* =========================================
+   YEARS
+========================================= */
 
 const years = [
+
 2025,
 2024,
 2023,
@@ -973,182 +1115,184 @@ const years = [
 2018,
 2017,
 2016
+
 ];
 
+
+/* =========================================
+   EXAM DATABASE
+========================================= */
 
 const exams = {
 
 "UPSC":{
-    icon:"🇮🇳",
-    subjects:[
-        "History",
-        "Polity",
-        "Geography",
-        "Economy",
-        "Environment",
-        "Science & Technology",
-        "Current Affairs",
-        "Full Paper"
-    ]
+icon:"🇮🇳",
+subjects:[
+"History",
+"Polity",
+"Geography",
+"Economy",
+"Environment",
+"Science & Technology",
+"Current Affairs",
+"Full Paper"
+]
 },
 
 "UPPCS":{
-    icon:"🏛️",
-    subjects:[
-        "History",
-        "Indian Polity",
-        "Geography",
-        "Economy",
-        "Environment",
-        "Science",
-        "Uttar Pradesh GK",
-        "Current Affairs",
-        "Full Paper"
-    ]
+icon:"🏛️",
+subjects:[
+"History",
+"Indian Polity",
+"Geography",
+"Economy",
+"Environment",
+"Science",
+"Uttar Pradesh GK",
+"Current Affairs",
+"Full Paper"
+]
 },
 
 "BPSC":{
-    icon:"📚",
-    subjects:[
-        "History",
-        "Geography",
-        "Polity",
-        "Economy",
-        "Bihar GK",
-        "Science",
-        "Current Affairs",
-        "Full Paper"
-    ]
+icon:"📚",
+subjects:[
+"History",
+"Geography",
+"Polity",
+"Economy",
+"Bihar GK",
+"Science",
+"Current Affairs",
+"Full Paper"
+]
 },
 
 "SSC":{
-    icon:"📝",
-    subjects:[
-        "General Intelligence & Reasoning",
-        "General Awareness",
-        "Quantitative Aptitude",
-        "English",
-        "Full Paper"
-    ]
+icon:"📝",
+subjects:[
+"General Intelligence & Reasoning",
+"General Awareness",
+"Quantitative Aptitude",
+"English",
+"Full Paper"
+]
 },
 
 "Railway":{
-    icon:"🚆",
-    subjects:[
-        "General Awareness",
-        "General Science",
-        "Mathematics",
-        "Reasoning",
-        "Current Affairs",
-        "Full Paper"
-    ]
+icon:"🚆",
+subjects:[
+"General Awareness",
+"General Science",
+"Mathematics",
+"Reasoning",
+"Current Affairs",
+"Full Paper"
+]
 },
 
 "PET":{
-    icon:"📖",
-    subjects:[
-        "Indian History",
-        "Indian National Movement",
-        "Geography",
-        "Indian Economy",
-        "Constitution",
-        "General Science",
-        "Current Affairs",
-        "UP GK",
-        "Full Paper"
-    ]
+icon:"📖",
+subjects:[
+"Indian History",
+"Indian National Movement",
+"Geography",
+"Indian Economy",
+"Constitution",
+"General Science",
+"Current Affairs",
+"UP GK",
+"Full Paper"
+]
 },
 
 "Banking":{
-    icon:"🏦",
-    subjects:[
-        "Reasoning",
-        "Quantitative Aptitude",
-        "English",
-        "General Awareness",
-        "Banking Awareness",
-        "Computer",
-        "Full Paper"
-    ]
+icon:"🏦",
+subjects:[
+"Reasoning",
+"Quantitative Aptitude",
+"English",
+"General Awareness",
+"Banking Awareness",
+"Computer",
+"Full Paper"
+]
 },
 
 "Police":{
-    icon:"👮",
-    subjects:[
-        "General Knowledge",
-        "General Science",
-        "Reasoning",
-        "Numerical Ability",
-        "Current Affairs",
-        "State GK",
-        "Full Paper"
-    ]
+icon:"👮",
+subjects:[
+"General Knowledge",
+"General Science",
+"Reasoning",
+"Numerical Ability",
+"Current Affairs",
+"State GK",
+"Full Paper"
+]
 },
 
 "Defence":{
-    icon:"🎖️",
-    subjects:[
-        "Mathematics",
-        "English",
-        "General Ability",
-        "History",
-        "Geography",
-        "Science",
-        "Current Affairs",
-        "Full Paper"
-    ]
+icon:"🎖️",
+subjects:[
+"Mathematics",
+"English",
+"General Ability",
+"History",
+"Geography",
+"Science",
+"Current Affairs",
+"Full Paper"
+]
 },
 
 "Teaching":{
-    icon:"👨‍🏫",
-    subjects:[
-        "Child Development",
-        "Pedagogy",
-        "Language",
-        "Mathematics",
-        "EVS",
-        "Science",
-        "Social Studies",
-        "Full Paper"
-    ]
+icon:"👨‍🏫",
+subjects:[
+"Child Development",
+"Pedagogy",
+"Language",
+"Mathematics",
+"EVS",
+"Science",
+"Social Studies",
+"Full Paper"
+]
 },
 
 "State Exams":{
-    icon:"🏢",
-    subjects:[
-        "History",
-        "Polity",
-        "Geography",
-        "Economy",
-        "State GK",
-        "Science",
-        "Current Affairs",
-        "Full Paper"
-    ]
+icon:"🏢",
+subjects:[
+"History",
+"Polity",
+"Geography",
+"Economy",
+"State GK",
+"Science",
+"Current Affairs",
+"Full Paper"
+]
 },
 
 "Other Govt Exams":{
-    icon:"🎯",
-    subjects:[
-        "General Knowledge",
-        "Reasoning",
-        "Mathematics",
-        "English",
-        "General Science",
-        "Current Affairs",
-        "Full Paper"
-    ]
+icon:"🎯",
+subjects:[
+"General Knowledge",
+"Reasoning",
+"Mathematics",
+"English",
+"General Science",
+"Current Affairs",
+"Full Paper"
+]
 }
 
 };
 
 
-/*
-Question Bank
-
-अभी उपलब्ध questions Practice Set हैं।
-उन्हें Official PYQ के रूप में label नहीं किया गया है।
-*/
+/* =========================================
+   QUESTION BANK
+========================================= */
 
 const bank = {
 
@@ -1163,7 +1307,12 @@ const bank = {
 
 [
 "भारतीय संविधान कब लागू हुआ?",
-["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],
+[
+"15 अगस्त 1947",
+"26 जनवरी 1950",
+"26 नवंबर 1949",
+"2 अक्टूबर 1950"
+],
 1
 ],
 
@@ -1175,14 +1324,79 @@ const bank = {
 
 [
 "विश्व का सबसे बड़ा महासागर कौन-सा है?",
-["हिन्द महासागर","अटलांटिक","प्रशांत","आर्कटिक"],
+[
+"हिन्द महासागर",
+"अटलांटिक",
+"प्रशांत",
+"आर्कटिक"
+],
 2
 ],
 
 [
 "विटामिन C की कमी से कौन-सा रोग होता है?",
-["रिकेट्स","स्कर्वी","बेरी-बेरी","एनीमिया"],
+[
+"रिकेट्स",
+"स्कर्वी",
+"बेरी-बेरी",
+"एनीमिया"
+],
 1
+],
+
+[
+"भारत की राजधानी क्या है?",
+[
+"मुंबई",
+"नई दिल्ली",
+"कोलकाता",
+"चेन्नई"
+],
+1
+],
+
+[
+"संविधान सभा के अध्यक्ष कौन थे?",
+[
+"राजेन्द्र प्रसाद",
+"नेहरू",
+"पटेल",
+"अम्बेडकर"
+],
+0
+],
+
+[
+"जल का रासायनिक सूत्र क्या है?",
+[
+"CO2",
+"H2O",
+"O2",
+"NaCl"
+],
+1
+],
+
+[
+"सूर्य के सबसे निकट ग्रह कौन-सा है?",
+[
+"पृथ्वी",
+"शुक्र",
+"बुध",
+"मंगल"
+],
+2
+],
+
+[
+"भारत का राष्ट्रीय ध्वज किसने डिजाइन किया?",
+[
+"पिंगली वेंकैया",
+"गांधी",
+"नेहरू",
+"पटेल"
+],
+0
 ]
 
 ],
@@ -1191,33 +1405,68 @@ const bank = {
 "SSC|General Intelligence & Reasoning":[
 
 [
-"श्रृंखला पूरी कीजिए: 2, 4, 8, 16, ?",
+"श्रृंखला: 2, 4, 8, 16, ?",
 ["20","24","32","36"],
 2
 ],
 
 [
-"घड़ी में 3 बजे सुइयों के बीच कोण कितना होता है?",
+"3 बजे घड़ी की सुइयों के बीच कोण?",
 ["60°","90°","120°","180°"],
 1
 ],
 
 [
-"यदि A=1, B=2, तो D=?",
+"यदि A=1, तो D=?",
 ["2","3","4","5"],
 2
 ],
 
 [
-"श्रृंखला पूरी कीजिए: 5, 10, 15, 20, ?",
+"5,10,15,20, ?",
 ["22","25","30","35"],
 1
 ],
 
 [
-"यदि CAT को DBU लिखा जाए, तो DOG को कैसे लिखा जाएगा?",
+"CAT को DBU लिखा जाए तो DOG?",
 ["EPH","EOG","DPH","FQI"],
 0
+],
+
+[
+"10,20,40,80, ?",
+["100","120","140","160"],
+3
+],
+
+[
+"Odd one out: 2,4,6,9",
+["2","4","6","9"],
+3
+],
+
+[
+"NORTH का विपरीत क्या है?",
+["South","East","West","North"],
+0
+],
+
+[
+"1,4,9,16, ?",
+["20","24","25","36"],
+2
+],
+
+[
+"Monday के बाद कौन-सा दिन आता है?",
+[
+"Sunday",
+"Tuesday",
+"Friday",
+"Saturday"
+],
+1
 ]
 
 ],
@@ -1232,19 +1481,19 @@ const bank = {
 ],
 
 [
-"15 और 20 का LCM क्या है?",
+"15 और 20 का LCM?",
 ["30","40","60","80"],
 2
 ],
 
 [
-"किसी वस्तु का मूल्य ₹100 है और 10% लाभ है। विक्रय मूल्य?",
+"₹100 पर 10% लाभ का विक्रय मूल्य?",
 ["₹105","₹110","₹115","₹120"],
 1
 ],
 
 [
-"200 का 15% कितना है?",
+"200 का 15%?",
 ["20","25","30","35"],
 2
 ],
@@ -1252,6 +1501,36 @@ const bank = {
 [
 "12 × 12 = ?",
 ["124","144","154","164"],
+1
+],
+
+[
+"1000 का 10%?",
+["10","50","100","200"],
+2
+],
+
+[
+"50 का 40%?",
+["10","20","30","40"],
+1
+],
+
+[
+"25 + 35 = ?",
+["50","55","60","65"],
+2
+],
+
+[
+"144 का वर्गमूल?",
+["10","11","12","14"],
+2
+],
+
+[
+"2/5 को प्रतिशत में बदलें",
+["20%","40%","50%","60%"],
 1
 ]
 
@@ -1261,92 +1540,215 @@ const bank = {
 "SSC|English":[
 
 [
-"Choose the correct synonym of Happy.",
+"Synonym of Happy?",
 ["Sad","Joyful","Angry","Weak"],
 1
 ],
 
 [
-"Choose the correct antonym of Strong.",
+"Antonym of Strong?",
 ["Powerful","Weak","Hard","Large"],
 1
 ],
 
 [
-"Choose the correct spelling.",
-["Goverment","Government","Governmant","Govarnment"],
+"Correct spelling?",
+[
+"Goverment",
+"Government",
+"Governmant",
+"Govarnment"
+],
 1
 ],
 
 [
-"Choose the antonym of Early.",
+"Antonym of Early?",
 ["Fast","Late","Quick","Soon"],
 1
 ],
 
 [
-"Choose the synonym of Brave.",
-["Coward","Courageous","Weak","Lazy"],
+"Synonym of Brave?",
+[
+"Coward",
+"Courageous",
+"Weak",
+"Lazy"
+],
+1
+],
+
+[
+"Antonym of Ancient?",
+[
+"Old",
+"Modern",
+"Past",
+"Historic"
+],
+1
+],
+
+[
+"Synonym of Begin?",
+[
+"End",
+"Start",
+"Stop",
+"Close"
+],
+1
+],
+
+[
+"Plural of Child?",
+[
+"Childs",
+"Children",
+"Childes",
+"Childrens"
+],
+1
+],
+
+[
+"Opposite of Victory?",
+[
+"Win",
+"Success",
+"Defeat",
+"Gain"
+],
+2
+],
+
+[
+"Synonym of Rapid?",
+[
+"Slow",
+"Fast",
+"Weak",
+"Late"
+],
 1
 ]
 
 ],
 
 
+/* UPSC */
+
 "UPSC|History":[
 
 [
-"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?",
-["हड़प्पा","मोहनजोदड़ो","लोथल","कालीबंगा"],
+"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह?",
+[
+"हड़प्पा",
+"मोहनजोदड़ो",
+"लोथल",
+"कालीबंगा"
+],
 2
 ],
 
 [
 "मौर्य साम्राज्य की स्थापना किसने की?",
-["अशोक","चन्द्रगुप्त मौर्य","बिन्दुसार","कौटिल्य"],
+[
+"अशोक",
+"चन्द्रगुप्त मौर्य",
+"बिन्दुसार",
+"कौटिल्य"
+],
 1
 ],
 
 [
-"प्रथम पानीपत का युद्ध किस वर्ष हुआ?",
-["1526","1556","1761","1757"],
+"प्रथम पानीपत का युद्ध?",
+[
+"1526",
+"1556",
+"1761",
+"1757"
+],
 0
 ],
 
 [
-"प्लासी का युद्ध किस वर्ष हुआ?",
-["1757","1764","1857","1773"],
+"प्लासी का युद्ध?",
+[
+"1757",
+"1764",
+"1857",
+"1773"
+],
 0
 ],
 
 [
-"भारतीय राष्ट्रीय कांग्रेस की स्थापना कब हुई?",
-["1885","1905","1919","1942"],
+"भारतीय राष्ट्रीय कांग्रेस की स्थापना?",
+[
+"1885",
+"1905",
+"1919",
+"1942"
+],
 0
 ],
 
 [
-"भारत छोड़ो आंदोलन किस वर्ष प्रारंभ हुआ?",
-["1930","1935","1942","1947"],
+"भारत छोड़ो आंदोलन?",
+[
+"1930",
+"1935",
+"1942",
+"1947"
+],
 2
 ],
 
 [
 "दांडी मार्च किस आंदोलन से संबंधित था?",
-["असहयोग","सविनय अवज्ञा","भारत छोड़ो","स्वदेशी"],
+[
+"असहयोग",
+"सविनय अवज्ञा",
+"भारत छोड़ो",
+"स्वदेशी"
+],
 1
 ],
 
 [
-"भारतीय संविधान कब अंगीकृत किया गया?",
-["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],
+"संविधान अंगीकृत कब हुआ?",
+[
+"15 अगस्त 1947",
+"26 जनवरी 1950",
+"26 नवंबर 1949",
+"2 अक्टूबर 1950"
+],
 2
 ],
 
 [
 "भारत गणराज्य कब बना?",
-["15 अगस्त 1947","26 नवंबर 1949","26 जनवरी 1950","26 जनवरी 1949"],
+[
+"15 अगस्त 1947",
+"26 नवंबर 1949",
+"26 जनवरी 1950",
+"26 जनवरी 1949"
+],
 2
+],
+
+[
+"1857 का विद्रोह कहाँ से शुरू हुआ?",
+[
+"मेरठ",
+"दिल्ली",
+"कानपुर",
+"लखनऊ"
+],
+0
 ]
 
 ],
@@ -1355,21 +1757,108 @@ const bank = {
 "UPSC|Polity":[
 
 [
-"मौलिक अधिकार संविधान के किस भाग में हैं?",
-["भाग I","भाग II","भाग III","भाग IV"],
+"मौलिक अधिकार किस भाग में हैं?",
+["I","II","III","IV"],
 2
 ],
 
 [
-"लोकसभा का सामान्य कार्यकाल कितना है?",
-["4 वर्ष","5 वर्ष","6 वर्ष","7 वर्ष"],
+"लोकसभा का सामान्य कार्यकाल?",
+[
+"4 वर्ष",
+"5 वर्ष",
+"6 वर्ष",
+"7 वर्ष"
+],
 1
 ],
 
 [
 "राज्यसभा कैसी सभा है?",
-["अस्थायी","स्थायी","5 वर्षीय","4 वर्षीय"],
+[
+"अस्थायी",
+"स्थायी",
+"5 वर्षीय",
+"4 वर्षीय"
+],
 1
+],
+
+[
+"भारत का संवैधानिक प्रमुख?",
+[
+"प्रधानमंत्री",
+"राष्ट्रपति",
+"मुख्यमंत्री",
+"मुख्य न्यायाधीश"
+],
+1
+],
+
+[
+"मनी बिल कहाँ पेश होता है?",
+[
+"राज्यसभा",
+"लोकसभा",
+"दोनों",
+"सुप्रीम कोर्ट"
+],
+1
+],
+
+[
+"मौलिक कर्तव्य किस अनुच्छेद में हैं?",
+[
+"51A",
+"32",
+"14",
+"19"
+],
+0
+],
+
+[
+"संविधान का संरक्षक किसे माना जाता है?",
+[
+"संसद",
+"सुप्रीम कोर्ट",
+"राष्ट्रपति",
+"चुनाव आयोग"
+],
+1
+],
+
+[
+"लोकसभा अध्यक्ष का चुनाव कौन करता है?",
+[
+"राष्ट्रपति",
+"लोकसभा",
+"राज्यसभा",
+"SC"
+],
+1
+],
+
+[
+"भारत में संघीय व्यवस्था के साथ क्या है?",
+[
+"एकात्मक झुकाव",
+"राजतंत्र",
+"सैन्य शासन",
+"प्रत्यक्ष लोकतंत्र"
+],
+0
+],
+
+[
+"भारत का सर्वोच्च न्यायालय कहाँ स्थित है?",
+[
+"नई दिल्ली",
+"मुंबई",
+"लखनऊ",
+"पटना"
+],
+0
 ]
 
 ],
@@ -1378,31 +1867,229 @@ const bank = {
 "UPSC|Geography":[
 
 [
-"भारत का क्षेत्रफल की दृष्टि से सबसे बड़ा राज्य कौन-सा है?",
-["मध्य प्रदेश","उत्तर प्रदेश","राजस्थान","महाराष्ट्र"],
+"क्षेत्रफल की दृष्टि से भारत का सबसे बड़ा राज्य?",
+[
+"मध्य प्रदेश",
+"उत्तर प्रदेश",
+"राजस्थान",
+"महाराष्ट्र"
+],
 2
 ],
 
 [
-"भारत की सबसे लंबी नदी कौन-सी है?",
-["गंगा","यमुना","गोदावरी","नर्मदा"],
+"भारत की सबसे लंबी नदी?",
+[
+"गंगा",
+"यमुना",
+"गोदावरी",
+"नर्मदा"
+],
 0
+],
+
+[
+"भारत का दक्षिणतम बिंदु?",
+[
+"इंदिरा पॉइंट",
+"कन्याकुमारी",
+"पोर्ट ब्लेयर",
+"रामेश्वरम"
+],
+0
+],
+
+[
+"कर्क रेखा भारत के कितने राज्यों से गुजरती है?",
+[
+"6",
+"7",
+"8",
+"9"
+],
+2
+],
+
+[
+"भारत का सबसे बड़ा पठार?",
+[
+"दक्कन",
+"मालवा",
+"छोटानागपुर",
+"मेघालय"
+],
+0
+],
+
+[
+"मानसून की प्रमुख दिशा?",
+[
+"उत्तर से दक्षिण",
+"दक्षिण-पश्चिम से उत्तर-पूर्व",
+"पूर्व से पश्चिम",
+"पश्चिम से पूर्व"
+],
+1
+],
+
+[
+"सुंदरबन किस डेल्टा में स्थित है?",
+[
+"गंगा-ब्रह्मपुत्र",
+"नर्मदा",
+"गोदावरी",
+"कावेरी"
+],
+0
+],
+
+[
+"भारत में सर्वाधिक वर्षा वाला क्षेत्र?",
+[
+"राजस्थान",
+"मेघालय",
+"लद्दाख",
+"गुजरात"
+],
+1
+],
+
+[
+"थार मरुस्थल मुख्यतः किस राज्य में?",
+[
+"राजस्थान",
+"बिहार",
+"असम",
+"केरल"
+],
+0
+],
+
+[
+"नीली क्रांति किससे संबंधित है?",
+[
+"दूध",
+"मछली",
+"गेहूँ",
+"तेल"
+],
+1
 ]
 
 ],
 
 
+/* RAILWAY */
+
 "Railway|General Awareness":[
 
 [
-"भारतीय रेलवे का मुख्यालय कहाँ है?",
-["मुंबई","नई दिल्ली","कोलकाता","चेन्नई"],
+"भारतीय रेलवे का मुख्यालय?",
+[
+"मुंबई",
+"नई दिल्ली",
+"कोलकाता",
+"चेन्नई"
+],
 1
 ],
 
 [
 "भारत में पहली रेलगाड़ी कब चली?",
-["1853","1857","1885","1905"],
+[
+"1853",
+"1857",
+"1885",
+"1905"
+],
+0
+],
+
+[
+"रेल बजट को आम बजट में कब मिलाया गया?",
+[
+"2015",
+"2017",
+"2019",
+"2020"
+],
+1
+],
+
+[
+"भारत की पहली मेट्रो कहाँ चली?",
+[
+"दिल्ली",
+"कोलकाता",
+"मुंबई",
+"चेन्नई"
+],
+1
+],
+
+[
+"भारतीय रेलवे किस मंत्रालय के अधीन है?",
+[
+"गृह",
+"रेल",
+"वित्त",
+"रक्षा"
+],
+1
+],
+
+[
+"रेलवे बोर्ड का मुख्यालय?",
+[
+"नई दिल्ली",
+"मुंबई",
+"पटना",
+"जयपुर"
+],
+0
+],
+
+[
+"वंदे भारत किस प्रकार की ट्रेन है?",
+[
+"सेमी हाई-स्पीड",
+"मालगाड़ी",
+"मेट्रो",
+"ट्राम"
+],
+0
+],
+
+[
+"लोकोमोटिव क्या है?",
+[
+"इंजन",
+"डिब्बा",
+"पुल",
+"स्टेशन"
+],
+0
+],
+
+[
+"भारत की पहली रेल किन स्थानों के बीच चली?",
+[
+"मुंबई-ठाणे",
+"दिल्ली-आगरा",
+"कोलकाता-पटना",
+"चेन्नई-बेंगलुरु"
+],
+0
+],
+
+[
+"भारतीय रेलवे का संचालन किसके द्वारा होता है?",
+[
+"रेल मंत्रालय",
+"गृह मंत्रालय",
+"शिक्षा मंत्रालय",
+"रक्षा मंत्रालय"
+],
 0
 ]
 
@@ -1412,15 +2099,113 @@ const bank = {
 "Railway|General Science":[
 
 [
-"पानी का रासायनिक सूत्र क्या है?",
-["CO2","H2O","O2","NaCl"],
+"पानी का रासायनिक सूत्र?",
+[
+"CO2",
+"H2O",
+"O2",
+"NaCl"
+],
 1
 ],
 
 [
-"मानव शरीर में रक्त को पंप करने वाला अंग कौन-सा है?",
-["फेफड़ा","हृदय","गुर्दा","यकृत"],
+"रक्त पंप करने वाला अंग?",
+[
+"फेफड़ा",
+"हृदय",
+"गुर्दा",
+"यकृत"
+],
 1
+],
+
+[
+"प्रकाश की गति?",
+[
+"3×10⁸ m/s",
+"3×10⁵",
+"3×10³",
+"3×10¹⁰"
+],
+0
+],
+
+[
+"विटामिन D की कमी से?",
+[
+"स्कर्वी",
+"रिकेट्स",
+"बेरी-बेरी",
+"रातांधता"
+],
+1
+],
+
+[
+"पौधों में भोजन निर्माण?",
+[
+"श्वसन",
+"प्रकाश संश्लेषण",
+"वाष्पोत्सर्जन",
+"अंकुरण"
+],
+1
+],
+
+[
+"मानव शरीर का सबसे बड़ा अंग?",
+[
+"हृदय",
+"त्वचा",
+"फेफड़ा",
+"यकृत"
+],
+1
+],
+
+[
+"ऑक्सीजन का प्रतीक?",
+[
+"O",
+"Ox",
+"O2x",
+"C"
+],
+0
+],
+
+[
+"बल की SI इकाई?",
+[
+"जूल",
+"न्यूटन",
+"वाट",
+"पास्कल"
+],
+1
+],
+
+[
+"ध्वनि निर्वात में?",
+[
+"चलती है",
+"नहीं चलती",
+"बहुत तेज चलती",
+"प्रकाश बनती"
+],
+1
+],
+
+[
+"जल का क्वथनांक सामान्य दाब पर?",
+[
+"50°C",
+"75°C",
+"100°C",
+"120°C"
+],
+2
 ]
 
 ],
@@ -1430,13 +2215,111 @@ const bank = {
 
 [
 "25 × 4 = ?",
-["50","75","100","125"],
+[
+"50",
+"75",
+"100",
+"125"
+],
 2
 ],
 
 [
-"1000 का 10% कितना है?",
-["10","50","100","200"],
+"1000 का 10%?",
+[
+"10",
+"50",
+"100",
+"200"
+],
+2
+],
+
+[
+"15 + 25 = ?",
+[
+"30",
+"35",
+"40",
+"45"
+],
+2
+],
+
+[
+"12 × 8 = ?",
+[
+"86",
+"96",
+"106",
+"116"
+],
+1
+],
+
+[
+"144 ÷ 12 = ?",
+[
+"10",
+"12",
+"14",
+"16"
+],
+1
+],
+
+[
+"50 का आधा?",
+[
+"20",
+"25",
+"30",
+"35"
+],
+1
+],
+
+[
+"5² = ?",
+[
+"10",
+"20",
+"25",
+"30"
+],
+2
+],
+
+[
+"3/4 का प्रतिशत?",
+[
+"25%",
+"50%",
+"75%",
+"80%"
+],
+2
+],
+
+[
+"60 का 20%?",
+[
+"10",
+"12",
+"15",
+"20"
+],
+1
+],
+
+[
+"4 और 6 का LCM?",
+[
+"8",
+"10",
+"12",
+"24"
+],
 2
 ]
 
@@ -1446,31 +2329,229 @@ const bank = {
 "Railway|Reasoning":[
 
 [
-"2, 4, 6, 8, ?",
-["9","10","11","12"],
+"2,4,6,8,?",
+[
+"9",
+"10",
+"11",
+"12"
+],
 1
 ],
 
 [
-"A=1, B=2, तो D=?",
-["2","3","4","5"],
+"A=1, B=2, D=?",
+[
+"2",
+"3",
+"4",
+"5"
+],
 2
+],
+
+[
+"10,20,30,40,?",
+[
+"45",
+"50",
+"55",
+"60"
+],
+1
+],
+
+[
+"1,3,5,7,?",
+[
+"8",
+"9",
+"10",
+"11"
+],
+1
+],
+
+[
+"Odd one out",
+[
+"2",
+"3",
+"5",
+"8"
+],
+3
+],
+
+[
+"North का opposite?",
+[
+"East",
+"South",
+"West",
+"North"
+],
+1
+],
+
+[
+"2,6,12,20,?",
+[
+"24",
+"30",
+"32",
+"36"
+],
+1
+],
+
+[
+"100,90,80,?",
+[
+"60",
+"70",
+"75",
+"85"
+],
+1
+],
+
+[
+"AB, CD, EF, ?",
+[
+"GH",
+"GI",
+"FG",
+"HI"
+],
+0
+],
+
+[
+"Monday के बाद?",
+[
+"Sunday",
+"Tuesday",
+"Friday",
+"Saturday"
+],
+1
 ]
 
 ],
 
 
+/* PET */
+
 "PET|Indian History":[
 
 [
-"मौर्य वंश के संस्थापक कौन थे?",
-["अशोक","चन्द्रगुप्त मौर्य","बिन्दुसार","समुद्रगुप्त"],
+"मौर्य वंश के संस्थापक?",
+[
+"अशोक",
+"चन्द्रगुप्त मौर्य",
+"बिन्दुसार",
+"समुद्रगुप्त"
+],
 1
 ],
 
 [
-"1857 का विद्रोह कहाँ से प्रारंभ हुआ?",
-["मेरठ","दिल्ली","कानपुर","लखनऊ"],
+"1857 का विद्रोह कहाँ से?",
+[
+"मेरठ",
+"दिल्ली",
+"कानपुर",
+"लखनऊ"
+],
+0
+],
+
+[
+"प्लासी का युद्ध?",
+[
+"1757",
+"1764",
+"1857",
+"1942"
+],
+0
+],
+
+[
+"कांग्रेस की स्थापना?",
+[
+"1885",
+"1905",
+"1919",
+"1942"
+],
+0
+],
+
+[
+"दांडी मार्च?",
+[
+"असहयोग",
+"सविनय अवज्ञा",
+"भारत छोड़ो",
+"स्वदेशी"
+],
+1
+],
+
+[
+"भारत छोड़ो आंदोलन?",
+[
+"1930",
+"1935",
+"1942",
+"1947"
+],
+2
+],
+
+[
+"पहला पानीपत युद्ध?",
+[
+"1526",
+"1556",
+"1761",
+"1757"
+],
+0
+],
+
+[
+"लोथल किस सभ्यता से?",
+[
+"सिंधु",
+"वैदिक",
+"मौर्य",
+"गुप्त"
+],
+0
+],
+
+[
+"अशोक किस वंश से?",
+[
+"मौर्य",
+"गुप्त",
+"कुषाण",
+"चोल"
+],
+0
+],
+
+[
+"नालंदा किस राज्य में?",
+[
+"बिहार",
+"UP",
+"MP",
+"राजस्थान"
+],
 0
 ]
 
@@ -1480,15 +2561,113 @@ const bank = {
 "PET|Indian National Movement":[
 
 [
-"असहयोग आंदोलन किस वर्ष प्रारंभ हुआ?",
-["1915","1919","1920","1930"],
+"असहयोग आंदोलन?",
+[
+"1915",
+"1919",
+"1920",
+"1930"
+],
 2
 ],
 
 [
-"भारत छोड़ो आंदोलन किस वर्ष प्रारंभ हुआ?",
-["1930","1935","1942","1947"],
+"भारत छोड़ो आंदोलन?",
+[
+"1930",
+"1935",
+"1942",
+"1947"
+],
 2
+],
+
+[
+"सविनय अवज्ञा आंदोलन?",
+[
+"1930",
+"1920",
+"1942",
+"1919"
+],
+0
+],
+
+[
+"जलियांवाला बाग घटना?",
+[
+"1919",
+"1920",
+"1930",
+"1942"
+],
+0
+],
+
+[
+"स्वदेशी आंदोलन किस घटना के बाद?",
+[
+"बंगाल विभाजन",
+"भारत छोड़ो",
+"दांडी",
+"1857"
+],
+0
+],
+
+[
+"दांडी मार्च किस वर्ष?",
+[
+"1920",
+"1930",
+"1942",
+"1947"
+],
+1
+],
+
+[
+"चंपारण सत्याग्रह?",
+[
+"1917",
+"1919",
+"1922",
+"1930"
+],
+0
+],
+
+[
+"भारत का स्वतंत्रता दिवस?",
+[
+"26 Jan",
+"15 Aug",
+"2 Oct",
+"14 Nov"
+],
+1
+],
+
+[
+"होम रूल आंदोलन से कौन जुड़ी थीं?",
+[
+"एनी बेसेंट",
+"सरोजिनी",
+"रानी लक्ष्मीबाई",
+"अरुणा आसफ"
+],
+0
+],
+
+[
+"पूर्ण स्वराज्य प्रस्ताव?",
+[
+"1929",
+"1930",
+"1919",
+"1942"
+],
+0
 ]
 
 ],
@@ -1497,9 +2676,113 @@ const bank = {
 "PET|Constitution":[
 
 [
-"मौलिक अधिकार संविधान के किस भाग में हैं?",
-["भाग II","भाग III","भाग IV","भाग V"],
+"मौलिक अधिकार किस भाग में?",
+[
+"II",
+"III",
+"IV",
+"V"
+],
 1
+],
+
+[
+"संविधान लागू?",
+[
+"15 Aug 1947",
+"26 Jan 1950",
+"26 Nov 1949",
+"2 Oct 1950"
+],
+1
+],
+
+[
+"संविधान अंगीकृत?",
+[
+"15 Aug 1947",
+"26 Jan 1950",
+"26 Nov 1949",
+"2 Oct 1950"
+],
+2
+],
+
+[
+"राज्यसभा?",
+[
+"अस्थायी",
+"स्थायी",
+"5 वर्षीय",
+"4 वर्षीय"
+],
+1
+],
+
+[
+"लोकसभा सामान्य कार्यकाल?",
+[
+"4",
+"5",
+"6",
+"7 वर्ष"
+],
+1
+],
+
+[
+"मौलिक कर्तव्य?",
+[
+"51A",
+"14",
+"19",
+"32"
+],
+0
+],
+
+[
+"भारत का संवैधानिक प्रमुख?",
+[
+"PM",
+"President",
+"CM",
+"CJI"
+],
+1
+],
+
+[
+"मनी बिल?",
+[
+"Rajya Sabha",
+"Lok Sabha",
+"SC",
+"EC"
+],
+1
+],
+
+[
+"सुप्रीम कोर्ट?",
+[
+"नई दिल्ली",
+"मुंबई",
+"लखनऊ",
+"पटना"
+],
+0
+],
+
+[
+"चुनाव आयोग?",
+[
+"संवैधानिक संस्था",
+"निजी संस्था",
+"न्यायालय",
+"मंत्रालय"
+],
+0
 ]
 
 ],
@@ -1508,9 +2791,113 @@ const bank = {
 "PET|General Science":[
 
 [
-"प्रकाश की गति लगभग कितनी है?",
-["3 × 10⁸ m/s","3 × 10⁵ m/s","3 × 10³ m/s","3 × 10¹⁰ m/s"],
+"प्रकाश की गति?",
+[
+"3×10⁸ m/s",
+"3×10⁵",
+"3×10³",
+"3×10¹⁰"
+],
 0
+],
+
+[
+"जल का सूत्र?",
+[
+"CO2",
+"H2O",
+"O2",
+"NaCl"
+],
+1
+],
+
+[
+"रक्त पंप?",
+[
+"फेफड़ा",
+"हृदय",
+"गुर्दा",
+"यकृत"
+],
+1
+],
+
+[
+"विटामिन C कमी?",
+[
+"रिकेट्स",
+"स्कर्वी",
+"बेरी-बेरी",
+"एनीमिया"
+],
+1
+],
+
+[
+"सबसे बड़ा अंग?",
+[
+"हृदय",
+"त्वचा",
+"फेफड़ा",
+"यकृत"
+],
+1
+],
+
+[
+"बल की SI इकाई?",
+[
+"जूल",
+"न्यूटन",
+"वाट",
+"पास्कल"
+],
+1
+],
+
+[
+"पौधों का भोजन निर्माण?",
+[
+"श्वसन",
+"प्रकाश संश्लेषण",
+"पाचन",
+"अंकुरण"
+],
+1
+],
+
+[
+"पृथ्वी का उपग्रह?",
+[
+"सूर्य",
+"चंद्रमा",
+"मंगल",
+"शुक्र"
+],
+1
+],
+
+[
+"O2 किस गैस का सूत्र है?",
+[
+"हाइड्रोजन",
+"ऑक्सीजन",
+"नाइट्रोजन",
+"कार्बन"
+],
+1
+],
+
+[
+"मानव में सामान्य रक्त समूहों की संख्या?",
+[
+"2",
+"4",
+"6",
+"8"
+],
+1
 ]
 
 ],
@@ -1519,25 +2906,229 @@ const bank = {
 "PET|UP GK":[
 
 [
-"उत्तर प्रदेश की राजधानी क्या है?",
-["कानपुर","लखनऊ","वाराणसी","प्रयागराज"],
+"उत्तर प्रदेश की राजधानी?",
+[
+"कानपुर",
+"लखनऊ",
+"वाराणसी",
+"प्रयागराज"
+],
 1
+],
+
+[
+"उत्तर प्रदेश का उच्च न्यायालय कहाँ है?",
+[
+"लखनऊ",
+"प्रयागराज",
+"कानपुर",
+"आगरा"
+],
+1
+],
+
+[
+"ताजमहल कहाँ है?",
+[
+"आगरा",
+"लखनऊ",
+"मेरठ",
+"झांसी"
+],
+0
+],
+
+[
+"काशी विश्वनाथ कहाँ है?",
+[
+"अयोध्या",
+"वाराणसी",
+"मथुरा",
+"आगरा"
+],
+1
+],
+
+[
+"सारनाथ कहाँ है?",
+[
+"वाराणसी",
+"प्रयागराज",
+"कानपुर",
+"गोरखपुर"
+],
+0
+],
+
+[
+"अयोध्या किस नदी के किनारे है?",
+[
+"गंगा",
+"सरयू",
+"यमुना",
+"गोमती"
+],
+1
+],
+
+[
+"लखनऊ किस नदी के किनारे है?",
+[
+"गोमती",
+"गंगा",
+"यमुना",
+"सरयू"
+],
+0
+],
+
+[
+"झांसी किस क्षेत्र से जुड़ा है?",
+[
+"बुंदेलखंड",
+"तराई",
+"पूर्वांचल",
+"अवध"
+],
+0
+],
+
+[
+"प्रयागराज का प्रसिद्ध संगम?",
+[
+"गंगा-यमुना-सरस्वती",
+"गंगा-गोमती",
+"यमुना-चंबल",
+"सरयू-गंगा"
+],
+0
+],
+
+[
+"उत्तर प्रदेश का राजकीय पशु?",
+[
+"बारहसिंगा",
+"बाघ",
+"हाथी",
+"हिरण"
+],
+0
 ]
 
 ],
 
 
+/* BPSC */
+
 "BPSC|History":[
 
 [
-"नालंदा विश्वविद्यालय किस राज्य में स्थित था?",
-["बिहार","उत्तर प्रदेश","मध्य प्रदेश","राजस्थान"],
+"नालंदा विश्वविद्यालय किस राज्य में?",
+[
+"बिहार",
+"UP",
+"MP",
+"राजस्थान"
+],
 0
 ],
 
 [
-"पाटलिपुत्र किस प्राचीन साम्राज्य से प्रमुख रूप से जुड़ा था?",
-["मौर्य","चोल","पल्लव","चालुक्य"],
+"पाटलिपुत्र किससे जुड़ा?",
+[
+"मौर्य",
+"चोल",
+"पल्लव",
+"चालुक्य"
+],
+0
+],
+
+[
+"बोधगया किस जिले में?",
+[
+"गया",
+"पटना",
+"नालंदा",
+"भागलपुर"
+],
+0
+],
+
+[
+"वैशाली किस राज्य में?",
+[
+"बिहार",
+"UP",
+"झारखंड",
+"बंगाल"
+],
+0
+],
+
+[
+"चंपारण सत्याग्रह?",
+[
+"1917",
+"1920",
+"1930",
+"1942"
+],
+0
+],
+
+[
+"राजगीर किस राज्य में?",
+[
+"बिहार",
+"UP",
+"ओडिशा",
+"MP"
+],
+0
+],
+
+[
+"महावीर का संबंध?",
+[
+"जैन धर्म",
+"बौद्ध धर्म",
+"सिख धर्म",
+"ईसाई धर्म"
+],
+0
+],
+
+[
+"बुद्ध को ज्ञान कहाँ प्राप्त हुआ?",
+[
+"बोधगया",
+"सारनाथ",
+"कुशीनगर",
+"वैशाली"
+],
+0
+],
+
+[
+"कुशीनगर किस राज्य में?",
+[
+"बिहार",
+"UP",
+"MP",
+"राजस्थान"
+],
+1
+],
+
+[
+"बिहार दिवस कब मनाया जाता है?",
+[
+"22 मार्च",
+"15 अगस्त",
+"26 जनवरी",
+"2 अक्टूबर"
+],
 0
 ]
 
@@ -1547,152 +3138,113 @@ const bank = {
 "BPSC|Bihar GK":[
 
 [
-"बिहार की राजधानी क्या है?",
-["गया","पटना","मुजफ्फरपुर","भागलपुर"],
+"बिहार की राजधानी?",
+[
+"गया",
+"पटना",
+"मुजफ्फरपुर",
+"भागलपुर"
+],
 1
-]
-
 ],
 
-
-"Banking|Reasoning":[
-
 [
-"श्रृंखला पूरी करें: 5, 10, 15, 20, ?",
-["22","25","30","35"],
-1
-]
-
+"बोधगया किस जिले में?",
+[
+"गया",
+"पटना",
+"नालंदा",
+"सारण"
 ],
-
-
-"Banking|Quantitative Aptitude":[
-
-[
-"200 का 15% कितना है?",
-["20","25","30","35"],
-2
-]
-
-],
-
-
-"Banking|English":[
-
-[
-"Choose the antonym of Early.",
-["Fast","Late","Quick","Soon"],
-1
-]
-
-],
-
-
-"Banking|Banking Awareness":[
-
-[
-"भारत में मौद्रिक नीति से प्रमुख रूप से कौन संबंधित है?",
-["RBI","SEBI","IRDAI","NITI Aayog"],
 0
-]
-
 ],
 
-
-"Police|General Knowledge":[
-
 [
-"भारत की राजधानी क्या है?",
-["मुंबई","नई दिल्ली","कोलकाता","चेन्नई"],
-1
-]
-
+"नालंदा किस राज्य में?",
+[
+"बिहार",
+"UP",
+"झारखंड",
+"ओडिशा"
 ],
-
-
-"Police|General Science":[
-
-[
-"मानव शरीर का सबसे बड़ा अंग कौन-सा है?",
-["हृदय","त्वचा","फेफड़ा","यकृत"],
-1
-]
-
-],
-
-
-"Police|Reasoning":[
-
-[
-"10, 20, 30, 40, ?",
-["45","50","55","60"],
-1
-]
-
-],
-
-
-"Defence|Mathematics":[
-
-[
-"12 × 12 = ?",
-["124","144","154","164"],
-1
-]
-
-],
-
-
-"Defence|English":[
-
-[
-"Choose the synonym of Brave.",
-["Coward","Courageous","Weak","Lazy"],
-1
-]
-
-],
-
-
-"Defence|History":[
-
-[
-"प्लासी का युद्ध किस वर्ष हुआ?",
-["1757","1764","1857","1942"],
 0
-]
-
 ],
 
-
-"Teaching|Child Development":[
-
 [
-"बाल विकास का अध्ययन मुख्यतः किससे संबंधित है?",
-["बच्चों के विकास","केवल गणित","केवल भाषा","केवल इतिहास"],
+"पटना का प्राचीन नाम?",
+[
+"पाटलिपुत्र",
+"इंद्रप्रस्थ",
+"काशी",
+"उज्जैन"
+],
 0
-]
-
 ],
 
-
-"Teaching|Mathematics":[
-
 [
-"10 + 20 = ?",
-["20","25","30","40"],
-2
-]
-
+"चंपारण किस आंदोलन से जुड़ा?",
+[
+"नील आंदोलन/सत्याग्रह",
+"दांडी",
+"भारत छोड़ो",
+"स्वदेशी"
+],
+0
 ],
 
-
-"Teaching|EVS":[
+[
+"गंगा बिहार से गुजरती है?",
+[
+"हाँ",
+"नहीं",
+"केवल सर्दी",
+"केवल गर्मी"
+],
+0
+],
 
 [
-"पर्यावरण में जैविक घटक का उदाहरण क्या है?",
-["जल","वायु","पौधे","मिट्टी"],
-2
+"वैशाली किससे जुड़ी?",
+[
+"गणराज्य",
+"मुगल",
+"मराठा",
+"चोल"
+],
+0
+],
+
+[
+"राजगीर किस राज्य में?",
+[
+"बिहार",
+"UP",
+"MP",
+"असम"
+],
+0
+],
+
+[
+"गया किस धार्मिक स्थल के लिए प्रसिद्ध है?",
+[
+"बोधगया",
+"अजंता",
+"एलोरा",
+"सोमनाथ"
+],
+0
+],
+
+[
+"बिहार दिवस?",
+[
+"22 मार्च",
+"15 अगस्त",
+"26 जनवरी",
+"2 अक्टूबर"
+],
+0
 ]
 
 ]
@@ -1700,140 +3252,136 @@ const bank = {
 };
 
 
-let selectedExam = "";
-let selectedYear = "";
-let selectedSubject = "";
+/* =========================================
+   GENERIC QUESTIONS
+========================================= */
 
-let currentTest = null;
+const generic=[
 
-let currentQuestion = 0;
+[
+"नियमित अभ्यास का सबसे बड़ा लाभ क्या है?",
+[
+"समय प्रबंधन और accuracy",
+"परीक्षा छोड़ना",
+"केवल मनोरंजन",
+"कोई नहीं"
+],
+0
+],
 
-let answers = [];
+[
+"Mock Test देते समय क्या करना चाहिए?",
+[
+"समय प्रबंधन",
+"सभी प्रश्न छोड़ना",
+"Timer बंद करना",
+"बिना पढ़े submit"
+],
+0
+],
 
-let timer = 0;
+[
+"गलत प्रश्नों की review क्यों जरूरी है?",
+[
+"कमजोरी पहचानने के लिए",
+"समय खराब करने के लिए",
+"जरूरी नहीं",
+"केवल मनोरंजन"
+],
+0
+],
 
-let interval = null;
+[
+"Subject-wise test का लाभ?",
+[
+"Topic की कमजोरी पता चलती है",
+"कोई लाभ नहीं",
+"केवल marks",
+"केवल speed"
+],
+0
+],
 
+[
+"Full test का उद्देश्य?",
+[
+"Exam जैसा अभ्यास",
+"सिर्फ theory",
+"केवल reading",
+"कोई नहीं"
+],
+0
+],
 
-/* SHOW PAGE */
+[
+"Test के बाद analysis कब?",
+[
+"Test के बाद",
+"कभी नहीं",
+"सिर्फ exam day",
+"अगले साल"
+],
+0
+],
 
-function show(id){
+[
+"Revision क्यों?",
+[
+"याददाश्त मजबूत करने के लिए",
+"समय घटाने के लिए",
+"कोई नहीं",
+"केवल खेल"
+],
+0
+],
 
-    document
-    .querySelectorAll(".page")
-    .forEach(x =>
-        x.classList.remove("active")
-    );
+[
+"Time management का अर्थ?",
+[
+"समय को प्रश्नों में बाँटना",
+"समय न देखना",
+"सब छोड़ना",
+"जल्दी submit"
+],
+0
+],
 
-    const page =
-        document.getElementById(id);
+[
+"Accuracy का अर्थ?",
+[
+"सही उत्तरों का अनुपात",
+"केवल speed",
+"केवल attempt",
+"केवल skip"
+],
+0
+],
 
-    if(page){
-        page.classList.add("active");
-    }
+[
+"Practice में consistency?",
+[
+"नियमित अभ्यास",
+"एक दिन अभ्यास",
+"केवल रविवार",
+"कोई नहीं"
+],
+0
+]
 
-    window.scrollTo(0,0);
-}
-
-
-/* HOME */
-
-function home(){
-
-    show("homePage");
-
-}
-
-
-/* NAVIGATION */
-
-function go(id){
-
-    home();
-
-    setTimeout(() => {
-
-        const el =
-            document.getElementById(id);
-
-        if(el){
-
-            el.scrollIntoView({
-                behavior:"smooth"
-            });
-
-        }
-
-    },50);
-
-}
-
-
-/* SUBJECT ICON */
-
-function iconForSubject(subject){
-
-    const icons = {
-
-        "History":"🏛️",
-
-        "Indian History":"🏛️",
-
-        "Polity":"⚖️",
-
-        "Indian Polity":"⚖️",
-
-        "Geography":"🌍",
-
-        "Economy":"💰",
-
-        "Environment":"🌱",
-
-        "Science":"🔬",
-
-        "General Science":"🔬",
-
-        "Science & Technology":"🧪",
-
-        "Current Affairs":"📰",
-
-        "General Awareness":"🌐",
-
-        "General Intelligence & Reasoning":"🧠",
-
-        "Reasoning":"🧠",
-
-        "Quantitative Aptitude":"➗",
-
-        "Mathematics":"➗",
-
-        "English":"📖",
-
-        "Uttar Pradesh GK":"🏠",
-
-        "UP GK":"🏠",
-
-        "Bihar GK":"🏠",
-
-        "Full Paper":"📚"
-
-    };
-
-    return icons[subject] || "📚";
-
-}
+];
 
 
-/* GET QUESTIONS */
+/* =========================================
+   QUESTION CONVERTER
+========================================= */
 
 function qsFor(exam,subject){
 
-    const data =
-        bank[exam+"|"+subject];
+    let data=bank[exam+"|"+subject];
 
     if(data){
 
-        return data.map(x => ({
+        return data.map(x=>({
 
             q:x[0],
 
@@ -1845,95 +3393,85 @@ function qsFor(exam,subject){
 
     }
 
+    return generic.map(x=>({
 
-    return [
+        q:exam+" — "+subject+": "+x[0],
 
-        {
+        o:x[1],
 
-            q:
-            `${exam} — ${subject} Practice Question`,
+        a:x[2]
 
-            o:[
-                "Option A",
-                "Option B",
-                "Option C",
-                "Option D"
-            ],
-
-            a:0
-
-        },
-
-        {
-
-            q:
-            "Mock Test में नियमित अभ्यास क्यों जरूरी है?",
-
-            o:[
-                "समय प्रबंधन और अभ्यास के लिए",
-                "केवल मनोरंजन के लिए",
-                "जरूरी नहीं",
-                "इनमें से कोई नहीं"
-            ],
-
-            a:0
-
-        },
-
-        {
-
-            q:
-            "परीक्षा में समय प्रबंधन का उद्देश्य क्या है?",
-
-            o:[
-                "प्रश्नों के लिए समय बाँटना",
-                "परीक्षा छोड़ना",
-                "सभी उत्तर छोड़ना",
-                "कुछ नहीं"
-            ],
-
-            a:0
-
-        }
-
-    ];
+    }));
 
 }
 
 
-/* TEST LIST */
+/* =========================================
+   SUBJECT ICON
+========================================= */
 
-const tests = [];
+function iconForSubject(subject){
+
+    const icons={
+
+        "History":"🏛️",
+        "Indian History":"🏛️",
+        "Polity":"⚖️",
+        "Indian Polity":"⚖️",
+        "Geography":"🌍",
+        "Economy":"💰",
+        "Environment":"🌱",
+        "Science":"🔬",
+        "General Science":"🔬",
+        "Science & Technology":"🧪",
+        "Current Affairs":"📰",
+        "General Awareness":"🌐",
+        "General Intelligence & Reasoning":"🧠",
+        "Reasoning":"🧠",
+        "Quantitative Aptitude":"➗",
+        "Mathematics":"➗",
+        "English":"📖",
+        "Uttar Pradesh GK":"🏠",
+        "UP GK":"🏠",
+        "Bihar GK":"🏠",
+        "Full Paper":"📚"
+
+    };
+
+    return icons[subject] || "📚";
+}
 
 
-Object.entries(exams)
-.forEach(([exam,data]) => {
+/* =========================================
+   BUILD TESTS
+========================================= */
 
-    data.subjects.forEach(subject => {
+let tests=[];
 
-        const q =
-            qsFor(exam,subject);
+Object.entries(exams).forEach(
+([exam,data])=>{
+
+    data.subjects
+    .filter(s=>s!=="Full Paper")
+    .forEach(subject=>{
+
+        let q=qsFor(exam,subject);
 
         tests.push({
 
-            id:
-            exam+"-"+subject,
+            id:exam+"-"+subject,
 
             title:
             exam+" "+subject+
             " Practice Test",
 
-            exam,
+            exam:exam,
 
-            subject,
+            subject:subject,
 
             year:"Practice",
 
-            duration:
-            Math.max(
-                5,
-                Math.ceil(q.length*1.2)
-            ),
+            type:"Practice",
 
             questions:q
 
@@ -1941,29 +3479,134 @@ Object.entries(exams)
 
     });
 
+
+    let all=[];
+
+    data.subjects
+    .filter(s=>s!=="Full Paper")
+    .forEach(subject=>{
+
+        all=all.concat(
+            qsFor(exam,subject)
+        );
+
+    });
+
+
+    tests.push({
+
+        id:exam+"-full",
+
+        title:
+        exam+
+        " Full Length Practice Test",
+
+        exam:exam,
+
+        subject:"Full Paper",
+
+        year:"Practice",
+
+        type:"Full Test",
+
+        questions:all
+
+    });
+
 });
 
 
-/* RENDER EXAMS */
+/* =========================================
+   GLOBAL VARIABLES
+========================================= */
+
+let selectedExam="";
+
+let selectedYear="";
+
+let selectedSubject="";
+
+let currentTest=null;
+
+let currentQuestion=0;
+
+let answers=[];
+
+let timer=0;
+
+let interval=null;
+
+
+/* =========================================
+   PAGE FUNCTIONS
+========================================= */
+
+function show(id){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(page=>{
+        page.classList.remove("active");
+    });
+
+    let page=document.getElementById(id);
+
+    if(page){
+        page.classList.add("active");
+    }
+
+    window.scrollTo(0,0);
+}
+
+
+function home(){
+
+    show("homePage");
+
+}
+
+
+function go(id){
+
+    home();
+
+    setTimeout(()=>{
+
+        let element=document.getElementById(id);
+
+        if(element){
+
+            element.scrollIntoView({
+                behavior:"smooth"
+            });
+
+        }
+
+    },100);
+
+}
+
+
+/* =========================================
+   RENDER EXAMS
+========================================= */
 
 function renderExams(){
 
-    const grid =
-        document.getElementById("examGrid");
+    const grid=
+    document.getElementById("examGrid");
 
-    grid.innerHTML = "";
-
+    grid.innerHTML="";
 
     Object.entries(exams)
-    .forEach(([name,data]) => {
+    .forEach(([name,data])=>{
 
-        const c =
-            document.createElement("div");
+        let card=
+        document.createElement("div");
 
-        c.className = "card";
+        card.className="card";
 
-
-        c.innerHTML = `
+        card.innerHTML=`
 
             <div class="icon">
                 ${data.icon}
@@ -1974,55 +3617,61 @@ function renderExams(){
             </h3>
 
             <p>
-                ${data.subjects.length}
-                Subjects •
-                Year Wise Tests •
-                Practice Sets
+                ${data.subjects.length-1}
+                Subjects • Year Wise • Practice • Full Test
             </p>
 
             <button class="btn">
                 Open Exam
             </button>
-
         `;
 
+        card
+        .querySelector("button")
+        .onclick=()=>openExam(name);
 
-        c.querySelector("button")
-        .onclick =
-            () => openExam(name);
-
-
-        grid.appendChild(c);
+        grid.appendChild(card);
 
     });
+
+
+    document.getElementById(
+        "examCount"
+    ).innerText=
+    Object.keys(exams).length;
 
 }
 
 
-/* OPEN EXAM */
+/* =========================================
+   OPEN EXAM
+========================================= */
 
 function openExam(exam){
 
-    selectedExam = exam;
+    selectedExam=exam;
 
-    document
-    .getElementById("examTitle")
-    .innerText = exam;
-
-
-    const box =
-        document.getElementById("examOptions");
-
-    box.innerHTML = "";
+    document.getElementById(
+        "examTitle"
+    ).innerText=exam;
 
 
-    const y =
-        document.createElement("div");
+    const box=
+    document.getElementById(
+        "examOptions"
+    );
 
-    y.className = "card";
+    box.innerHTML="";
 
 
-    y.innerHTML = `
+    /* YEAR CARD */
+
+    let yearCard=
+    document.createElement("div");
+
+    yearCard.className="card";
+
+    yearCard.innerHTML=`
 
         <div class="icon">
             📅
@@ -2033,8 +3682,8 @@ function openExam(exam){
         </h3>
 
         <p>
-            2016 से 2025 तक Year
-            और Subject चुनें।
+            2016–2025 Year →
+            Subject → Test
         </p>
 
         <button class="btn">
@@ -2043,24 +3692,25 @@ function openExam(exam){
 
     `;
 
+    yearCard
+    .querySelector("button")
+    .onclick=openYears;
 
-    y.querySelector("button")
-    .onclick = openYears;
-
-
-    box.appendChild(y);
-
-
-    exams[exam].subjects
-    .forEach(subject => {
-
-        const c =
-            document.createElement("div");
-
-        c.className = "card";
+    box.appendChild(yearCard);
 
 
-        c.innerHTML = `
+    /* SUBJECT CARDS */
+
+    exams[exam]
+    .subjects
+    .forEach(subject=>{
+
+        let card=
+        document.createElement("div");
+
+        card.className="card";
+
+        card.innerHTML=`
 
             <div class="icon">
                 ${iconForSubject(subject)}
@@ -2071,28 +3721,32 @@ function openExam(exam){
             </h3>
 
             <p>
-                ${exam}
-                ${subject}
-                Practice Set
+                ${exam} ${subject}
+                Practice Test
             </p>
 
             <button class="btn">
-                Start Practice
+                ${
+                    subject==="Full Paper"
+                    ?
+                    "Start Full Test"
+                    :
+                    "Start Practice"
+                }
             </button>
 
         `;
 
+        card
+        .querySelector("button")
+        .onclick=()=>
+        startDirect(
+            exam,
+            subject,
+            "Practice"
+        );
 
-        c.querySelector("button")
-        .onclick =
-            () =>
-            startDirect(
-                exam,
-                subject
-            );
-
-
-        box.appendChild(c);
+        box.appendChild(card);
 
     });
 
@@ -2102,35 +3756,38 @@ function openExam(exam){
 }
 
 
-/* OPEN YEARS */
+/* =========================================
+   YEAR PAGE
+========================================= */
 
 function openYears(){
 
-    document
-    .getElementById("yearTitle")
-    .innerText =
-        selectedExam+
-        " – Select Year";
+    document.getElementById(
+        "yearTitle"
+    ).innerText=
+    selectedExam+
+    " – Select Year";
 
 
-    const grid =
-        document.getElementById("yearGrid");
+    const grid=
+    document.getElementById(
+        "yearGrid"
+    );
 
-    grid.innerHTML = "";
-
-
-    years.forEach(y => {
-
-        const c =
-            document.createElement("div");
-
-        c.className = "year-card";
+    grid.innerHTML="";
 
 
-        c.innerHTML = `
+    years.forEach(year=>{
+
+        let card=
+        document.createElement("div");
+
+        card.className="year-card";
+
+        card.innerHTML=`
 
             <h2>
-                ${y}
+                ${year}
             </h2>
 
             <p>
@@ -2143,13 +3800,12 @@ function openYears(){
 
         `;
 
+        card
+        .querySelector("button")
+        .onclick=()=>
+        openSubjects(year);
 
-        c.querySelector("button")
-        .onclick =
-            () => openSubjects(y);
-
-
-        grid.appendChild(c);
+        grid.appendChild(card);
 
     });
 
@@ -2159,42 +3815,43 @@ function openYears(){
 }
 
 
-/* OPEN SUBJECTS */
+/* =========================================
+   SUBJECT PAGE
+========================================= */
 
 function openSubjects(year){
 
-    selectedYear = year;
+    selectedYear=year;
+
+    document.getElementById(
+        "subjectTitle"
+    ).innerText=
+    selectedExam+
+    " "+year;
 
 
-    document
-    .getElementById("subjectTitle")
-    .innerText =
-        selectedExam+
-        " "+
-        year;
+    const grid=
+    document.getElementById(
+        "subjectGrid"
+    );
+
+    grid.innerHTML="";
 
 
-    const grid =
-        document.getElementById("subjectGrid");
+    exams[selectedExam]
+    .subjects
+    .forEach(subject=>{
 
-    grid.innerHTML = "";
+        let card=
+        document.createElement("div");
 
+        card.className="subject-card";
 
-    exams[selectedExam].subjects
-    .forEach(subject => {
-
-        const c =
-            document.createElement("div");
-
-        c.className =
-            "subject-card";
+        let full=
+        subject==="Full Paper";
 
 
-        const isFull =
-            subject === "Full Paper";
-
-
-        c.innerHTML = `
+        card.innerHTML=`
 
             <div class="icon">
                 ${iconForSubject(subject)}
@@ -2204,10 +3861,9 @@ function openSubjects(year){
                 ${subject}
             </h3>
 
-            <p
-            style="
-            color:#667085;
-            margin:10px 0
+            <p style="
+                color:#667085;
+                margin:10px 0;
             ">
 
                 ${selectedExam}
@@ -2219,9 +3875,9 @@ function openSubjects(year){
             <button class="btn">
 
                 ${
-                    isFull
+                    full
                     ?
-                    "Start Full Paper"
+                    "Start Full Practice"
                     :
                     "Start Test"
                 }
@@ -2231,17 +3887,20 @@ function openSubjects(year){
         `;
 
 
-        c.querySelector("button")
-        .onclick =
-            () =>
+        card
+        .querySelector("button")
+        .onclick=()=>{
+
             startDirect(
                 selectedExam,
                 subject,
                 year
             );
 
+        };
 
-        grid.appendChild(c);
+
+        grid.appendChild(card);
 
     });
 
@@ -2251,7 +3910,9 @@ function openSubjects(year){
 }
 
 
-/* START TEST */
+/* =========================================
+   START TEST
+========================================= */
 
 function startDirect(
     exam,
@@ -2259,34 +3920,27 @@ function startDirect(
     year="Practice"
 ){
 
-    selectedExam =
-        exam;
+    selectedExam=exam;
 
-    selectedSubject =
-        subject;
+    selectedSubject=subject;
 
-    selectedYear =
-        year;
+    selectedYear=year;
 
 
-    let q;
+    let questions=[];
 
 
-    if(subject === "Full Paper"){
+    if(subject==="Full Paper"){
 
-        q = [];
+        exams[exam]
+        .subjects
+        .filter(s=>s!=="Full Paper")
+        .forEach(s=>{
 
-
-        exams[exam].subjects
-        .filter(
-            s => s !== "Full Paper"
-        )
-        .forEach(s => {
-
-            q =
-                q.concat(
-                    qsFor(exam,s)
-                );
+            questions=
+            questions.concat(
+                qsFor(exam,s)
+            );
 
         });
 
@@ -2294,194 +3948,187 @@ function startDirect(
 
     else{
 
-        q =
-            qsFor(
-                exam,
-                subject
-            );
+        questions=
+        qsFor(
+            exam,
+            subject
+        );
 
     }
 
 
-    currentTest = {
+    currentTest={
 
         title:
-        `${exam} ${year} ${subject} ${
-            year === "Practice"
-            ?
-            "Practice Test"
-            :
-            "Test"
-        }`,
+        `${exam} ${year} ${subject} Practice Test`,
 
-        questions:q,
-
-        duration:
-        Math.max(
-            5,
-            Math.ceil(q.length*1.2)
-        )
+        questions:questions
 
     };
 
 
-    currentQuestion = 0;
+    currentQuestion=0;
 
 
-    answers =
-        new Array(q.length)
-        .fill(null);
+    answers=
+    new Array(
+        questions.length
+    ).fill(null);
 
 
-    timer =
-        currentTest.duration *
-        60;
+    /*
+       1.2 मिनट per question
+    */
+
+    timer=
+    Math.max(
+        10,
+        Math.ceil(
+            questions.length*1.2
+        )*60
+    );
 
 
-    document
-    .getElementById("runningTitle")
-    .innerText =
-        currentTest.title;
+    document.getElementById(
+        "runningTitle"
+    ).innerText=
+    currentTest.title;
 
 
     makePalette();
 
-
     show("testPage");
 
-
     loadQ();
-
 
     startTimer();
 
 }
 
 
-/* QUESTION PALETTE */
+/* =========================================
+   QUESTION PALETTE
+========================================= */
 
 function makePalette(){
 
-    const p =
-        document.getElementById("palette");
+    let palette=
+    document.getElementById(
+        "palette"
+    );
 
-    p.innerHTML = "";
+    palette.innerHTML="";
 
 
     currentTest.questions
-    .forEach((_,i) => {
+    .forEach((question,index)=>{
 
-        const b =
-            document.createElement("button");
+        let button=
+        document.createElement("button");
+
+        button.innerText=
+        index+1;
 
 
-        b.innerText =
-            i+1;
+        button.onclick=()=>{
 
-
-        b.onclick = () => {
-
-            currentQuestion =
-                i;
+            currentQuestion=
+            index;
 
             loadQ();
 
         };
 
 
-        p.appendChild(b);
+        palette.appendChild(button);
 
     });
 
 }
 
 
-/* LOAD QUESTION */
+/* =========================================
+   LOAD QUESTION
+========================================= */
 
 function loadQ(){
 
-    const q =
-        currentTest
-        .questions[
-            currentQuestion
-        ];
+    let q=
+    currentTest.questions[
+        currentQuestion
+    ];
 
 
-    document
-    .getElementById("qnum")
-    .innerText =
-
-        `Question ${
-            currentQuestion+1
-        } / ${
-            currentTest.questions.length
-        }`;
-
-
-    document
-    .getElementById("qtext")
-    .innerText =
-        q.q;
+    document.getElementById(
+        "qnum"
+    ).innerText=
+    `Question ${
+        currentQuestion+1
+    } / ${
+        currentTest.questions.length
+    }`;
 
 
-    const box =
-        document.getElementById("options");
-
-    box.innerHTML = "";
-
-
-    q.o.forEach((op,i) => {
-
-        const l =
-            document.createElement("label");
-
-        l.className =
-            "option";
+    document.getElementById(
+        "qtext"
+    ).innerText=q.q;
 
 
-        l.innerHTML = `
+    let options=
+    document.getElementById(
+        "options"
+    );
+
+    options.innerHTML="";
+
+
+    q.o.forEach(
+    (option,index)=>{
+
+        let label=
+        document.createElement("label");
+
+        label.className="option";
+
+
+        label.innerHTML=`
 
             <input
-            type="radio"
-            name="ans"
-
-            ${
-                answers[
-                    currentQuestion
-                ] === i
-                ?
-                "checked"
-                :
-                ""
-            }
-
+                type="radio"
+                name="answer"
+                ${
+                    answers[
+                        currentQuestion
+                    ]===index
+                    ?
+                    "checked"
+                    :
+                    ""
+                }
             >
 
-            ${
-                String.fromCharCode(
-                    65+i
-                )
-            }.
-
-            ${op}
+            ${String.fromCharCode(
+                65+index
+            )}.
+            ${option}
 
         `;
 
 
-        l.querySelector("input")
-        .onchange = () => {
+        label
+        .querySelector("input")
+        .onchange=()=>{
 
             answers[
                 currentQuestion
-            ] = i;
-
+            ]=index;
 
             updatePalette();
 
         };
 
 
-        box.appendChild(l);
+        options.appendChild(label);
 
     });
 
@@ -2491,7 +4138,9 @@ function loadQ(){
 }
 
 
-/* UPDATE PALETTE */
+/* =========================================
+   PALETTE UPDATE
+========================================= */
 
 function updatePalette(){
 
@@ -2499,27 +4148,29 @@ function updatePalette(){
     .querySelectorAll(
         "#palette button"
     )
-    .forEach((b,i) => {
+    .forEach(
+    (button,index)=>{
 
-        b.className = "";
+        button.className="";
 
 
-        if(i === currentQuestion){
+        if(
+            index===
+            currentQuestion
+        ){
 
-            b.classList.add(
-                "current"
-            );
+            button.classList
+            .add("current");
 
         }
 
 
         if(
-            answers[i] !== null
+            answers[index]!==null
         ){
 
-            b.classList.add(
-                "answered"
-            );
+            button.classList
+            .add("answered");
 
         }
 
@@ -2528,12 +4179,14 @@ function updatePalette(){
 }
 
 
-/* NEXT */
+/* =========================================
+   NEXT
+========================================= */
 
 function nextQ(){
 
     if(
-        currentQuestion <
+        currentQuestion<
         currentTest.questions.length-1
     ){
 
@@ -2554,13 +4207,13 @@ function nextQ(){
 }
 
 
-/* PREVIOUS */
+/* =========================================
+   PREVIOUS
+========================================= */
 
 function prevQ(){
 
-    if(
-        currentQuestion > 0
-    ){
+    if(currentQuestion>0){
 
         currentQuestion--;
 
@@ -2571,92 +4224,90 @@ function prevQ(){
 }
 
 
-/* TIMER */
+/* =========================================
+   TIMER
+========================================= */
 
 function startTimer(){
 
     clearInterval(interval);
 
-
     updateTimer();
 
 
-    interval =
-        setInterval(() => {
+    interval=
+    setInterval(()=>{
 
-            timer--;
+        timer--;
+
+        updateTimer();
 
 
-            updateTimer();
+        if(timer<=0){
 
+            clearInterval(
+                interval
+            );
 
-            if(timer <= 0){
+            submitTest();
 
-                clearInterval(
-                    interval
-                );
+        }
 
-                submitTest();
-
-            }
-
-        },1000);
+    },1000);
 
 }
 
-
-/* UPDATE TIMER */
 
 function updateTimer(){
 
-    const m =
-        Math.floor(
-            timer/60
-        );
+    let minutes=
+    Math.floor(
+        timer/60
+    );
+
+    let seconds=
+    timer%60;
 
 
-    const s =
-        timer%60;
+    document.getElementById(
+        "timer"
+    ).innerText=
 
+    String(minutes)
+    .padStart(2,"0")
+    +
 
-    document
-    .getElementById("timer")
-    .innerText =
+    ":"+
 
-        String(m)
-        .padStart(2,"0")
-
-        +
-
-        ":"
-
-        +
-
-        String(s)
-        .padStart(2,"0");
+    String(seconds)
+    .padStart(2,"0");
 
 }
 
 
-/* SUBMIT TEST */
+/* =========================================
+   SUBMIT TEST
+========================================= */
 
 function submitTest(){
 
     clearInterval(interval);
 
 
-    let correct = 0;
+    let correct=0;
 
-    let wrong = 0;
+    let wrong=0;
 
-    let skip = 0;
+    let skip=0;
 
 
-    currentTest.questions
-    .forEach((q,i) => {
+    currentTest
+    .questions
+    .forEach(
+    (question,index)=>{
 
         if(
-            answers[i] === null
+            answers[index]===null
         ){
 
             skip++;
@@ -2664,7 +4315,8 @@ function submitTest(){
         }
 
         else if(
-            answers[i] === q.a
+            answers[index]===
+            question.a
         ){
 
             correct++;
@@ -2680,31 +4332,31 @@ function submitTest(){
     });
 
 
-    document
-    .getElementById("score")
-    .innerText =
+    document.getElementById(
+        "score"
+    ).innerText=
 
-        correct+
-        "/"+
-        currentTest.questions.length;
-
-
-    document
-    .getElementById("correct")
-    .innerText =
-        correct;
+    correct+
+    "/"+
+    currentTest.questions.length;
 
 
-    document
-    .getElementById("wrong")
-    .innerText =
-        wrong;
+    document.getElementById(
+        "correct"
+    ).innerText=
+    correct;
 
 
-    document
-    .getElementById("skip")
-    .innerText =
-        skip;
+    document.getElementById(
+        "wrong"
+    ).innerText=
+    wrong;
+
+
+    document.getElementById(
+        "skip"
+    ).innerText=
+    skip;
 
 
     show("resultPage");
@@ -2712,56 +4364,84 @@ function submitTest(){
 }
 
 
-/* RENDER TESTS */
+/* =========================================
+   RENDER TESTS
+========================================= */
 
 function renderTests(list){
 
-    const grid =
-        document.getElementById("testGrid");
+    const grid=
+    document.getElementById(
+        "testGrid"
+    );
 
-    grid.innerHTML = "";
-
-
-    list.forEach(t => {
-
-        const c =
-            document.createElement("div");
-
-        c.className =
-            "test-card";
+    grid.innerHTML="";
 
 
-        c.innerHTML = `
+    if(!list.length){
+
+        grid.innerHTML=`
+
+            <div
+                class="empty"
+                style="grid-column:1/-1"
+            >
+
+                कोई test नहीं मिला।
+                Search बदलकर देखें।
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach(test=>{
+
+        let card=
+        document.createElement("div");
+
+        card.className="test-card";
+
+
+        card.innerHTML=`
 
             <h3>
-                ${t.title}
+                ${test.title}
             </h3>
 
             <div class="meta">
 
                 <span>
-                    ${t.exam}
+                    ${test.exam}
                 </span>
 
                 <span>
-                    ${t.questions.length}
+                    ${test.questions.length}
                     Questions
                 </span>
 
             </div>
 
+
             <div class="meta">
 
                 <span>
-                    ${t.subject}
+                    ${test.subject}
                 </span>
 
                 <span>
-                    ${t.duration}
+                    ${Math.ceil(
+                        test.questions.length*1.2
+                    )}
                     Min
                 </span>
 
             </div>
+
 
             <button class="btn">
                 Start Test
@@ -2770,155 +4450,192 @@ function renderTests(list){
         `;
 
 
-        c.querySelector("button")
-        .onclick =
-            () =>
+        card
+        .querySelector("button")
+        .onclick=()=>{
+
             startDirect(
-                t.exam,
-                t.subject,
-                t.year
+                test.exam,
+                test.subject,
+                test.year
             );
 
+        };
 
-        grid.appendChild(c);
+
+        grid.appendChild(card);
 
     });
+
+
+    document.getElementById(
+        "testCount"
+    ).innerText=
+    list.length;
 
 }
 
 
-/* FILTERS */
+/* =========================================
+   FILTERS
+========================================= */
 
 function renderFilters(){
 
-    const f =
-        document.getElementById(
-            "filters"
-        );
+    const filters=
+    document.getElementById(
+        "filters"
+    );
+
+    filters.innerHTML="";
 
 
     [
         "All",
         ...Object.keys(exams)
     ]
-    .forEach((x,i) => {
+    .forEach(
+    (name,index)=>{
 
-        const b =
-            document.createElement(
-                "button"
-            );
+        let button=
+        document.createElement(
+            "button"
+        );
 
-
-        b.className =
-            "filter"+
-            (
-                i===0
-                ?
-                " active"
-                :
-                ""
-            );
-
-
-        b.innerText =
-            x;
+        button.className=
+        "filter"+
+        (
+            index===0
+            ?
+            " active"
+            :
+            ""
+        );
 
 
-        b.onclick = () => {
+        button.innerText=name;
+
+
+        button.onclick=()=>{
 
             document
             .querySelectorAll(
                 ".filter"
             )
-            .forEach(z =>
-                z.classList.remove(
+            .forEach(
+            b=>{
+                b.classList
+                .remove(
                     "active"
-                )
-            );
+                );
+            });
 
 
-            b.classList.add(
-                "active"
-            );
+            button.classList
+            .add("active");
 
 
-            renderTests(
+            if(name==="All"){
 
-                x === "All"
+                renderTests(
+                    tests
+                );
 
-                ?
+            }
 
-                tests
+            else{
 
-                :
+                renderTests(
+                    tests.filter(
+                    test=>
+                    test.exam===name
+                    )
+                );
 
-                tests.filter(
-                    t =>
-                    t.exam === x
-                )
-
-            );
+            }
 
         };
 
 
-        f.appendChild(b);
+        filters.appendChild(
+            button
+        );
 
     });
 
 }
 
 
-/* SEARCH */
+/* =========================================
+   SEARCH
+========================================= */
 
 function searchTests(){
 
-    const s =
-        document
-        .getElementById(
-            "searchInput"
+    let value=
+    document
+    .getElementById(
+        "searchInput"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
+
+    if(!value){
+
+        renderTests(tests);
+
+        return;
+
+    }
+
+
+    let result=
+    tests.filter(test=>{
+
+        let text=
+        (
+            test.title+
+            " "+
+            test.exam+
+            " "+
+            test.subject
         )
-        .value
-        .toLowerCase()
-        .trim();
+        .toLowerCase();
 
 
-    renderTests(
+        return text.includes(
+            value
+        );
 
-        !s
+    });
 
-        ?
 
-        tests
-
-        :
-
-        tests.filter(t =>
-
-            (
-                t.title+
-                " "+
-                t.exam+
-                " "+
-                t.subject
-            )
-            .toLowerCase()
-            .includes(s)
-
-        )
-
-    );
+    renderTests(result);
 
 }
 
 
-/* START WEBSITE */
+/* =========================================
+   START WEBSITE
+========================================= */
 
-renderExams();
+function init(){
 
-renderFilters();
+    renderExams();
 
-renderTests(tests);
+    renderFilters();
+
+    renderTests(tests);
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
 
 </script>
 
