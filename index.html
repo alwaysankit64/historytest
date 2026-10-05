@@ -41,6 +41,40 @@
 
 <main id="app" class="max-w-7xl mx-auto px-4 py-6"></main>
 
+<!-- ========== FOOTER ========== -->
+<footer class="mt-10 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white grid place-items-center font-bold">E</span>
+        <span class="font-extrabold text-lg text-indigo-700 dark:text-indigo-300">ExamMock <span class="text-blue-600">Pro</span></span>
+      </div>
+      <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">UPSSSC PET, UPSC, SSC, राज्य PSC, रेलवे, बैंकिंग और अन्य प्रतियोगी परीक्षाओं के लिए रियल एग्जाम इंटरफेस वाले मॉक टेस्ट – एक ही जगह।</p>
+    </div>
+    <div>
+      <h4 class="font-bold mb-3">उपयोगी लिंक</h4>
+      <ul class="space-y-2 text-sm">
+        <li><button onclick="openInfo('about')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">About Us (हमारे बारे में)</button></li>
+        <li><button onclick="openInfo('contact')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Contact Us (संपर्क करें)</button></li>
+        <li><button onclick="openInfo('privacy')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Privacy Policy (गोपनीयता नीति)</button></li>
+        <li><button onclick="openInfo('terms')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Terms &amp; Conditions (नियम और शर्तें)</button></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold mb-3">संपर्क</h4>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">प्रश्न में गलती, सुझाव या तकनीकी समस्या के लिए ईमेल करें:</p>
+      <a href="mailto:youthindia33@gmail.com" class="inline-block text-sm font-semibold text-indigo-600 dark:text-indigo-300 hover:underline break-all">✉ youthindia33@gmail.com</a>
+    </div>
+  </div>
+  <div class="border-t border-slate-200 dark:border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between text-xs text-slate-500 dark:text-slate-400">
+      <p>© <span id="yr">2026</span> ExamMock Pro. सर्वाधिकार सुरक्षित।</p>
+      <p>यह एक स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है; किसी सरकारी विभाग या परीक्षा आयोजक संस्था से संबद्ध नहीं है।</p>
+    </div>
+  </div>
+</footer>
+
+<!-- मौजूदा छोटा मोडल (कन्फर्मेशन आदि के लिए) -->
 <div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 grid place-items-center p-4">
   <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
     <h3 id="modalTitle" class="text-lg font-bold mb-2"></h3>
@@ -49,19 +83,35 @@
   </div>
 </div>
 
+<!-- फुटर पेज मोडल (About / Contact / Privacy / Terms) -->
+<div id="infoModal" class="hidden fixed inset-0 z-50 bg-black/60 grid place-items-center p-4" onclick="if(event.target===this)closeInfo()">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl fade-in" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+    <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-200 dark:border-slate-700">
+      <h3 id="infoTitle" class="text-lg font-bold"></h3>
+      <button id="infoClose" onclick="closeInfo()" aria-label="बंद करें" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 grid place-items-center">✕</button>
+    </div>
+    <div id="infoBody" class="overflow-y-auto px-5 py-4 text-sm leading-relaxed space-y-5"></div>
+    <div class="px-5 py-3 border-t border-slate-200 dark:border-slate-700 text-right">
+      <button onclick="closeInfo()" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 text-sm font-semibold">बंद करें</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function () {
   'use strict';
   var CARD = 'rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 ';
+  var QCOUNT = 100; // हर टेस्ट में प्रश्नों की संख्या
 
+  // time = 100 प्रश्न का समय (मिनट); न दें तो 100 मिनट
   var EXAMS = [
+    { id:'upsssc', name:'UPSSSC PET', sub:'PET PYQ • प्रैक्टिस सेट • फुल मॉक', icon:'🌾', color:'from-green-600 to-lime-600', qs:6000, sets:3000, marks:1, neg:0.25, time:120, tags:'upsssc pet lekhpal uppsc up police उत्तर प्रदेश पेट' },
     { id:'upsc', name:'UPSC', sub:'Civil Services / CDS / NDA', icon:'🏛️', color:'from-indigo-600 to-blue-600', qs:5200, sets:3100, marks:2, neg:0.67, tags:'upsc ias civil services cds nda' },
     { id:'ssc', name:'SSC', sub:'CGL, CHSL, MTS, CPO', icon:'📝', color:'from-blue-600 to-cyan-600', qs:6000, sets:3800, marks:2, neg:0.5, tags:'ssc cgl chsl mts cpo' },
     { id:'psc', name:'राज्य PSC', sub:'UPPSC, BPSC, MPPSC, RPSC', icon:'🗺️', color:'from-emerald-600 to-teal-600', qs:5400, sets:3300, marks:1, neg:0.33, tags:'state psc uppsc bpsc mppsc rpsc राज्य' },
     { id:'defence', name:'डिफेंस', sub:'CDS, AFCAT, Agniveer', icon:'🛡️', color:'from-slate-700 to-slate-500', qs:5100, sets:2600, marks:1, neg:0.25, tags:'defence cds afcat agniveer army navy airforce' },
     { id:'teaching', name:'टीचिंग एग्जाम', sub:'CTET, UPTET, KVS', icon:'🎓', color:'from-amber-600 to-orange-600', qs:5000, sets:2400, marks:1, neg:0, tags:'teaching ctet uptet kvs tet teacher' },
     { id:'rail', name:'रेलवे', sub:'NTPC & Group D', icon:'🚆', color:'from-rose-600 to-pink-600', qs:5600, sets:3500, marks:1, neg:0.33, tags:'railway rrb ntpc group d रेलवे' },
-    { id:'upsssc', name:'UPSSSC / UP PSC', sub:'PET, लेखपाल, UPPSC', icon:'🌾', color:'from-green-600 to-lime-600', qs:4000, sets:2000, marks:1, neg:0.25, tags:'upsssc pet lekhpal uppsc up police उत्तर प्रदेश' },
     { id:'bpsc', name:'BPSC / बिहार', sub:'BPSC, बिहार दारोगा, BSSC', icon:'🏯', color:'from-orange-600 to-red-600', qs:3500, sets:1800, marks:1, neg:0.25, tags:'bpsc bihar bssc बिहार daroga' },
     { id:'bank', name:'बैंकिंग', sub:'IBPS PO/Clerk, SBI, RBI', icon:'🏦', color:'from-cyan-700 to-blue-700', qs:4500, sets:2200, marks:1, neg:0.25, tags:'bank ibps sbi rbi po clerk बैंक' }
   ];
@@ -72,6 +122,8 @@
     { id:'sectional', label:'सेक्शनल टेस्ट', share:0.30 },
     { id:'full', label:'फुल मॉक टेस्ट', share:0.13 }
   ];
+  var PETL = { pyq:'PET PYQ', chapter:'PET प्रैक्टिस (विषय-वार)', sectional:'PET सेक्शनल', full:'PET फुल मॉक' };
+  function tabLabel(e, t) { return e.id === 'upsssc' ? PETL[t.id] : t.label; }
 
   function Q(s, q, o, a, e) { return { s:s, q:q, o:o, a:a, e:e }; }
   var BANK = {
@@ -133,7 +185,33 @@
       Q('उत्तर प्रदेश GK','विधानसभा में कुल कितनी सीटें हैं?',['350','403','425','300'],1,'403 सीटें।'),
       Q('उत्तर प्रदेश GK','दुधवा राष्ट्रीय उद्यान किस जिले में है?',['बहराइच','पीलीभीत','लखीमपुर खीरी','सोनभद्र'],2,'लखीमपुर खीरी।'),
       Q('उत्तर प्रदेश GK','गोरखपुर किस नदी के किनारे है?',['राप्ती','गोमती','घाघरा','यमुना'],0,'राप्ती।'),
-      Q('इतिहास','चौरी-चौरा कांड कब हुआ?',['1920','1921','1922','1930'],2,'4 फरवरी 1922।')
+      Q('इतिहास','चौरी-चौरा कांड कब हुआ?',['1920','1921','1922','1930'],2,'4 फरवरी 1922।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश की राजधानी कौन-सी है?',['प्रयागराज','लखनऊ','कानपुर','वाराणसी'],1,'लखनऊ।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश का उच्च न्यायालय मुख्य रूप से कहाँ स्थित है?',['लखनऊ','आगरा','प्रयागराज','वाराणसी'],2,'प्रयागराज (लखनऊ में खंडपीठ)।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश से लोकसभा में कितने सदस्य चुने जाते हैं?',['60','70','80','90'],2,'80 सीटें।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश का राज्य पशु कौन-सा है?',['बाघ','बारहसिंगा','हाथी','तेंदुआ'],1,'बारहसिंगा (स्वैम्प डियर)।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश का राज्य पक्षी कौन-सा है?',['मोर','सारस क्रेन','गौरैया','कोयल'],1,'सारस क्रेन।'),
+      Q('उत्तर प्रदेश GK','स्वतंत्र भारत में उत्तर प्रदेश के प्रथम मुख्यमंत्री कौन थे?',['सम्पूर्णानंद','गोविंद बल्लभ पंत','चंद्रभानु गुप्त','सुचेता कृपलानी'],1,'गोविंद बल्लभ पंत।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश की प्रथम महिला राज्यपाल कौन थीं?',['सरोजिनी नायडू','सुचेता कृपलानी','विजयलक्ष्मी पंडित','इंदिरा गांधी'],0,'सरोजिनी नायडू।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश में कुल कितने मंडल हैं?',['16','17','18','19'],2,'18 मंडल।'),
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश क्षेत्रफल की दृष्टि से सबसे बड़ा जिला कौन-सा है?',['सोनभद्र','लखीमपुर खीरी','हरदोई','प्रयागराज'],1,'लखीमपुर खीरी।'),
+      Q('उत्तर प्रदेश GK','फिरोजाबाद किस उद्योग के लिए प्रसिद्ध है?',['कालीन','ताला','काँच','पीतल'],2,'काँच उद्योग।'),
+      Q('उत्तर प्रदेश GK','अलीगढ़ किस उद्योग के लिए प्रसिद्ध है?',['ताला','कालीन','चिकनकारी','चमड़ा'],0,'ताला उद्योग।'),
+      Q('उत्तर प्रदेश GK','भदोही-मिर्जापुर क्षेत्र किसके लिए प्रसिद्ध है?',['कालीन','चीनी','जूते','काँच'],0,'कालीन उद्योग।'),
+      Q('उत्तर प्रदेश GK','मुरादाबाद किसके लिए प्रसिद्ध है?',['पीतल के बर्तन','काँच','ताले','रेशम'],0,'पीतल नगरी।'),
+      Q('उत्तर प्रदेश GK','चिकनकारी कला किस शहर की प्रसिद्ध है?',['लखनऊ','आगरा','मेरठ','गोरखपुर'],0,'लखनऊ।'),
+      Q('इतिहास','उत्तर प्रदेश का गठन पूर्व में किस नाम से था (1950 से पहले)?',['संयुक्त प्रांत','मध्य प्रांत','अवध राज्य','आर्यावर्त'],0,'संयुक्त प्रांत (United Provinces)।'),
+      Q('भारतीय राजव्यवस्था','भारत का संविधान कब लागू हुआ?',['15 अगस्त 1947','26 नवंबर 1949','26 जनवरी 1950','2 अक्टूबर 1950'],2,'26 जनवरी 1950।'),
+      Q('भारतीय राजव्यवस्था','राष्ट्रपति का कार्यकाल कितने वर्ष का होता है?',['4','5','6','7'],1,'5 वर्ष।'),
+      Q('भारतीय राजव्यवस्था','लोकसभा सदस्य बनने की न्यूनतम आयु कितनी है?',['21','25','30','35'],1,'25 वर्ष।'),
+      Q('सामान्य विज्ञान','जल का रासायनिक सूत्र क्या है?',['CO2','H2O','O2','NaCl'],1,'H2O।'),
+      Q('सामान्य विज्ञान','मानव शरीर में हड्डियों की संख्या (वयस्क) कितनी होती है?',['206','208','300','212'],0,'206।'),
+      Q('सामान्य विज्ञान','ध्वनि की तीव्रता की इकाई क्या है?',['हर्ट्ज','डेसिबल','वोल्ट','ओम'],1,'डेसिबल।'),
+      Q('सामान्य विज्ञान','पारे (Mercury) का रासायनिक प्रतीक?',['Mg','Hg','Me','Pb'],1,'Hg।'),
+      Q('भूगोल','विश्व का सबसे बड़ा महासागर कौन-सा है?',['अटलांटिक','हिंद','प्रशांत','आर्कटिक'],2,'प्रशांत महासागर।'),
+      Q('सामान्य हिंदी','"सूर्य" का पर्यायवाची कौन-सा है?',['रवि','शशि','सागर','पवन'],0,'रवि, दिनकर, भास्कर।'),
+      Q('सामान्य हिंदी','"आदर" का विलोम शब्द क्या है?',['सम्मान','अनादर','मान','श्रद्धा'],1,'अनादर।'),
+      Q('सामान्य हिंदी','हिंदी दिवस कब मनाया जाता है?',['14 सितंबर','10 जनवरी','1 मई','15 अगस्त'],0,'14 सितंबर।')
     ],
     bpsc: [
       Q('बिहार GK','बिहार में कुल कितने जिले हैं?',['36','37','38','40'],2,'38 जिले।'),
@@ -151,6 +229,45 @@
     ]
   };
 
+  /* ---------- स्वचालित गणित/रीज़निंग प्रश्न (हर टेस्ट में 100 पूरे करने के लिए) ---------- */
+  var GEN_SUBJECTS = ['गणित', 'रीज़निंग'];
+  function ri(r, a, b) { return a + Math.floor(r() * (b - a + 1)); }
+  function nr(v) { return Math.round(v * 100) / 100; }
+  function mc(r, s, q, v, st, pre, suf, e) {
+    var d = shuffle([-3, -2, -1, 1, 2, 3], r), o = [pre + nr(v) + suf];
+    for (var i = 0; i < d.length && o.length < 4; i++) { var x = nr(v + d[i] * st); if (x > 0) o.push(pre + x + suf); }
+    return { s: s, q: q, o: o, a: 0, e: e };
+  }
+  var GENS = [
+    { s:'गणित', f:function (r) { var x = [5,10,12,15,20,25,30,40][ri(r,0,7)], n = ri(r,2,60) * 100, v = n * x / 100;
+      return mc(r,'गणित', n + ' का ' + x + '% कितना होगा?', v, Math.max(1, Math.round(n / 50)), '', '', n + '×' + x + '/100 = ' + v + '।'); } },
+    { s:'गणित', f:function (r) { var p = ri(r,2,40) * 500, R = [4,5,6,8,10][ri(r,0,4)], t = ri(r,2,5), v = p * R * t / 100;
+      return mc(r,'गणित', '₹' + p + ' पर ' + R + '% वार्षिक साधारण ब्याज की दर से ' + t + ' वर्ष का ब्याज कितना होगा?', v, Math.max(10, R * 10), '₹', '', 'SI = P×R×T/100 = ₹' + v + '।'); } },
+    { s:'गणित', f:function (r) { var s = ri(r,4,16) * 5, t = ri(r,2,9), v = s * t;
+      return mc(r,'गणित', s + ' किमी/घंटा की चाल से ' + t + ' घंटे में कितनी दूरी तय होगी?', v, 5 * t, '', ' किमी', 'दूरी = चाल × समय = ' + v + ' किमी।'); } },
+    { s:'गणित', f:function (r) { var a = ri(r,10,60), d = ri(r,-8,8), s4 = 4 * a + d, v = a - d;
+      return mc(r,'गणित', '5 संख्याओं का औसत ' + a + ' है। यदि 4 संख्याओं का योग ' + s4 + ' हो, तो पाँचवीं संख्या कौन-सी है?', v, 2, '', '', 'कुल योग 5×' + a + ' = ' + 5 * a + '; पाँचवीं = ' + 5 * a + ' − ' + s4 + ' = ' + v + '।'); } },
+    { s:'गणित', f:function (r) { var cp = ri(r,4,40) * 50, p = [10,20,30,40][ri(r,0,3)], v = cp * (100 + p) / 100;
+      return mc(r,'गणित', 'क्रय मूल्य ₹' + cp + ' है। ' + p + '% लाभ पर विक्रय मूल्य कितना होगा?', v, Math.max(5, cp / 10), '₹', '', 'SP = ' + cp + '×' + (100 + p) + '/100 = ₹' + v + '।'); } },
+    { s:'गणित', f:function (r) { var a = ri(r,2,7), b = a + ri(r,1,4), k = ri(r,2,12), v = b * k;
+      return mc(r,'गणित', 'दो संख्याओं का अनुपात ' + a + ' : ' + b + ' है और उनका योग ' + (a + b) * k + ' है। बड़ी संख्या कौन-सी है?', v, k, '', '', 'एक भाग = ' + k + '; बड़ी संख्या = ' + b + '×' + k + ' = ' + v + '।'); } },
+    { s:'गणित', f:function (r) { var w = [[12,6,4],[20,5,4],[10,15,6],[30,20,12],[12,4,3],[15,10,6],[24,8,6],[18,9,6],[20,30,12],[40,10,8]][ri(r,0,9)];
+      return mc(r,'गणित', 'A किसी कार्य को ' + w[0] + ' दिन में और B ' + w[1] + ' दिन में करता है। दोनों मिलकर कितने दिन में करेंगे?', w[2], 1, '', ' दिन', '1/' + w[0] + ' + 1/' + w[1] + ' = 1/' + w[2] + '।'); } },
+    { s:'गणित', f:function (r) { var x = ri(r,2,20), a = ri(r,2,9), b = ri(r,1,30);
+      return mc(r,'गणित', a + 'x + ' + b + ' = ' + (a * x + b) + ' हो, तो x का मान क्या होगा?', x, 1, '', '', a + 'x = ' + a * x + ' ⇒ x = ' + x + '।'); } },
+    { s:'गणित', f:function (r) { var l = ri(r,5,40), w = ri(r,2,l - 1), ar = ri(r,0,1);
+      return mc(r,'गणित', 'एक आयत की लंबाई ' + l + ' मी और चौड़ाई ' + w + ' मी है। उसका ' + (ar ? 'क्षेत्रफल' : 'परिमाप') + ' कितना है?', ar ? l * w : 2 * (l + w), 2, '', ar ? ' वर्ग मी' : ' मी', ar ? 'क्षेत्रफल = l×b।' : 'परिमाप = 2(l+b)।'); } },
+    { s:'रीज़निंग', f:function (r) { var t = ri(r,0,1), a, d, n, arr = [], v, e, i;
+      if (t) { n = ri(r,2,9); for (i = 0; i < 5; i++) arr.push((n + i) * (n + i)); v = (n + 5) * (n + 5); e = 'वर्ग संख्याओं की श्रेणी; अगला ' + (n + 5) + '² = ' + v + '।'; }
+      else { a = ri(r,1,30); d = ri(r,2,9); for (i = 0; i < 5; i++) arr.push(a + d * i); v = a + d * 5; e = 'हर बार ' + d + ' जुड़ता है; अगला = ' + v + '।'; }
+      return mc(r,'रीज़निंग', 'श्रेणी पूरी करें: ' + arr.join(', ') + ', ?', v, t ? 3 : d, '', '', e); } }
+  ];
+  function gen(r, k, only) {
+    var pool = GENS.filter(function (g) { return !only || g.s === only; }), out = [], seen = {}, tries = 0;
+    while (out.length < k && tries < k * 8) { tries++; var q = pool[ri(r, 0, pool.length - 1)].f(r); if (seen[q.q]) continue; seen[q.q] = 1; out.push(q); }
+    return out;
+  }
+
   var S = { view:'home', examId:null, tab:'pyq', search:'', shown:{}, test:null, result:null, timer:null };
   var $app = document.getElementById('app');
 
@@ -163,25 +280,37 @@
   function shuffle(arr, r) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function hash(s) { var h = 7; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
-  function subjectsOf(id) { var seen = {}, out = []; BANK[id].forEach(function (q) { if (!seen[q.s]) { seen[q.s] = 1; out.push(q.s); } }); return out; }
+  function subjectsOf(id) {
+    var seen = {}, out = [];
+    BANK[id].forEach(function (q) { if (!seen[q.s]) { seen[q.s] = 1; out.push(q.s); } });
+    GEN_SUBJECTS.forEach(function (s) { if (!seen[s]) out.push(s); });
+    return out;
+  }
 
   function tabTotal(exam, tab) { return Math.round(exam.sets * tab.share); }
   function makeTest(exam, tabId, i) {
-    var subs = subjectsOf(exam.id), name, subject = null, base = BANK[exam.id].length;
-    if (tabId === 'pyq') { name = exam.name + ' ' + (2025 - Math.floor(i / 3)) + ' – Shift ' + (i % 3 + 1); }
-    else if (tabId === 'chapter') { subject = subs[i % subs.length]; name = subject + ' – चैप्टर टेस्ट ' + (Math.floor(i / subs.length) + 1); }
-    else if (tabId === 'sectional') { subject = subs[i % subs.length]; name = 'सेक्शनल: ' + subject + ' – सेट ' + (Math.floor(i / subs.length) + 1); }
+    var subs = subjectsOf(exam.id), name, subject = null, pet = exam.id === 'upsssc', k;
+    if (tabId === 'pyq') name = (pet ? 'UPSSSC PET PYQ सेट ' : exam.name + ' PYQ सेट ') + (i + 1);
+    else if (tabId === 'chapter') { subject = subs[i % subs.length]; k = Math.floor(i / subs.length) + 1; name = (pet ? 'PET प्रैक्टिस: ' : '') + subject + ' – चैप्टर टेस्ट ' + k; }
+    else if (tabId === 'sectional') { subject = subs[i % subs.length]; k = Math.floor(i / subs.length) + 1; name = (pet ? 'PET सेक्शनल: ' : 'सेक्शनल: ') + subject + ' – सेट ' + k; }
     else name = exam.name + ' फुल मॉक टेस्ट ' + (i + 1);
-    var n = (tabId === 'full' || tabId === 'pyq') ? Math.min(base, 100) : Math.min(base, 25);
-    return { id: exam.id + '-' + tabId + '-' + i, exam: exam.id, tab: tabId, index: i, name: name, subject: subject, n: n, minutes: Math.max(n, 5), marks: n * exam.marks };
+    var n = QCOUNT;
+    return { id: exam.id + '-' + tabId + '-' + i, exam: exam.id, tab: tabId, index: i, name: name, subject: subject, n: n, minutes: exam.time || n, marks: n * exam.marks };
   }
   function buildQuestions(t) {
-    var r = rng(hash(t.id)), pool = BANK[t.exam].slice(), chosen;
+    var r = rng(hash(t.id)), pool = BANK[t.exam].slice(), n = t.n, chosen;
     if (t.subject) {
-      var own = shuffle(pool.filter(function (q) { return q.s === t.subject; }), r);
-      var rest = shuffle(pool.filter(function (q) { return q.s !== t.subject; }), r);
-      chosen = own.concat(rest).slice(0, t.n);
-    } else chosen = shuffle(pool, r).slice(0, t.n);
+      if (GEN_SUBJECTS.indexOf(t.subject) !== -1) chosen = gen(r, n, t.subject);
+      else {
+        var own = shuffle(pool.filter(function (q) { return q.s === t.subject; }), r);
+        var rest = shuffle(pool.filter(function (q) { return q.s !== t.subject; }), r);
+        chosen = own.concat(rest).slice(0, n);
+        chosen = chosen.concat(gen(r, n - chosen.length));
+      }
+    } else {
+      chosen = shuffle(pool, r).slice(0, n);
+      chosen = shuffle(chosen.concat(gen(r, n - chosen.length)), r);
+    }
     return chosen.map(function (q) {
       var opts = shuffle(q.o.map(function (txt, i) { return { t: txt, ok: i === q.a }; }), r), c = 0;
       opts.forEach(function (o, k) { if (o.ok) c = k; });
@@ -221,6 +350,99 @@
   }
   function hideModal() { $('modal').classList.add('hidden'); }
 
+  /* ---------- फुटर पेज: About / Contact / Privacy / Terms ---------- */
+  var MAIL = 'youthindia33@gmail.com';
+  var MAIL_LINK = '<a href="mailto:' + MAIL + '" class="font-semibold text-indigo-600 dark:text-indigo-300 underline break-all">' + MAIL + '</a>';
+  function sec(t, body) { return '<section><h4 class="font-bold text-base mb-1.5 text-indigo-700 dark:text-indigo-300">' + t + '</h4><div class="space-y-2">' + body + '</div></section>'; }
+  function p(t) { return '<p class="text-slate-600 dark:text-slate-300">' + t + '</p>'; }
+  function ul(a) { return '<ul class="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">' + a.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>'; }
+  function upd() { return '<p class="text-xs text-slate-500 dark:text-slate-400">अंतिम अपडेट: अक्टूबर 2026</p>'; }
+
+  var PAGES = {
+    about: { t: 'हमारे बारे में (About Us)', b:
+      sec('ExamMock Pro क्या है?', p('ExamMock Pro एक ऑनलाइन मॉक टेस्ट पोर्टल है, जो प्रतियोगी परीक्षाओं की तैयारी करने वाले अभ्यर्थियों के लिए बनाया गया है। यहाँ आप असली परीक्षा जैसे इंटरफेस में टाइमर के साथ अभ्यास कर सकते हैं और हर टेस्ट के बाद अपना प्रदर्शन तुरंत देख सकते हैं।')) +
+      sec('हमारा उद्देश्य', p('हमारा लक्ष्य है कि हर अभ्यर्थी को एक ही जगह पर व्यवस्थित, सरल और भरोसेमंद अभ्यास सामग्री मिले, ताकि वह अपनी कमज़ोरियाँ पहचानकर समय रहते सुधार कर सके।')) +
+      sec('हम क्या प्रदान करते हैं', ul([
+        'UPSSSC PET, UPSC, SSC, राज्य PSC, डिफेंस, टीचिंग, रेलवे, बिहार परीक्षाएँ और बैंकिंग के लिए टेस्ट',
+        'PYQ पैटर्न सेट, चैप्टर-वाइज, सेक्शनल और फुल मॉक टेस्ट – हर टेस्ट 100 प्रश्न का',
+        'रियल एग्जाम इंटरफेस: टाइमर, प्रश्न पैलेट, Mark for Review और नेगेटिव मार्किंग',
+        'टेस्ट के बाद सही/गलत उत्तर, सटीकता और हर प्रश्न का स्पष्टीकरण',
+        'डार्क मोड और मोबाइल-फ्रेंडली डिज़ाइन'
+      ])) +
+      sec('महत्वपूर्ण सूचना', p('ExamMock Pro एक स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है। यह किसी सरकारी विभाग, आयोग या परीक्षा आयोजक संस्था से संबद्ध नहीं है। सभी परीक्षाओं के नाम उनके संबंधित स्वामियों के हैं और केवल पहचान के लिए उपयोग किए गए हैं।')) +
+      sec('संपर्क', p('सुझाव, प्रश्न में त्रुटि या किसी भी सहायता के लिए हमें ईमेल करें: ' + MAIL_LINK))
+    },
+    contact: { t: 'संपर्क करें (Contact Us)', b:
+      '<div class="rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 p-4 text-center">' +
+        '<p class="text-xs text-slate-500 dark:text-slate-400 mb-1">हमारा ईमेल</p>' +
+        '<a href="mailto:' + MAIL + '" class="text-lg sm:text-xl font-extrabold text-indigo-700 dark:text-indigo-300 break-all hover:underline">' + MAIL + '</a>' +
+        '<div class="mt-3"><a href="mailto:' + MAIL + '" class="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 text-sm font-semibold">ईमेल भेजें</a></div>' +
+      '</div>' +
+      sec('आप किन बातों के लिए लिख सकते हैं?', ul([
+        'किसी प्रश्न, उत्तर या स्पष्टीकरण में गलती की जानकारी',
+        'तकनीकी समस्या (टेस्ट न खुलना, टाइमर या पैलेट की दिक्कत आदि)',
+        'नई परीक्षा, विषय या सुविधा का सुझाव',
+        'गोपनीयता नीति या नियम व शर्तों से जुड़े प्रश्न',
+        'सहयोग या साझेदारी का प्रस्ताव'
+      ])) +
+      sec('बेहतर सहायता के लिए ईमेल में यह लिखें', ul([
+        'टेस्ट का नाम और प्रश्न संख्या (यदि प्रश्न से संबंधित है)',
+        'समस्या का संक्षिप्त विवरण और संभव हो तो स्क्रीनशॉट',
+        'आपका डिवाइस और ब्राउज़र (जैसे Android – Chrome)'
+      ])) +
+      p('हम आपके संदेश का यथाशीघ्र उत्तर देने का प्रयास करेंगे।')
+    },
+    privacy: { t: 'गोपनीयता नीति (Privacy Policy)', b:
+      upd() +
+      sec('1. परिचय', p('ExamMock Pro ("हम") आपकी गोपनीयता का सम्मान करता है। यह नीति बताती है कि इस वेबसाइट का उपयोग करते समय कौन-सी जानकारी कैसे उपयोग की जाती है। वेबसाइट का उपयोग करके आप इस नीति से सहमत होते हैं।')) +
+      sec('2. हम कौन-सी जानकारी एकत्र करते हैं', ul([
+        'वर्तमान में वेबसाइट पर रजिस्ट्रेशन या लॉगिन नहीं है। हम आपसे नाम, फ़ोन नंबर, पता या ईमेल नहीं माँगते।',
+        'आपके दिए गए टेस्ट का इतिहास (टेस्ट का नाम, स्कोर, सटीकता) और डार्क मोड की पसंद आपके अपने ब्राउज़र की स्थानीय मेमोरी (localStorage) में सहेजी जाती है।',
+        'यह जानकारी आपके डिवाइस पर ही रहती है; हम इसे अपने सर्वर पर नहीं भेजते।',
+        'यदि आप हमें ईमेल करते हैं, तो आपका ईमेल पता और संदेश केवल आपको उत्तर देने के लिए उपयोग किए जाएँगे।'
+      ])) +
+      sec('3. डेटा कैसे हटाएँ', p('आप प्रोफ़ाइल मेन्यू में "इतिहास मिटाएँ" बटन से अपना टेस्ट इतिहास हटा सकते हैं। ब्राउज़र का डेटा/कैश साफ़ करने पर सभी सहेजी गई जानकारी हट जाती है।')) +
+      sec('4. थर्ड-पार्टी सेवाएँ', p('यह वेबसाइट डिज़ाइन के लिए Tailwind CSS जैसी बाहरी सेवाओं (CDN) का उपयोग करती है, इसलिए पेज खुलते समय आपका ब्राउज़र उन सेवाओं से जुड़ता है और IP एड्रेस जैसी सामान्य तकनीकी जानकारी उन्हें मिल सकती है। भविष्य में हम एनालिटिक्स या विज्ञापन सेवाएँ जोड़ सकते हैं; ऐसा होने पर वे कुकीज़ का उपयोग कर सकती हैं और हम इस नीति को तदनुसार अपडेट करेंगे।')) +
+      sec('5. कुकीज़', p('हम स्वयं कोई ट्रैकिंग कुकी नहीं लगाते। आप अपने ब्राउज़र की सेटिंग से कुकीज़ और स्थानीय डेटा को नियंत्रित कर सकते हैं।')) +
+      sec('6. बच्चों की गोपनीयता', p('हम जानबूझकर किसी से भी, विशेषकर 13 वर्ष से कम आयु के बच्चों से, व्यक्तिगत जानकारी एकत्र नहीं करते।')) +
+      sec('7. सुरक्षा', p('हम आपकी जानकारी को न्यूनतम रखने का प्रयास करते हैं। फिर भी इंटरनेट पर कोई भी प्रणाली पूरी तरह सुरक्षित होने की गारंटी नहीं दे सकती।')) +
+      sec('8. नीति में बदलाव', p('हम समय-समय पर इस नीति को अपडेट कर सकते हैं। बदलाव इसी पेज पर "अंतिम अपडेट" तिथि के साथ दिखाए जाएँगे।')) +
+      sec('9. संपर्क', p('गोपनीयता से जुड़े किसी प्रश्न के लिए ईमेल करें: ' + MAIL_LINK))
+    },
+    terms: { t: 'नियम और शर्तें (Terms & Conditions)', b:
+      upd() +
+      sec('1. शर्तों की स्वीकृति', p('ExamMock Pro का उपयोग करके आप इन नियमों और शर्तों को स्वीकार करते हैं। यदि आप सहमत नहीं हैं, तो कृपया वेबसाइट का उपयोग न करें।')) +
+      sec('2. उपयोग का उद्देश्य', p('यह वेबसाइट केवल शैक्षिक अभ्यास और स्व-मूल्यांकन के लिए है। आप इसका उपयोग केवल वैध और व्यक्तिगत उद्देश्यों के लिए कर सकते हैं।')) +
+      sec('3. सामग्री की सटीकता', ul([
+        'हम प्रश्नों, उत्तरों और स्पष्टीकरणों को सही रखने का प्रयास करते हैं, परंतु उनमें त्रुटि या अद्यतन की कमी हो सकती है।',
+        'कुछ अभ्यास प्रश्न (जैसे गणित/रीज़निंग) स्वतः तैयार होते हैं।',
+        'जहाँ स्पष्ट रूप से उल्लेख न हो, PYQ सेट को असली पुराने प्रश्नपत्र न समझें; वे पैटर्न-आधारित अभ्यास सेट हो सकते हैं।',
+        'महत्वपूर्ण जानकारी (सिलेबस, पैटर्न, तिथियाँ, नेगेटिव मार्किंग) की पुष्टि हमेशा संबंधित संस्था की आधिकारिक वेबसाइट से करें।'
+      ])) +
+      sec('4. कोई गारंटी नहीं', p('मॉक टेस्ट में प्राप्त अंक वास्तविक परीक्षा के परिणाम का संकेत मात्र हैं। हम किसी परीक्षा में चयन, अंक या रैंक की गारंटी नहीं देते।')) +
+      sec('5. उपयोगकर्ता आचरण', ul([
+        'वेबसाइट के संचालन में बाधा डालना या उसे हैक करने का प्रयास करना प्रतिबंधित है।',
+        'स्वचालित टूल से सामग्री की बड़े पैमाने पर नकल (स्क्रैपिंग) करना प्रतिबंधित है।',
+        'किसी भी गैरकानूनी उद्देश्य के लिए वेबसाइट का उपयोग न करें।'
+      ])) +
+      sec('6. बौद्धिक संपदा', p('वेबसाइट का डिज़ाइन, कोड और मौलिक सामग्री ExamMock Pro की है। बिना लिखित अनुमति के इसे व्यावसायिक रूप से कॉपी, बेचने या पुनः प्रकाशित करने की अनुमति नहीं है। परीक्षाओं के नाम और चिह्न उनके संबंधित स्वामियों के हैं।')) +
+      sec('7. संबद्धता', p('ExamMock Pro किसी सरकारी विभाग, आयोग या परीक्षा आयोजक संस्था से संबद्ध या अनुमोदित नहीं है।')) +
+      sec('8. दायित्व की सीमा', p('वेबसाइट "जैसी है" के आधार पर उपलब्ध है। इसके उपयोग या अनुपलब्धता से होने वाली किसी हानि के लिए हम कानून द्वारा अनुमत सीमा तक उत्तरदायी नहीं होंगे।')) +
+      sec('9. सेवा और शर्तों में बदलाव', p('हम किसी भी समय वेबसाइट की सामग्री, सुविधाओं या इन शर्तों में बदलाव कर सकते हैं। बदलाव के बाद वेबसाइट का उपयोग जारी रखने का अर्थ है कि आप नई शर्तें स्वीकार करते हैं।')) +
+      sec('10. लागू कानून', p('ये शर्तें भारत के कानूनों के अनुसार लागू होंगी।')) +
+      sec('11. संपर्क', p('इन शर्तों से जुड़े प्रश्न के लिए ईमेल करें: ' + MAIL_LINK))
+    }
+  };
+  window.openInfo = function (k) {
+    var pg = PAGES[k]; if (!pg) return;
+    $('infoTitle').textContent = pg.t; $('infoBody').innerHTML = pg.b; $('infoBody').scrollTop = 0;
+    $('infoModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+    $('infoClose').focus();
+  };
+  window.closeInfo = function () { $('infoModal').classList.add('hidden'); document.body.style.overflow = ''; };
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeInfo(); hideModal(); } });
+  $('yr').textContent = new Date().getFullYear();
+
   window.goHome = function () {
     if (S.view === 'test' && S.test && !S.test.done) { showModal('टेस्ट छोड़ें?', 'आपकी प्रगति खो जाएगी।', [{ label:'रद्द करें' }, { label:'हाँ, छोड़ें', primary:true, fn:function () { stopTimer(); S.test = null; S.view = 'home'; S.examId = null; render(); } }]); return; }
     stopTimer(); S.test = null; S.view = 'home'; S.examId = null; render(); window.scrollTo(0, 0);
@@ -239,11 +461,11 @@
     var totalQ = EXAMS.reduce(function (a, e) { return a + e.qs; }, 0), totalS = EXAMS.reduce(function (a, e) { return a + e.sets; }, 0);
     var html = '<section class="fade-in"><div class="rounded-3xl bg-gradient-to-br from-indigo-600 via-blue-600 to-sky-500 text-white p-6 sm:p-10 mb-6">' +
       '<h1 class="text-2xl sm:text-4xl font-extrabold leading-tight">भारत की प्रमुख परीक्षाओं की तैयारी – एक ही जगह</h1>' +
-      '<p class="mt-2 text-white/90 max-w-2xl">PYQ पैटर्न सेट, चैप्टर-वाइज व सेक्शनल टेस्ट और फुल मॉक – रियल एग्जाम इंटरफेस के साथ।</p>' +
+      '<p class="mt-2 text-white/90 max-w-2xl">PYQ पैटर्न सेट, चैप्टर-वाइज व सेक्शनल टेस्ट और 100 प्रश्न के फुल मॉक – रियल एग्जाम इंटरफेस के साथ।</p>' +
       '<div class="mt-5 flex flex-wrap gap-3 text-sm"><span class="bg-white/20 rounded-full px-4 py-1.5">' + fmt(totalQ) + '+ प्रश्न (कैटलॉग लक्ष्य)</span>' +
       '<span class="bg-white/20 rounded-full px-4 py-1.5">' + fmt(totalS) + '+ टेस्ट/सेट (कैटलॉग लक्ष्य)</span>' +
-      '<span class="bg-white/20 rounded-full px-4 py-1.5">' + EXAMS.length + ' परीक्षा श्रेणियाँ</span></div></div>' +
-      '<div class="mb-6 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-sm p-3"><b>डेमो नोट:</b> अभी हर परीक्षा में नमूना (sample) प्रश्न हैं। असली प्रश्न <code>ExamMock.loadBank()</code> से जोड़ें।</div>' +
+      '<span class="bg-white/20 rounded-full px-4 py-1.5">हर टेस्ट: ' + QCOUNT + ' प्रश्न</span></div></div>' +
+      '<div class="mb-6 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-sm p-3"><b>डेमो नोट:</b> हर टेस्ट में ' + QCOUNT + ' प्रश्न हैं। GK/विषय के नमूना प्रश्न सीमित हैं; बाकी प्रश्न गणित/रीज़निंग के स्वतः बनते हैं। असली प्रश्न <code>ExamMock.loadBank()</code> से जोड़ें।</div>' +
       '<h2 class="text-xl font-bold mb-4">परीक्षा चुनें</h2>';
     if (!list.length) html += '<p class="text-slate-500">कोई परीक्षा नहीं मिली।</p>';
     html += '<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">';
@@ -263,7 +485,7 @@
     var html = '<section class="fade-in"><button onclick="goHome()" class="text-sm text-indigo-600 dark:text-indigo-300 mb-3">← सभी परीक्षाएँ</button>' +
       '<div class="rounded-2xl bg-gradient-to-r ' + e.color + ' text-white p-5 mb-5 flex items-center gap-4"><span class="text-4xl">' + e.icon + '</span><div><h1 class="text-2xl font-extrabold">' + esc(e.name) + '</h1><p class="text-sm text-white/90">' + esc(e.sub) + ' • ' + fmt(e.qs) + '+ प्रश्न • ' + fmt(e.sets) + '+ सेट</p></div></div><div class="flex gap-2 overflow-x-auto pb-2 mb-4">';
     TABS.forEach(function (t) {
-      html += '<button onclick="setTab(\'' + t.id + '\')" class="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold border ' + (t.id === S.tab ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600') + '">' + t.label + ' <span class="opacity-75">(' + fmt(tabTotal(e, t)) + ')</span></button>';
+      html += '<button onclick="setTab(\'' + t.id + '\')" class="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold border ' + (t.id === S.tab ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600') + '">' + tabLabel(e, t) + ' <span class="opacity-75">(' + fmt(tabTotal(e, t)) + ')</span></button>';
     });
     html += '</div>';
     var items = [], q = S.search;
@@ -282,7 +504,7 @@
     });
     html += '</div>';
     if (!q && shown < total) html += '<div class="text-center mt-5"><button onclick="loadMore()" class="rounded-lg border border-indigo-500 text-indigo-600 dark:text-indigo-300 px-5 py-2 text-sm font-semibold">और टेस्ट दिखाएँ (' + fmt(total - shown) + ' शेष)</button></div>';
-    $app.innerHTML = html + '<p class="text-xs text-slate-500 mt-6">ध्यान दें: डेमो में हर टेस्ट नमूना प्रश्न बैंक से बनता है।</p></section>';
+    $app.innerHTML = html + '<p class="text-xs text-slate-500 mt-6">ध्यान दें: डेमो में PYQ सेट असली पुराने पेपर नहीं, पैटर्न-आधारित सेट हैं। असली PYQ <code>ExamMock.loadBank()</code> से जोड़ें।</p></section>';
   }
 
   function findTest(id) { var p = id.split('-'), ex = getExam(p[0]); return ex ? makeTest(ex, p[p.length - 2], parseInt(p[p.length - 1], 10)) : null; }
@@ -328,7 +550,7 @@
       '<button onclick="markNext()" class="rounded-lg bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 text-sm font-semibold">Mark for Review &amp; Next</button>' +
       '<button onclick="clearResp()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">Clear Response</button>' +
       '<button onclick="goTo(' + Math.max(0, T.cur - 1) + ')" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">← Previous</button></div></div>' +
-      '<aside class="' + CARD + 'p-4 h-fit"><h3 class="font-bold mb-3">प्रश्न पैलेट</h3><div class="grid grid-cols-5 gap-2 mb-4">';
+      '<aside class="' + CARD + 'p-4 h-fit lg:sticky lg:top-20"><h3 class="font-bold mb-3">प्रश्न पैलेट</h3><div class="grid grid-cols-5 gap-2 mb-4 max-h-72 overflow-y-auto p-1">';
     T.qs.forEach(function (_, i) { html += '<button onclick="goTo(' + i + ')" class="h-9 rounded-md text-sm font-semibold ' + paletteClass(T, i) + '">' + (i + 1) + '</button>'; });
     var att = T.ans.filter(function (a) { return a !== -1; }).length;
     html += '</div><div class="text-xs space-y-1 text-slate-600 dark:text-slate-300 mb-4">' +
@@ -388,7 +610,7 @@
 
   /* ---------- Public API: असली डेटा / नई परीक्षा जोड़ने के लिए ---------- */
   window.ExamMock = {
-    // loadBank('ssc', [{ s:'विषय', q:'प्रश्न', o:['A','B','C','D'], a:1, e:'व्याख्या' }, ...])
+    // loadBank('upsssc', [{ s:'विषय', q:'प्रश्न', o:['A','B','C','D'], a:1, e:'व्याख्या' }, ...])
     loadBank: function (examId, arr) {
       if (!BANK[examId] || !Array.isArray(arr)) return false;
       var clean = arr.filter(function (x) { return x && x.q && Array.isArray(x.o) && x.o.length === 4 && x.a >= 0 && x.a < 4; })
@@ -396,7 +618,7 @@
       if (!clean.length) return false;
       BANK[examId] = clean; if (S.view === 'exam' || S.view === 'home') render(); return true;
     },
-    // addExam({id,name,sub,icon,color,marks,neg,qs,sets,tags}, [प्रश्न...])
+    // addExam({id,name,sub,icon,color,marks,neg,time,qs,sets,tags}, [प्रश्न...])
     addExam: function (exam, arr) {
       if (getExam(exam.id)) return this.loadBank(exam.id, arr);
       exam.tags = exam.tags || exam.id; exam.qs = exam.qs || 1000; exam.sets = exam.sets || 500;
