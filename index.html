@@ -4,21 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>HistoryTest.online - Government Exam Test Series</title>
+<title>HistoryTest.online | Government Exam Test Series</title>
 
 <meta name="description"
-content="UPSC, UPPCS, BPSC, SSC, Railway, PET, Banking, Police, Defence और Teaching Exams के Mock Tests और Practice Sets.">
+content="UPSC, UPPCS, BPSC, SSC, Railway, PET, Banking, Police, Defence और Teaching Exams के Free Mock Tests और Practice Sets.">
 
 <style>
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
 }
 
 body{
@@ -29,33 +25,42 @@ body{
 
 button{
     cursor:pointer;
-    border:none;
+    border:0;
 }
 
-a{
-    text-decoration:none;
-    color:inherit;
+.page{
+    display:none;
 }
 
-/* ================= HEADER ================= */
+.page.active{
+    display:block;
+}
+
+.container{
+    width:92%;
+    max-width:1250px;
+    margin:auto;
+}
+
+/* HEADER */
 
 header{
     background:linear-gradient(135deg,#182848,#4b6cb7);
-    color:white;
-    padding:15px 5%;
+    color:#fff;
+    padding:14px 4%;
     position:sticky;
     top:0;
-    z-index:999;
-    box-shadow:0 3px 15px rgba(0,0,0,.15);
+    z-index:99;
+    box-shadow:0 3px 15px #0002;
 }
 
-.navbar{
+.nav{
     max-width:1250px;
     margin:auto;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:20px;
+    gap:15px;
 }
 
 .logo{
@@ -67,103 +72,28 @@ header{
     color:#ffd43b;
 }
 
-.navlinks{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-}
-
-.navlinks button{
+.nav button{
     background:transparent;
-    color:white;
-    padding:9px 13px;
+    color:#fff;
+    padding:9px 12px;
     border-radius:8px;
-    font-size:14px;
 }
 
-.navlinks button:hover{
-    background:rgba(255,255,255,.15);
+.nav button:hover{
+    background:#fff2;
 }
 
-/* ================= COMMON ================= */
-
-.container{
-    width:92%;
-    max-width:1250px;
-    margin:auto;
-}
-
-.page{
-    display:none;
-}
-
-.active-page{
-    display:block;
-}
-
-.section{
-    padding:45px 0;
-}
-
-.section-title{
-    text-align:center;
-    font-size:30px;
-    margin-bottom:10px;
-}
-
-.section-subtitle{
-    text-align:center;
-    color:#667085;
-    margin-bottom:30px;
-}
-
-.btn{
-    padding:11px 18px;
-    border-radius:8px;
-    font-weight:bold;
-    background:#4b6cb7;
-    color:white;
-}
-
-.btn:hover{
-    opacity:.9;
-}
-
-.btn-dark{
-    background:#172033;
-}
-
-.btn-green{
-    background:#16803c;
-}
-
-.btn-red{
-    background:#d62828;
-}
-
-.back-btn{
-    margin-bottom:20px;
-}
-
-/* ================= HERO ================= */
+/* HERO */
 
 .hero{
-    min-height:440px;
-    background:
-    linear-gradient(135deg,rgba(15,32,62,.95),rgba(75,108,183,.90));
-    color:white;
-    display:flex;
-    align-items:center;
+    background:linear-gradient(135deg,#182848,#4b6cb7);
+    color:#fff;
     text-align:center;
-}
-
-.hero-content{
-    max-width:850px;
-    margin:auto;
+    padding:75px 0;
 }
 
 .hero h1{
-    font-size:48px;
+    font-size:46px;
     margin-bottom:15px;
 }
 
@@ -172,36 +102,55 @@ header{
 }
 
 .hero p{
-    font-size:18px;
+    max-width:800px;
+    margin:0 auto 25px;
     line-height:1.7;
-    margin-bottom:25px;
+    font-size:18px;
 }
 
-.search-box{
+.search{
     max-width:700px;
     margin:auto;
-    display:flex;
-    background:white;
-    border-radius:10px;
+    background:#fff;
     padding:5px;
+    border-radius:10px;
+    display:flex;
 }
 
-.search-box input{
+.search input{
     flex:1;
-    border:none;
-    outline:none;
+    border:0;
+    outline:0;
     padding:13px;
     font-size:16px;
 }
 
-.search-box button{
+.search button{
     background:#4b6cb7;
-    color:white;
+    color:#fff;
     padding:0 20px;
     border-radius:8px;
 }
 
-/* ================= STATS ================= */
+/* COMMON */
+
+.section{
+    padding:45px 0;
+}
+
+.title{
+    text-align:center;
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.sub{
+    text-align:center;
+    color:#667085;
+    margin-bottom:28px;
+}
+
+/* STATS */
 
 .stats{
     display:grid;
@@ -212,82 +161,105 @@ header{
 }
 
 .stat{
-    background:white;
-    padding:25px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 5px 20px #00000012;
     text-align:center;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    padding:23px;
 }
 
 .stat h2{
     color:#4b6cb7;
 }
 
-/* ================= EXAM GRID ================= */
+/* CARDS */
 
-.exam-grid{
+.grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:18px;
 }
 
-.exam-card{
-    background:white;
-    border-radius:14px;
+.card{
+    background:#fff;
     padding:22px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    border-radius:14px;
+    box-shadow:0 5px 20px #00000012;
     transition:.2s;
 }
 
-.exam-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px #0002;
 }
 
-.exam-icon{
+.icon{
     font-size:38px;
-    margin-bottom:12px;
+    margin-bottom:10px;
 }
 
-.exam-card h3{
+.card h3{
     margin-bottom:8px;
 }
 
-.exam-card p{
+.card p{
     color:#667085;
     line-height:1.5;
-    min-height:45px;
+    min-height:48px;
 }
 
-.exam-card .btn{
-    margin-top:15px;
+/* BUTTON */
+
+.btn{
+    background:#4b6cb7;
+    color:#fff;
+    padding:11px 17px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.btn.dark{
+    background:#172033;
+}
+
+.btn.red{
+    background:#d62828;
+}
+
+.btn.green{
+    background:#16803c;
+}
+
+.card .btn,
+.subject-card .btn,
+.year-card .btn{
     width:100%;
+    margin-top:14px;
 }
 
-/* ================= FILTER ================= */
+/* FILTER */
 
 .filters{
     display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+    gap:8px;
     justify-content:center;
+    flex-wrap:wrap;
     margin-bottom:25px;
 }
 
-.filter-btn{
-    background:white;
-    padding:10px 16px;
-    border-radius:8px;
+.filter{
+    background:#fff;
     border:1px solid #ddd;
+    padding:9px 14px;
+    border-radius:8px;
 }
 
-.filter-btn.active,
-.filter-btn:hover{
+.filter.active{
     background:#4b6cb7;
-    color:white;
+    color:#fff;
 }
 
-/* ================= TEST CARDS ================= */
+/* TEST CARDS */
 
 .test-grid{
     display:grid;
@@ -296,114 +268,107 @@ header{
 }
 
 .test-card{
-    background:white;
-    border-radius:14px;
+    background:#fff;
     padding:20px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    border-radius:14px;
+    box-shadow:0 5px 20px #00000012;
 }
 
 .test-card h3{
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
-.test-meta{
+.meta{
     display:flex;
     justify-content:space-between;
     color:#667085;
-    margin:10px 0;
     font-size:14px;
+    margin:9px 0;
 }
 
-.test-card button{
+.test-card .btn{
     width:100%;
+    margin-top:10px;
 }
 
-/* ================= YEAR PAGE ================= */
+/* PAGE HEAD */
 
 .page-head{
     background:linear-gradient(135deg,#182848,#4b6cb7);
-    color:white;
+    color:#fff;
     padding:35px 0;
-    margin-bottom:30px;
 }
 
 .page-head h1{
     font-size:34px;
+    margin:15px 0 5px;
 }
 
-.year-grid{
+/* YEARS */
+
+.years{
     display:grid;
     grid-template-columns:repeat(5,1fr);
     gap:15px;
 }
 
 .year-card{
-    background:white;
-    padding:25px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 5px 20px #00000012;
     text-align:center;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    padding:25px;
 }
 
-.year-card h2{
-    color:#4b6cb7;
-    margin-bottom:12px;
-}
+/* SUBJECTS */
 
-.year-card button{
-    width:100%;
-}
-
-/* ================= SUBJECT ================= */
-
-.subject-grid{
+.subjects{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:18px;
 }
 
 .subject-card{
-    background:white;
-    padding:25px;
+    background:#fff;
     border-radius:14px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    box-shadow:0 5px 20px #00000012;
     text-align:center;
+    padding:25px;
 }
 
 .subject-card .icon{
     font-size:42px;
-    margin-bottom:12px;
 }
 
-/* ================= TEST ENGINE ================= */
+/* TEST ENGINE */
 
-.test-header{
+.test-top{
     background:#182848;
-    color:white;
-    padding:15px;
+    color:#fff;
+    padding:14px;
 }
 
-.test-header-inner{
+.test-top-inner{
     max-width:1250px;
+    width:92%;
     margin:auto;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:15px;
 }
 
 .timer{
     background:#ffd43b;
     color:#111;
-    padding:10px 15px;
+    padding:9px 14px;
     border-radius:8px;
     font-weight:bold;
 }
 
 .test-layout{
+    width:92%;
     max-width:1250px;
     margin:25px auto;
-    width:92%;
     display:grid;
     grid-template-columns:1fr 280px;
     gap:20px;
@@ -411,31 +376,30 @@ header{
 
 .question-box,
 .palette-box{
-    background:white;
-    border-radius:12px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 5px 20px #00000012;
     padding:25px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
-.question-number{
+.qnum{
     color:#4b6cb7;
     font-weight:bold;
     margin-bottom:12px;
 }
 
-.question-text{
+.qtext{
     font-size:20px;
     line-height:1.6;
     margin-bottom:20px;
 }
 
 .option{
+    display:block;
     border:1px solid #ddd;
     border-radius:9px;
     padding:13px;
     margin-bottom:10px;
-    display:block;
-    transition:.2s;
 }
 
 .option:hover{
@@ -443,14 +407,15 @@ header{
 }
 
 .option input{
-    margin-right:10px;
+    margin-right:9px;
 }
 
-.test-actions{
+.actions{
     display:flex;
+    gap:8px;
     justify-content:space-between;
-    gap:10px;
     margin-top:20px;
+    flex-wrap:wrap;
 }
 
 .palette{
@@ -466,29 +431,29 @@ header{
     background:#eee;
 }
 
-.palette button.current{
+.palette .current{
     background:#4b6cb7;
-    color:white;
+    color:#fff;
 }
 
-.palette button.answered{
+.palette .answered{
     background:#16803c;
-    color:white;
+    color:#fff;
 }
 
-/* ================= RESULT ================= */
+/* RESULT */
 
 .result-box{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 5px 20px #00000012;
     max-width:800px;
-    margin:50px auto;
-    background:white;
-    border-radius:15px;
+    margin:55px auto;
     padding:35px;
-    box-shadow:0 5px 25px rgba(0,0,0,.1);
     text-align:center;
 }
 
-.result-score{
+.score{
     font-size:55px;
     color:#4b6cb7;
     font-weight:bold;
@@ -508,32 +473,37 @@ header{
     border-radius:10px;
 }
 
-/* ================= FOOTER ================= */
+/* NOTE */
+
+.note{
+    background:#fff8d9;
+    border-left:5px solid #ffd43b;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+/* FOOTER */
 
 footer{
     background:#172033;
-    color:white;
-    padding:35px 0;
-    margin-top:40px;
-}
-
-.footer-inner{
-    max-width:1250px;
-    width:92%;
-    margin:auto;
+    color:#fff;
     text-align:center;
+    padding:35px;
+    margin-top:30px;
 }
 
-.footer-inner p{
+footer p{
     color:#cbd5e1;
-    margin-top:10px;
+    margin-top:8px;
 }
 
-/* ================= MOBILE ================= */
+/* MOBILE */
 
 @media(max-width:900px){
 
-    .exam-grid{
+    .grid{
         grid-template-columns:repeat(2,1fr);
     }
 
@@ -541,11 +511,11 @@ footer{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .subject-grid{
+    .subjects{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .year-grid{
+    .years{
         grid-template-columns:repeat(3,1fr);
     }
 
@@ -560,7 +530,7 @@ footer{
 
 @media(max-width:600px){
 
-    .navbar{
+    .nav{
         flex-direction:column;
     }
 
@@ -568,26 +538,22 @@ footer{
         font-size:32px;
     }
 
-    .exam-grid,
+    .grid,
     .test-grid,
-    .subject-grid{
+    .subjects{
         grid-template-columns:1fr;
     }
 
-    .year-grid{
+    .years{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .search-box{
+    .search{
         flex-direction:column;
         gap:5px;
     }
 
-    .search-box button{
+    .search button{
         padding:12px;
     }
 }
@@ -597,34 +563,24 @@ footer{
 
 <body>
 
-<!-- =========================================================
-HEADER
-========================================================= -->
-
 <header>
 
-<div class="navbar">
+<div class="nav">
 
 <div class="logo">
 History<span>Test</span>.online
 </div>
 
-<div class="navlinks">
+<div>
 
-<button onclick="showPage('homePage')">
-Home
-</button>
+<button onclick="home()">Home</button>
 
-<button onclick="scrollToSection('examSection')">
+<button onclick="go('examSection')">
 Exams
 </button>
 
-<button onclick="scrollToSection('testSection')">
+<button onclick="go('testSection')">
 Mock Tests
-</button>
-
-<button onclick="scrollToSection('aboutSection')">
-About
 </button>
 
 </div>
@@ -634,15 +590,13 @@ About
 </header>
 
 
-<!-- =========================================================
-HOME PAGE
-========================================================= -->
+<!-- HOME PAGE -->
 
-<div id="homePage" class="page active-page">
+<div id="homePage" class="page active">
 
 <section class="hero">
 
-<div class="container hero-content">
+<div class="container">
 
 <h1>
 Government Exam
@@ -655,13 +609,13 @@ Police, Defence और Teaching Exams की तैयारी के लिए
 Free Mock Tests और Practice Sets.
 </p>
 
-<div class="search-box">
+<div class="search">
 
 <input
-id="globalSearch"
-type="text"
-placeholder="Exam या Test खोजें..."
-onkeyup="searchTests()">
+id="searchInput"
+placeholder="Exam या Subject खोजें..."
+oninput="searchTests()"
+>
 
 <button onclick="searchTests()">
 Search
@@ -679,388 +633,62 @@ Search
 <div class="stats">
 
 <div class="stat">
-<h2>15+</h2>
+<h2>12+</h2>
 <p>Exam Categories</p>
 </div>
 
 <div class="stat">
-<h2>10+</h2>
+<h2>10</h2>
 <p>Years</p>
 </div>
 
 <div class="stat">
-<h2>1000+</h2>
+<h2>100+</h2>
 <p>Practice Questions</p>
 </div>
 
 <div class="stat">
 <h2>FREE</h2>
-<p>Test Series</p>
+<p>Platform</p>
 </div>
 
 </div>
 
 </div>
 
-
-<!-- =========================================================
-EXAMS
-========================================================= -->
 
 <section id="examSection" class="section">
 
 <div class="container">
 
-<h2 class="section-title">
+<h2 class="title">
 Government Exams
 </h2>
 
-<p class="section-subtitle">
+<p class="sub">
 अपना Exam चुनें
 </p>
 
-<div class="exam-grid">
-
-
-<!-- UPSC -->
-
-<div class="exam-card">
-
-<div class="exam-icon">🇮🇳</div>
-
-<h3>UPSC</h3>
-
-<p>
-Civil Services Examination,
-Prelims और GS आधारित Practice.
-</p>
-
-<button
-class="btn"
-onclick="openExam('UPSC')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- UPPCS -->
-
-<div class="exam-card">
-
-<div class="exam-icon">🏛️</div>
-
-<h3>UPPCS</h3>
-
-<p>
-UPPSC PCS Prelims एवं
-State-specific preparation.
-</p>
-
-<button
-class="btn"
-onclick="openExam('UPPCS')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- BPSC -->
-
-<div class="exam-card">
-
-<div class="exam-icon">📚</div>
-
-<h3>BPSC</h3>
-
-<p>
-Bihar Public Service Commission
-Practice Tests.
-</p>
-
-<button
-class="btn"
-onclick="openExam('BPSC')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- SSC -->
-
-<div class="exam-card">
-
-<div class="exam-icon">📝</div>
-
-<h3>SSC</h3>
-
-<p>
-CGL, CHSL, MTS, GD, CPO,
-JE और Stenographer.
-</p>
-
-<button
-class="btn"
-onclick="openExam('SSC')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- RAILWAY -->
-
-<div class="exam-card">
-
-<div class="exam-icon">🚆</div>
-
-<h3>Railway</h3>
-
-<p>
-NTPC, Group D, ALP और
-Technician Tests.
-</p>
-
-<button
-class="btn"
-onclick="openExam('Railway')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- PET -->
-
-<div class="exam-card">
-
-<div class="exam-icon">📖</div>
-
-<h3>UPSSSC PET</h3>
-
-<p>
-PET General Studies और
-Previous Pattern Practice.
-</p>
-
-<button
-class="btn"
-onclick="openExam('PET')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- BANKING -->
-
-<div class="exam-card">
-
-<div class="exam-icon">🏦</div>
-
-<h3>Banking</h3>
-
-<p>
-IBPS, SBI और अन्य Banking
-exam practice.
-</p>
-
-<button
-class="btn"
-onclick="openExam('Banking')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- POLICE -->
-
-<div class="exam-card">
-
-<div class="exam-icon">👮</div>
-
-<h3>Police</h3>
-
-<p>
-UP Police और अन्य Police
-recruitment practice.
-</p>
-
-<button
-class="btn"
-onclick="openExam('Police')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- DEFENCE -->
-
-<div class="exam-card">
-
-<div class="exam-icon">🎖️</div>
-
-<h3>Defence</h3>
-
-<p>
-NDA, CDS और CAPF
-practice tests.
-</p>
-
-<button
-class="btn"
-onclick="openExam('Defence')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- TEACHING -->
-
-<div class="exam-card">
-
-<div class="exam-icon">👨‍🏫</div>
-
-<h3>Teaching</h3>
-
-<p>
-CTET, TET और Teaching
-exam practice.
-</p>
-
-<button
-class="btn"
-onclick="openExam('Teaching')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- STATE EXAMS -->
-
-<div class="exam-card">
-
-<div class="exam-icon">🏢</div>
-
-<h3>State Exams</h3>
-
-<p>
-अन्य State PSC एवं
-Government Exams.
-</p>
-
-<button
-class="btn"
-onclick="openExam('State')">
-Open Tests
-</button>
-
-</div>
-
-
-<!-- OTHER -->
-
-<div class="exam-card">
-
-<div class="exam-icon">🎯</div>
-
-<h3>Other Govt Exams</h3>
-
-<p>
-अन्य competitive government
-exam practice.
-</p>
-
-<button
-class="btn"
-onclick="openExam('Other')">
-Open Tests
-</button>
-
-</div>
-
-</div>
+<div id="examGrid" class="grid"></div>
 
 </div>
 
 </section>
 
 
-<!-- =========================================================
-MOCK TEST SECTION
-========================================================= -->
-
 <section id="testSection" class="section">
 
 <div class="container">
 
-<h2 class="section-title">
+<h2 class="title">
 Free Mock Tests
 </h2>
 
-<p class="section-subtitle">
+<p class="sub">
 Practice करें और अपना Score देखें
 </p>
 
-<div class="filters">
-
-<button class="filter-btn active"
-onclick="filterTests('All',this)">
-All
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('UPSC',this)">
-UPSC
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('UPPCS',this)">
-UPPCS
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('BPSC',this)">
-BPSC
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('SSC',this)">
-SSC
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('Railway',this)">
-Railway
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('PET',this)">
-PET
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('Banking',this)">
-Banking
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('Police',this)">
-Police
-</button>
-
-<button class="filter-btn"
-onclick="filterTests('Defence',this)">
-Defence
-</button>
-
-</div>
+<div class="filters" id="filters"></div>
 
 <div id="testGrid" class="test-grid"></div>
 
@@ -1069,37 +697,25 @@ Defence
 </section>
 
 
-<!-- =========================================================
-ABOUT
-========================================================= -->
-
-<section id="aboutSection" class="section">
+<section class="section">
 
 <div class="container">
 
-<h2 class="section-title">
+<h2 class="title">
 About HistoryTest.online
 </h2>
 
-<p class="section-subtitle">
+<p class="sub">
 एक ही जगह पर Government Exam Practice
 </p>
 
-<div class="exam-card">
+<div class="card">
 
 <p style="line-height:1.8">
 
-HistoryTest.online का उद्देश्य competitive exam
-students को एक simple और free test platform देना है।
-
-यहाँ UPSC, UPPCS, BPSC, SSC, Railway, PET,
-Banking, Police, Defence और Teaching Exams के
-practice tests उपलब्ध कराए जा सकते हैं।
-
-<strong>
-Official PYQ और Practice Set को अलग-अलग
-label किया जाएगा।
-</strong>
+यह platform Government Exam preparation के लिए बनाया गया है।
+Official PYQ और Practice Set को अलग-अलग label किया जाएगा।
+अभी उपलब्ध questions को Practice Set के रूप में रखा गया है।
 
 </p>
 
@@ -1112,9 +728,7 @@ label किया जाएगा।
 </div>
 
 
-<!-- =========================================================
-EXAM PAGE
-========================================================= -->
+<!-- EXAM PAGE -->
 
 <div id="examPage" class="page">
 
@@ -1122,17 +736,14 @@ EXAM PAGE
 
 <div class="container">
 
-<button class="btn btn-dark back-btn"
-onclick="showPage('homePage')">
+<button class="btn dark" onclick="home()">
 ← Home
 </button>
 
-<h1 id="examPageTitle">
-Exam
-</h1>
+<h1 id="examTitle"></h1>
 
-<p id="examPageSubtitle">
-Year और Subject चुनें
+<p>
+Year या Practice Test चुनें
 </p>
 
 </div>
@@ -1141,16 +752,21 @@ Year और Subject चुनें
 
 <div class="container section">
 
-<div id="examOptions"></div>
+<div class="note">
+
+पहले <b>Year Wise</b> चुनकर 2016–2025 में से वर्ष चुन सकते हैं।
+फिर Subject-wise test खुलेगा।
+
+</div>
+
+<div id="examOptions" class="grid"></div>
 
 </div>
 
 </div>
 
 
-<!-- =========================================================
-YEAR PAGE
-========================================================= -->
+<!-- YEAR PAGE -->
 
 <div id="yearPage" class="page">
 
@@ -1158,17 +774,14 @@ YEAR PAGE
 
 <div class="container">
 
-<button class="btn btn-dark back-btn"
-onclick="openCurrentExam()">
+<button class="btn dark" onclick="openExam(selectedExam)">
 ← Back
 </button>
 
-<h1 id="yearPageTitle">
-Select Year
-</h1>
+<h1 id="yearTitle"></h1>
 
 <p>
-2016 से 2025 तक उपलब्ध Year चुनें
+2016–2025
 </p>
 
 </div>
@@ -1177,16 +790,14 @@ Select Year
 
 <div class="container section">
 
-<div id="yearGrid" class="year-grid"></div>
+<div id="yearGrid" class="years"></div>
 
 </div>
 
 </div>
 
 
-<!-- =========================================================
-SUBJECT PAGE
-========================================================= -->
+<!-- SUBJECT PAGE -->
 
 <div id="subjectPage" class="page">
 
@@ -1194,17 +805,14 @@ SUBJECT PAGE
 
 <div class="container">
 
-<button class="btn btn-dark back-btn"
-onclick="openYearPage()">
+<button class="btn dark" onclick="openYears()">
 ← Back
 </button>
 
-<h1 id="subjectPageTitle">
-Subject
-</h1>
+<h1 id="subjectTitle"></h1>
 
-<p id="subjectPageSubtitle">
-Subject-wise Test
+<p>
+Subject-wise Tests
 </p>
 
 </div>
@@ -1213,73 +821,52 @@ Subject-wise Test
 
 <div class="container section">
 
-<div id="subjectGrid" class="subject-grid"></div>
+<div id="subjectGrid" class="subjects"></div>
 
 </div>
 
 </div>
 
 
-<!-- =========================================================
-TEST PAGE
-========================================================= -->
+<!-- TEST PAGE -->
 
 <div id="testPage" class="page">
 
-<div class="test-header">
+<div class="test-top">
 
-<div class="test-header-inner">
+<div class="test-top-inner">
 
-<div>
-<strong id="runningTestTitle">
-Test
-</strong>
-</div>
+<b id="runningTitle"></b>
 
-<div class="timer">
-⏱ <span id="timer">
-00:00
+<span class="timer">
+⏱ <span id="timer">00:00</span>
 </span>
-</div>
 
 </div>
 
 </div>
-
 
 <div class="test-layout">
 
 <div class="question-box">
 
-<div class="question-number"
-id="questionNumber">
-Question 1
-</div>
+<div class="qnum" id="qnum"></div>
 
-<div class="question-text"
-id="questionText">
-Question
-</div>
+<div class="qtext" id="qtext"></div>
 
-<div id="optionsContainer"></div>
+<div id="options"></div>
 
-<div class="test-actions">
+<div class="actions">
 
-<button
-class="btn btn-dark"
-onclick="previousQuestion()">
+<button class="btn dark" onclick="prevQ()">
 ← Previous
 </button>
 
-<button
-class="btn"
-onclick="nextQuestion()">
+<button class="btn" onclick="nextQ()">
 Next →
 </button>
 
-<button
-class="btn btn-red"
-onclick="submitTest()">
+<button class="btn red" onclick="submitTest()">
 Submit
 </button>
 
@@ -1294,9 +881,7 @@ Submit
 Questions
 </h3>
 
-<div id="palette"
-class="palette">
-</div>
+<div id="palette" class="palette"></div>
 
 </div>
 
@@ -1305,9 +890,7 @@ class="palette">
 </div>
 
 
-<!-- =========================================================
-RESULT PAGE
-========================================================= -->
+<!-- RESULT PAGE -->
 
 <div id="resultPage" class="page">
 
@@ -1319,42 +902,33 @@ RESULT PAGE
 Test Completed 🎉
 </h1>
 
-<div class="result-score"
-id="resultScore">
+<div id="score" class="score">
 0/0
 </div>
 
 <div class="result-grid">
 
 <div class="result-stat">
-<strong id="correctCount">
-0
-</strong>
+<b id="correct">0</b>
 <br>
 Correct
 </div>
 
 <div class="result-stat">
-<strong id="wrongCount">
-0
-</strong>
+<b id="wrong">0</b>
 <br>
 Wrong
 </div>
 
 <div class="result-stat">
-<strong id="unattemptedCount">
-0
-</strong>
+<b id="skip">0</b>
 <br>
 Unattempted
 </div>
 
 </div>
 
-<button
-class="btn"
-onclick="showPage('homePage')">
+<button class="btn" onclick="home()">
 Go Home
 </button>
 
@@ -1365,13 +939,7 @@ Go Home
 </div>
 
 
-<!-- =========================================================
-FOOTER
-========================================================= -->
-
 <footer>
-
-<div class="footer-inner">
 
 <h2>
 HistoryTest.online
@@ -1385,2021 +953,4 @@ Free Government Exam Practice Platform
 © 2026 HistoryTest.online
 </p>
 
-</div>
-
 </footer>
-
-
-<script>
-
-/* =========================================================
-GLOBAL VARIABLES
-========================================================= */
-
-let selectedExam = "";
-let selectedYear = "";
-let selectedSubject = "";
-
-let currentTest = null;
-let currentQuestion = 0;
-let userAnswers = [];
-let timerInterval = null;
-let timeLeft = 0;
-
-
-/* =========================================================
-EXAM DATABASE
-========================================================= */
-
-const examDatabase = {
-
-"UPSC":{
-icon:"🇮🇳",
-subjects:[
-"History",
-"Polity",
-"Geography",
-"Economy",
-"Environment",
-"Science & Technology",
-"Current Affairs",
-"Full Paper"
-]
-},
-
-"UPPCS":{
-icon:"🏛️",
-subjects:[
-"History",
-"Indian Polity",
-"Geography",
-"Economy",
-"Environment",
-"Science",
-"Uttar Pradesh GK",
-"Current Affairs",
-"Full Paper"
-]
-},
-
-"BPSC":{
-icon:"📚",
-subjects:[
-"History",
-"Geography",
-"Polity",
-"Economy",
-"Bihar GK",
-"Science",
-"Current Affairs",
-"Full Paper"
-]
-},
-
-"SSC":{
-icon:"📝",
-subjects:[
-"General Intelligence & Reasoning",
-"General Awareness",
-"Quantitative Aptitude",
-"English",
-"Full Paper"
-]
-},
-
-"Railway":{
-icon:"🚆",
-subjects:[
-"General Awareness",
-"General Science",
-"Mathematics",
-"Reasoning",
-"Current Affairs",
-"Full Paper"
-]
-},
-
-"PET":{
-icon:"📖",
-subjects:[
-"Indian History",
-"Indian National Movement",
-"Geography",
-"Indian Economy",
-"Constitution",
-"General Science",
-"Current Affairs",
-"UP GK",
-"Full Paper"
-]
-},
-
-"Banking":{
-icon:"🏦",
-subjects:[
-"Reasoning",
-"Quantitative Aptitude",
-"English",
-"General Awareness",
-"Banking Awareness",
-"Computer",
-"Full Paper"
-]
-},
-
-"Police":{
-icon:"👮",
-subjects:[
-"General Knowledge",
-"General Science",
-"Reasoning",
-"Numerical Ability",
-"Current Affairs",
-"State GK",
-"Full Paper"
-]
-},
-
-"Defence":{
-icon:"🎖️",
-subjects:[
-"Mathematics",
-"English",
-"General Ability",
-"History",
-"Geography",
-"Science",
-"Current Affairs",
-"Full Paper"
-]
-},
-
-"Teaching":{
-icon:"👨‍🏫",
-subjects:[
-"Child Development",
-"Pedagogy",
-"Language",
-"Mathematics",
-"EVS",
-"Science",
-"Social Studies",
-"Full Paper"
-]
-},
-
-"State":{
-icon:"🏢",
-subjects:[
-"History",
-"Polity",
-"Geography",
-"Economy",
-"State GK",
-"Science",
-"Current Affairs",
-"Full Paper"
-]
-},
-
-"Other":{
-icon:"🎯",
-subjects:[
-"General Knowledge",
-"Reasoning",
-"Mathematics",
-"English",
-"General Science",
-"Current Affairs",
-"Full Paper"
-]
-}
-
-};
-
-
-/* =========================================================
-YEAR LIST
-========================================================= */
-
-const years = [
-2025,
-2024,
-2023,
-2022,
-2021,
-2020,
-2019,
-2018,
-2017,
-2016
-];
-
-
-/* =========================================================
-QUESTION BANK
-========================================================= */
-
-/*
-IMPORTANT:
-
-ये questions Practice Set के लिए हैं।
-इन्हें Official PYQ नहीं कहा गया है।
-Exact verified PYQ बाद में अलग database
-से जोड़े जा सकते हैं।
-*/
-
-const questionBank = {
-
-
-/* ================= UPSC ================= */
-
-UPSC:{
-
-"History":[
-
-{
-q:"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?",
-o:["हड़प्पा","मोहनजोदड़ो","लोथल","कालीबंगा"],
-a:2
-},
-
-{
-q:"मौर्य साम्राज्य की स्थापना किसने की?",
-o:["अशोक","चन्द्रगुप्त मौर्य","बिन्दुसार","कौटिल्य"],
-a:1
-},
-
-{
-q:"भारत में बौद्ध धर्म के प्रसार में किस सम्राट की महत्वपूर्ण भूमिका थी?",
-o:["अशोक","समुद्रगुप्त","हर्ष","कनिष्क"],
-a:0
-},
-
-{
-q:"प्रथम पानीपत का युद्ध किस वर्ष हुआ?",
-o:["1526","1556","1761","1757"],
-a:0
-},
-
-{
-q:"प्लासी का युद्ध किस वर्ष हुआ?",
-o:["1757","1764","1857","1773"],
-a:0
-},
-
-{
-q:"भारतीय राष्ट्रीय कांग्रेस की स्थापना कब हुई?",
-o:["1885","1905","1919","1942"],
-a:0
-},
-
-{
-q:"भारत छोड़ो आंदोलन किस वर्ष प्रारंभ हुआ?",
-o:["1930","1935","1942","1947"],
-a:2
-},
-
-{
-q:"दांडी मार्च किस आंदोलन से संबंधित था?",
-o:[
-"असहयोग आंदोलन",
-"सविनय अवज्ञा आंदोलन",
-"भारत छोड़ो आंदोलन",
-"स्वदेशी आंदोलन"
-],
-a:1
-},
-
-{
-q:"भारतीय संविधान कब अंगीकृत किया गया?",
-o:[
-"15 अगस्त 1947",
-"26 जनवरी 1950",
-"26 नवंबर 1949",
-"2 अक्टूबर 1950"
-],
-a:2
-},
-
-{
-q:"भारत गणराज्य कब बना?",
-o:[
-"15 अगस्त 1947",
-"26 नवंबर 1949",
-"26 जनवरी 1950",
-"26 जनवरी 1949"
-],
-a:2
-}
-
-],
-
-"Polity":[
-
-{
-q:"भारतीय संविधान का संरक्षक किसे माना जाता है?",
-o:[
-"संसद",
-"सर्वोच्च न्यायालय",
-"राष्ट्रपति",
-"प्रधानमंत्री"
-],
-a:1
-},
-
-{
-q:"मौलिक अधिकार संविधान के किस भाग में हैं?",
-o:["भाग I","भाग II","भाग III","भाग IV"],
-a:2
-},
-
-{
-q:"राज्यसभा का कार्यकाल कितना होता है?",
-o:[
-"5 वर्ष",
-"6 वर्ष",
-"स्थायी सदन है",
-"4 वर्ष"
-],
-a:2
-},
-
-{
-q:"लोकसभा का सामान्य कार्यकाल कितना है?",
-o:[
-"4 वर्ष",
-"5 वर्ष",
-"6 वर्ष",
-"7 वर्ष"
-],
-a:1
-}
-
-],
-
-"Geography":[
-
-{
-q:"भारत की सबसे लंबी नदी कौन-सी है?",
-o:["गंगा","यमुना","गोदावरी","नर्मदा"],
-a:0
-},
-
-{
-q:"भारत का सबसे बड़ा राज्य क्षेत्रफल की दृष्टि से कौन-सा है?",
-o:[
-"मध्य प्रदेश",
-"उत्तर प्रदेश",
-"राजस्थान",
-"महाराष्ट्र"
-],
-a:2
-}
-
-],
-
-"Economy":[
-
-{
-q:"भारतीय रिजर्व बैंक की स्थापना किस वर्ष हुई?",
-o:["1935","1947","1950","1920"],
-a:0
-},
-
-{
-q:"भारत में मौद्रिक नीति मुख्यतः किस संस्था से संबंधित है?",
-o:[
-"RBI",
-"SEBI",
-"NITI Aayog",
-"Finance Commission"
-],
-a:0
-}
-
-],
-
-"Environment":[
-
-{
-q:"ओजोन परत मुख्यतः किस मंडल में पाई जाती है?",
-o:[
-"क्षोभमंडल",
-"समतापमंडल",
-"मध्यमंडल",
-"तापमंडल"
-],
-a:1
-}
-
-],
-
-"Science & Technology":[
-
-{
-q:"DNA का पूर्ण रूप क्या है?",
-o:[
-"Deoxyribonucleic Acid",
-"Dynamic Nuclear Acid",
-"Double Nitrogen Acid",
-"None"
-],
-a:0
-}
-
-],
-
-"Current Affairs":[
-
-{
-q:"Current Affairs section में प्रश्न समय के अनुसार अपडेट किए जाने चाहिए।",
-o:[
-"Practice Question",
-"Official Current Affairs",
-"Static GK",
-"None"
-],
-a:0
-}
-
-]
-
-},
-
-
-/* ================= SSC ================= */
-
-SSC:{
-
-"General Intelligence & Reasoning":[
-
-{
-q:"यदि CAT को DBU लिखा जाता है, तो DOG को किस प्रकार लिखा जाएगा?",
-o:["EPH","EOG","DPH","FPI"],
-a:0
-},
-
-{
-q:"श्रृंखला पूरी कीजिए: 2, 4, 8, 16, ?",
-o:["20","24","32","36"],
-a:2
-},
-
-{
-q:"एक घड़ी में 3 बजे घंटे और मिनट की सुई के बीच कोण कितना होता है?",
-o:["60°","90°","120°","180°"],
-a:1
-},
-
-{
-q:"यदि सभी आम फल हैं और कुछ फल मीठे हैं, तो कौन-सा निष्कर्ष निश्चित है?",
-o:[
-"सभी आम मीठे हैं",
-"कुछ फल आम हैं",
-"आम फल हैं",
-"कोई फल मीठा नहीं"
-],
-a:2
-}
-
-],
-
-"General Awareness":[
-
-{
-q:"भारत का राष्ट्रीय पशु कौन-सा है?",
-o:["सिंह","बाघ","हाथी","मोर"],
-a:1
-},
-
-{
-q:"भारतीय संविधान कब लागू हुआ?",
-o:["15 अगस्त 1947","26 जनवरी 1950","26 नवंबर 1949","2 अक्टूबर 1950"],
-a:1
-},
-
-{
-q:"RBI की स्थापना किस वर्ष हुई?",
-o:["1935","1947","1950","1960"],
-a:0
-},
-
-{
-q:"विश्व का सबसे बड़ा महासागर कौन-सा है?",
-o:["हिन्द महासागर","अटलांटिक","प्रशांत","आर्कटिक"],
-a:2
-},
-
-{
-q:"विटामिन C की कमी से कौन-सा रोग होता है?",
-o:["रिकेट्स","स्कर्वी","बेरी-बेरी","एनीमिया"],
-a:1
-}
-
-],
-
-"Quantitative Aptitude":[
-
-{
-q:"20 का 25% कितना है?",
-o:["4","5","6","10"],
-a:1
-},
-
-{
-q:"यदि किसी वस्तु का मूल्य ₹100 है और 10% लाभ है, तो विक्रय मूल्य कितना होगा?",
-o:["₹105","₹110","₹115","₹120"],
-a:1
-},
-
-{
-q:"15 और 20 का LCM क्या है?",
-o:["30","40","60","80"],
-a:2
-},
-
-{
-q:"एक संख्या का आधा 25 है। संख्या क्या है?",
-o:["25","40","50","75"],
-a:2
-}
-
-],
-
-"English":[
-
-{
-q:"Choose the correct synonym of 'Happy'.",
-o:["Sad","Joyful","Angry","Weak"],
-a:1
-},
-
-{
-q:"Choose the correct antonym of 'Strong'.",
-o:["Powerful","Weak","Hard","Large"],
-a:1
-},
-
-{
-q:"Choose the correct spelling.",
-o:["Goverment","Government","Governmant","Govarnment"],
-a:1
-}
-
-]
-
-},
-
-
-/* ================= RAILWAY ================= */
-
-Railway:{
-
-"General Awareness":[
-
-{
-q:"भारतीय रेलवे का मुख्यालय कहाँ है?",
-o:["मुंबई","नई दिल्ली","कोलकाता","चेन्नई"],
-a:1
-},
-
-{
-q:"भारत में पहली रेलगाड़ी कब चली?",
-o:["1853","1857","1885","1905"],
-a:0
-}
-
-],
-
-"General Science":[
-
-{
-q:"पानी का रासायनिक सूत्र क्या है?",
-o:["CO2","H2O","O2","NaCl"],
-a:1
-},
-
-{
-q:"मानव शरीर में रक्त को पंप करने वाला अंग कौन-सा है?",
-o:["फेफड़ा","हृदय","गुर्दा","यकृत"],
-a:1
-}
-
-],
-
-"Mathematics":[
-
-{
-q:"25 × 4 = ?",
-o:["50","75","100","125"],
-a:2
-},
-
-{
-q:"1000 का 10% कितना है?",
-o:["10","50","100","200"],
-a:2
-}
-
-],
-
-"Reasoning":[
-
-{
-q:"2, 4, 6, 8, ?",
-o:["9","10","11","12"],
-a:1
-},
-
-{
-q:"यदि A = 1, B = 2, तो D = ?",
-o:["2","3","4","5"],
-a:2
-}
-
-]
-
-},
-
-
-/* ================= PET ================= */
-
-PET:{
-
-"Indian History":[
-
-{
-q:"मौर्य वंश के संस्थापक कौन थे?",
-o:[
-"अशोक",
-"चन्द्रगुप्त मौर्य",
-"बिन्दुसार",
-"समुद्रगुप्त"
-],
-a:1
-},
-
-{
-q:"1857 का विद्रोह कहाँ से प्रारंभ हुआ?",
-o:["मेरठ","दिल्ली","कानपुर","लखनऊ"],
-a:0
-}
-
-],
-
-"Indian National Movement":[
-
-{
-q:"असहयोग आंदोलन किस वर्ष प्रारंभ हुआ?",
-o:["1915","1919","1920","1930"],
-a:2
-},
-
-{
-q:"भारत छोड़ो आंदोलन किस वर्ष प्रारंभ हुआ?",
-o:["1930","1935","1942","1947"],
-a:2
-}
-
-],
-
-"Constitution":[
-
-{
-q:"मौलिक अधिकार संविधान के किस भाग में हैं?",
-o:["भाग II","भाग III","भाग IV","भाग V"],
-a:1
-}
-
-],
-
-"General Science":[
-
-{
-q:"प्रकाश की गति लगभग कितनी है?",
-o:[
-"3 × 10⁸ m/s",
-"3 × 10⁵ m/s",
-"3 × 10³ m/s",
-"3 × 10¹⁰ m/s"
-],
-a:0
-}
-
-],
-
-"UP GK":[
-
-{
-q:"उत्तर प्रदेश की राजधानी क्या है?",
-o:["कानपुर","लखनऊ","वाराणसी","प्रयागराज"],
-a:1
-}
-
-]
-
-},
-
-
-/* ================= BPSC ================= */
-
-BPSC:{
-
-"History":[
-
-{
-q:"बिहार की प्राचीन राजधानी पाटलिपुत्र किस साम्राज्य से प्रमुख रूप से जुड़ी थी?",
-o:["मौर्य","चोल","पल्लव","चालुक्य"],
-a:0
-},
-
-{
-q:"नालंदा विश्वविद्यालय किस राज्य में स्थित था?",
-o:["बिहार","उत्तर प्रदेश","मध्य प्रदेश","राजस्थान"],
-a:0
-}
-
-],
-
-"Bihar GK":[
-
-{
-q:"बिहार की राजधानी क्या है?",
-o:["गया","पटना","मुजफ्फरपुर","भागलपुर"],
-a:1
-}
-
-],
-
-"Geography":[
-
-{
-q:"गंगा नदी बिहार में किस दिशा में मुख्यतः बहती है?",
-o:[
-"पश्चिम से पूर्व",
-"पूर्व से पश्चिम",
-"उत्तर से दक्षिण",
-"दक्षिण से उत्तर"
-],
-a:0
-}
-
-]
-
-},
-
-
-/* ================= BANKING ================= */
-
-Banking:{
-
-"Reasoning":[
-
-{
-q:"श्रृंखला पूरी करें: 5, 10, 15, 20, ?",
-o:["22","25","30","35"],
-a:1
-}
-
-],
-
-"Quantitative Aptitude":[
-
-{
-q:"200 का 15% कितना है?",
-o:["20","25","30","35"],
-a:2
-}
-
-],
-
-"English":[
-
-{
-q:"Choose the correct antonym of 'Early'.",
-o:["Fast","Late","Quick","Soon"],
-a:1
-}
-
-],
-
-"Banking Awareness":[
-
-{
-q:"भारत में मौद्रिक नीति से प्रमुख रूप से कौन संबंधित है?",
-o:["RBI","SEBI","IRDAI","NITI Aayog"],
-a:0
-}
-
-]
-
-},
-
-
-/* ================= POLICE ================= */
-
-Police:{
-
-"General Knowledge":[
-
-{
-q:"भारत की राजधानी क्या है?",
-o:["मुंबई","नई दिल्ली","कोलकाता","चेन्नई"],
-a:1
-}
-
-],
-
-"General Science":[
-
-{
-q:"मानव शरीर का सबसे बड़ा अंग कौन-सा है?",
-o:["हृदय","त्वचा","फेफड़ा","यकृत"],
-a:1
-}
-
-],
-
-"Reasoning":[
-
-{
-q:"10, 20, 30, 40, ?",
-o:["45","50","55","60"],
-a:1
-}
-
-]
-
-},
-
-
-/* ================= DEFENCE ================= */
-
-Defence:{
-
-"Mathematics":[
-
-{
-q:"12 × 12 = ?",
-o:["124","144","154","164"],
-a:1
-}
-
-],
-
-"English":[
-
-{
-q:"Choose the correct synonym of 'Brave'.",
-o:["Coward","Courageous","Weak","Lazy"],
-a:1
-}
-
-],
-
-"History":[
-
-{
-q:"प्लासी का युद्ध किस वर्ष हुआ?",
-o:["1757","1764","1857","1942"],
-a:0
-}
-
-]
-
-},
-
-
-/* ================= TEACHING ================= */
-
-Teaching:{
-
-"Child Development":[
-
-{
-q:"बाल विकास का अध्ययन मुख्यतः किससे संबंधित है?",
-o:[
-"बच्चों के विकास",
-"केवल गणित",
-"केवल भाषा",
-"केवल इतिहास"
-],
-a:0
-}
-
-],
-
-"Mathematics":[
-
-{
-q:"10 + 20 = ?",
-o:["20","25","30","40"],
-a:2
-}
-
-],
-
-"EVS":[
-
-{
-q:"पर्यावरण में जैविक घटक का उदाहरण क्या है?",
-o:["जल","वायु","पौधे","मिट्टी"],
-a:2
-}
-
-]
-
-}
-
-};
-
-
-/* =========================================================
-DEFAULT QUESTIONS
-========================================================= */
-
-const defaultQuestions = [
-
-{
-q:"यह एक Practice Question है। सही उत्तर चुनिए।",
-o:[
-"Option A",
-"Option B",
-"Option C",
-"Option D"
-],
-a:0
-},
-
-{
-q:"Competitive examination की तैयारी में नियमित अभ्यास क्यों महत्वपूर्ण है?",
-o:[
-"समय प्रबंधन के लिए",
-"सिर्फ मनोरंजन के लिए",
-"परीक्षा छोड़ने के लिए",
-"इनमें से कोई नहीं"
-],
-a:0
-},
-
-{
-q:"Mock Test का मुख्य उद्देश्य क्या है?",
-o:[
-"Practice और performance analysis",
-"केवल marks देखना",
-"केवल certificate लेना",
-"कुछ नहीं"
-],
-a:0
-},
-
-{
-q:"किसी प्रश्न का उत्तर नहीं पता हो तो क्या करना चाहिए?",
-o:[
-"समय प्रबंधन के अनुसार निर्णय लेना",
-"पूरी परीक्षा छोड़ देना",
-"सभी विकल्प चुनना",
-"कुछ भी नहीं"
-],
-a:0
-},
-
-{
-q:"परीक्षा में time management क्यों जरूरी है?",
-o:[
-"सभी प्रश्नों के लिए समय बाँटने हेतु",
-"केवल पहले प्रश्न के लिए",
-"केवल अंतिम प्रश्न के लिए",
-"जरूरी नहीं"
-],
-a:0
-}
-
-];
-
-
-/* =========================================================
-SAMPLE TEST DATABASE
-========================================================= */
-
-const tests = [
-
-{
-id:"upsc-history-01",
-exam:"UPSC",
-title:"UPSC History Practice Test – 01",
-subject:"History",
-year:"Practice",
-questions:questionBank.UPSC.History,
-duration:10
-},
-
-{
-id:"upsc-polity-01",
-exam:"UPSC",
-title:"UPSC Polity Practice Test – 01",
-subject:"Polity",
-year:"Practice",
-questions:questionBank.UPSC.Polity,
-duration:8
-},
-
-{
-id:"uppcs-history-01",
-exam:"UPPCS",
-title:"UPPCS History Practice Test – 01",
-subject:"History",
-year:"Practice",
-questions:questionBank.UPSC.History,
-duration:10
-},
-
-{
-id:"bpsc-history-01",
-exam:"BPSC",
-title:"BPSC History Practice Test – 01",
-subject:"History",
-year:"Practice",
-questions:questionBank.BPSC.History,
-duration:8
-},
-
-{
-id:"ssc-ga-01",
-exam:"SSC",
-title:"SSC General Awareness Practice – 01",
-subject:"General Awareness",
-year:"Practice",
-questions:questionBank.SSC["General Awareness"],
-duration:8
-},
-
-{
-id:"ssc-reasoning-01",
-exam:"SSC",
-title:"SSC Reasoning Practice – 01",
-subject:"General Intelligence & Reasoning",
-year:"Practice",
-questions:questionBank.SSC["General Intelligence & Reasoning"],
-duration:8
-},
-
-{
-id:"ssc-math-01",
-exam:"SSC",
-title:"SSC Quantitative Aptitude Practice – 01",
-subject:"Quantitative Aptitude",
-year:"Practice",
-questions:questionBank.SSC["Quantitative Aptitude"],
-duration:8
-},
-
-{
-id:"ssc-english-01",
-exam:"SSC",
-title:"SSC English Practice – 01",
-subject:"English",
-year:"Practice",
-questions:questionBank.SSC["English"],
-duration:8
-},
-
-{
-id:"railway-ga-01",
-exam:"Railway",
-title:"Railway General Awareness Practice – 01",
-subject:"General Awareness",
-year:"Practice",
-questions:questionBank.Railway["General Awareness"],
-duration:8
-},
-
-{
-id:"railway-science-01",
-exam:"Railway",
-title:"Railway General Science Practice – 01",
-subject:"General Science",
-year:"Practice",
-questions:questionBank.Railway["General Science"],
-duration:8
-},
-
-{
-id:"railway-math-01",
-exam:"Railway",
-title:"Railway Mathematics Practice – 01",
-subject:"Mathematics",
-year:"Practice",
-questions:questionBank.Railway["Mathematics"],
-duration:8
-},
-
-{
-id:"pet-history-01",
-exam:"PET",
-title:"UPSSSC PET History Practice – 01",
-subject:"Indian History",
-year:"Practice",
-questions:questionBank.PET["Indian History"],
-duration:8
-},
-
-{
-id:"pet-constitution-01",
-exam:"PET",
-title:"UPSSSC PET Constitution Practice – 01",
-subject:"Constitution",
-year:"Practice",
-questions:questionBank.PET["Constitution"],
-duration:8
-},
-
-{
-id:"banking-reasoning-01",
-exam:"Banking",
-title:"Banking Reasoning Practice – 01",
-subject:"Reasoning",
-year:"Practice",
-questions:questionBank.Banking.Reasoning,
-duration:8
-},
-
-{
-id:"banking-math-01",
-exam:"Banking",
-title:"Banking Quantitative Aptitude Practice – 01",
-subject:"Quantitative Aptitude",
-year:"Practice",
-questions:questionBank.Banking["Quantitative Aptitude"],
-duration:8
-},
-
-{
-id:"police-gk-01",
-exam:"Police",
-title:"Police General Knowledge Practice – 01",
-subject:"General Knowledge",
-year:"Practice",
-questions:questionBank.Police["General Knowledge"],
-duration:8
-},
-
-{
-id:"defence-math-01",
-exam:"Defence",
-title:"Defence Mathematics Practice – 01",
-subject:"Mathematics",
-year:"Practice",
-questions:questionBank.Defence.Mathematics,
-duration:8
-},
-
-{
-id:"teaching-child-01",
-exam:"Teaching",
-title:"Teaching Child Development Practice – 01",
-subject:"Child Development",
-year:"Practice",
-questions:questionBank.Teaching["Child Development"],
-duration:8
-}
-
-];
-
-
-/* =========================================================
-PAGE CONTROL
-========================================================= */
-
-function showPage(id){
-
-document.querySelectorAll(".page").forEach(
-page=>page.classList.remove("active-page")
-);
-
-document.getElementById(id).classList.add("active-page");
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-
-/* =========================================================
-SCROLL
-========================================================= */
-
-function scrollToSection(id){
-
-showPage("homePage");
-
-setTimeout(()=>{
-
-document.getElementById(id)
-.scrollIntoView({
-behavior:"smooth"
-});
-
-},100);
-
-}
-
-
-/* =========================================================
-OPEN EXAM
-========================================================= */
-
-function openExam(exam){
-
-selectedExam=exam;
-
-document.getElementById("examPageTitle").innerText=
-exam+" Examination";
-
-document.getElementById("examPageSubtitle").innerText=
-"पहले Year चुनें";
-
-const box=document.getElementById("examOptions");
-
-box.innerHTML="";
-
-let data=examDatabase[exam];
-
-if(!data){
-
-data=examDatabase.Other;
-
-}
-
-const wrapper=document.createElement("div");
-
-wrapper.className="exam-grid";
-
-const yearsCard=document.createElement("div");
-
-yearsCard.className="exam-card";
-
-yearsCard.innerHTML=`
-
-<div class="exam-icon">📅</div>
-
-<h3>Year Wise Tests</h3>
-
-<p>
-2016 से 2025 तक Year चुनें और
-फिर Subject चुनें।
-</p>
-
-<button class="btn">
-Open Years
-</button>
-
-`;
-
-yearsCard.querySelector("button")
-.onclick=()=>openYearPage();
-
-wrapper.appendChild(yearsCard);
-
-
-/* direct subject cards */
-
-data.subjects.forEach(subject=>{
-
-const card=document.createElement("div");
-
-card.className="exam-card";
-
-card.innerHTML=`
-
-<div class="exam-icon">📚</div>
-
-<h3>${subject}</h3>
-
-<p>
-${exam} ${subject}
-Practice Test
-</p>
-
-<button class="btn">
-Open Test
-</button>
-
-`;
-
-card.querySelector("button")
-.onclick=()=>{
-
-selectedYear="Practice";
-selectedSubject=subject;
-
-startSubjectTest();
-
-};
-
-wrapper.appendChild(card);
-
-});
-
-box.appendChild(wrapper);
-
-showPage("examPage");
-
-}
-
-
-/* =========================================================
-OPEN YEAR PAGE
-========================================================= */
-
-function openYearPage(){
-
-document.getElementById("yearPageTitle").innerText=
-selectedExam+" – Select Year";
-
-const grid=document.getElementById("yearGrid");
-
-grid.innerHTML="";
-
-years.forEach(year=>{
-
-const card=document.createElement("div");
-
-card.className="year-card";
-
-card.innerHTML=`
-
-<h2>${year}</h2>
-
-<p style="margin-bottom:15px">
-${selectedExam} Tests
-</p>
-
-<button class="btn">
-View Subjects
-</button>
-
-`;
-
-card.querySelector("button")
-.onclick=()=>openSubjectPage(year);
-
-grid.appendChild(card);
-
-});
-
-showPage("yearPage");
-
-}
-
-
-/* =========================================================
-OPEN SUBJECT PAGE
-========================================================= */
-
-function openSubjectPage(year){
-
-selectedYear=year;
-
-const data=
-examDatabase[selectedExam] ||
-examDatabase.Other;
-
-document.getElementById("subjectPageTitle").innerText=
-selectedExam+" "+year;
-
-document.getElementById("subjectPageSubtitle").innerText=
-"Subject-wise Tests";
-
-const grid=document.getElementById("subjectGrid");
-
-grid.innerHTML="";
-
-data.subjects.forEach((subject,index)=>{
-
-const icons=[
-"🧠",
-"🌍",
-"➗",
-"📖",
-"📚",
-"🔬",
-"📰",
-"🎯"
-];
-
-const card=document.createElement("div");
-
-card.className="subject-card";
-
-card.innerHTML=`
-
-<div class="icon">
-${icons[index%icons.length]}
-</div>
-
-<h3>
-${subject}
-</h3>
-
-<p style="margin:10px 0;color:#667085">
-${selectedExam} • ${year}
-</p>
-
-<button class="btn">
-Start Test
-</button>
-
-`;
-
-card.querySelector("button")
-.onclick=()=>{
-
-selectedSubject=subject;
-
-startSubjectTest();
-
-};
-
-grid.appendChild(card);
-
-});
-
-showPage("subjectPage");
-
-}
-
-
-/* =========================================================
-BACK TO EXAM
-========================================================= */
-
-function openCurrentExam(){
-
-openExam(selectedExam);
-
-}
-
-
-/* =========================================================
-BACK TO YEARS
-========================================================= */
-
-function openYearPageBack(){
-
-openYearPage();
-
-}
-
-
-/* =========================================================
-SUBJECT TEST
-========================================================= */
-
-function startSubjectTest(){
-
-let qs=null;
-
-if(
-questionBank[selectedExam] &&
-questionBank[selectedExam][selectedSubject]
-){
-
-qs=questionBank[selectedExam][selectedSubject];
-
-}
-
-if(!qs || qs.length===0){
-
-qs=defaultQuestions;
-
-}
-
-currentTest={
-
-id:
-selectedExam+"-"+selectedYear+"-"+selectedSubject,
-
-exam:selectedExam,
-
-year:selectedYear,
-
-subject:selectedSubject,
-
-title:
-selectedExam+
-" "+selectedYear+
-" "+selectedSubject+
-" Practice Test",
-
-questions:qs,
-
-duration:Math.max(5,Math.ceil(qs.length*1.2))
-
-};
-
-startTest(currentTest);
-
-}
-
-
-/* =========================================================
-START TEST
-========================================================= */
-
-function startTest(test){
-
-currentTest=test;
-
-currentQuestion=0;
-
-userAnswers=
-new Array(test.questions.length).fill(null);
-
-timeLeft=
-test.duration*60;
-
-document.getElementById("runningTestTitle")
-.innerText=test.title;
-
-createPalette();
-
-showPage("testPage");
-
-loadQuestion();
-
-startTimer();
-
-}
-
-
-/* =========================================================
-TIMER
-========================================================= */
-
-function startTimer(){
-
-clearInterval(timerInterval);
-
-updateTimer();
-
-timerInterval=setInterval(()=>{
-
-timeLeft--;
-
-updateTimer();
-
-if(timeLeft<=0){
-
-clearInterval(timerInterval);
-
-submitTest();
-
-}
-
-},1000);
-
-}
-
-
-function updateTimer(){
-
-let minutes=
-Math.floor(timeLeft/60);
-
-let seconds=
-timeLeft%60;
-
-document.getElementById("timer")
-.innerText=
-String(minutes).padStart(2,"0")
-+
-":"
-+
-String(seconds).padStart(2,"0");
-
-}
-
-
-/* =========================================================
-LOAD QUESTION
-========================================================= */
-
-function loadQuestion(){
-
-const q=
-currentTest.questions[currentQuestion];
-
-document.getElementById("questionNumber")
-.innerText=
-"Question "+
-(currentQuestion+1)+
-" / "+
-currentTest.questions.length;
-
-document.getElementById("questionText")
-.innerText=q.q;
-
-const container=
-document.getElementById("optionsContainer");
-
-container.innerHTML="";
-
-q.o.forEach((option,index)=>{
-
-const label=
-document.createElement("label");
-
-label.className="option";
-
-label.innerHTML=`
-
-<input
-type="radio"
-name="answer"
-value="${index}"
-${userAnswers[currentQuestion]===index?"checked":""}
->
-
-${String.fromCharCode(65+index)}.
-${option}
-
-`;
-
-label.querySelector("input")
-.addEventListener(
-"change",
-()=>{
-
-userAnswers[currentQuestion]=index;
-
-updatePalette();
-
-}
-);
-
-container.appendChild(label);
-
-});
-
-updatePalette();
-
-}
-
-
-/* =========================================================
-NEXT
-========================================================= */
-
-function nextQuestion(){
-
-if(
-currentQuestion<
-currentTest.questions.length-1
-){
-
-currentQuestion++;
-
-loadQuestion();
-
-}else{
-
-alert("यह अंतिम प्रश्न है।");
-
-}
-
-}
-
-
-/* =========================================================
-PREVIOUS
-========================================================= */
-
-function previousQuestion(){
-
-if(currentQuestion>0){
-
-currentQuestion--;
-
-loadQuestion();
-
-}
-
-}
-
-
-/* =========================================================
-PALETTE
-========================================================= */
-
-function createPalette(){
-
-const palette=
-document.getElementById("palette");
-
-palette.innerHTML="";
-
-currentTest.questions.forEach((q,index)=>{
-
-const btn=
-document.createElement("button");
-
-btn.innerText=index+1;
-
-btn.onclick=()=>{
-
-currentQuestion=index;
-
-loadQuestion();
-
-};
-
-palette.appendChild(btn);
-
-});
-
-}
-
-
-function updatePalette(){
-
-const buttons=
-document.querySelectorAll("#palette button");
-
-buttons.forEach((btn,index)=>{
-
-btn.classList.remove(
-"current",
-"answered"
-);
-
-if(index===currentQuestion){
-
-btn.classList.add("current");
-
-}
-
-if(userAnswers[index]!==null){
-
-btn.classList.add("answered");
-
-}
-
-});
-
-}
-
-
-/* =========================================================
-SUBMIT
-========================================================= */
-
-function submitTest(){
-
-clearInterval(timerInterval);
-
-let correct=0;
-
-let wrong=0;
-
-let unattempted=0;
-
-currentTest.questions.forEach(
-(q,index)=>{
-
-if(userAnswers[index]===null){
-
-unattempted++;
-
-}else if(
-userAnswers[index]===q.a
-){
-
-correct++;
-
-}else{
-
-wrong++;
-
-}
-
-});
-
-document.getElementById("resultScore")
-.innerText=
-correct+
-"/"+
-currentTest.questions.length;
-
-document.getElementById("correctCount")
-.innerText=correct;
-
-document.getElementById("wrongCount")
-.innerText=wrong;
-
-document.getElementById("unattemptedCount")
-.innerText=unattempted;
-
-showPage("resultPage");
-
-}
-
-
-/* =========================================================
-MOCK TEST FILTER
-========================================================= */
-
-function renderTests(list){
-
-const grid=
-document.getElementById("testGrid");
-
-grid.innerHTML="";
-
-if(list.length===0){
-
-grid.innerHTML=`
-
-<div class="exam-card">
-
-<h3>No Test Found</h3>
-
-<p>
-इस category में अभी test उपलब्ध नहीं है।
-</p>
-
-</div>
-
-`;
-
-return;
-
-}
-
-list.forEach(test=>{
-
-const card=
-document.createElement("div");
-
-card.className="test-card";
-
-card.innerHTML=`
-
-<h3>${test.title}</h3>
-
-<div class="test-meta">
-
-<span>${test.exam}</span>
-
-<span>${test.questions.length} Questions</span>
-
-</div>
-
-<div class="test-meta">
-
-<span>${test.subject}</span>
-
-<span>${test.duration} Min</span>
-
-</div>
-
-<button class="btn">
-Start Test
-</button>
-
-`;
-
-card.querySelector("button")
-.onclick=()=>startTest(test);
-
-grid.appendChild(card);
-
-});
-
-}
-
-
-function filterTests(category,button){
-
-document
-.querySelectorAll(".filter-btn")
-.forEach(btn=>
-btn.classList.remove("active")
-);
-
-button.classList.add("active");
-
-if(category==="All"){
-
-renderTests(tests);
-
-return;
-
-}
-
-renderTests(
-tests.filter(test=>
-test.exam===category
-)
-);
-
-}
-
-
-/* =========================================================
-SEARCH
-========================================================= */
-
-function searchTests(){
-
-const text=
-document.getElementById("globalSearch")
-.value
-.toLowerCase()
-.trim();
-
-if(!text){
-
-renderTests(tests);
-
-return;
-
-}
-
-const filtered=
-tests.filter(test=>
-
-test.title
-.toLowerCase()
-.includes(text)
-
-||
-
-test.exam
-.toLowerCase()
-.includes(text)
-
-||
-
-test.subject
-.toLowerCase()
-.includes(text)
-
-);
-
-renderTests(filtered);
-
-document
-.getElementById("testSection")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-
-/* =========================================================
-INITIAL LOAD
-========================================================= */
-
-renderTests(tests);
-
-
-/* =========================================================
-ESC KEY
-========================================================= */
-
-document.addEventListener(
-"keydown",
-function(e){
-
-if(e.key==="Escape"){
-
-if(
-document
-.getElementById("testPage")
-.classList.contains("active-page")
-){
-
-if(confirm("क्या आप Test से बाहर जाना चाहते हैं?")){
-
-clearInterval(timerInterval);
-
-showPage("homePage");
-
-}
-
-}
-
-}
-
-});
-
-
-</script>
-
-</body>
-</html>
