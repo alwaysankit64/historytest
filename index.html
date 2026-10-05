@@ -7,25 +7,23 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config = { darkMode: 'class' };</script>
 <style>
-  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif; }
-  .fade-in { animation: fade .25s ease; }
-  @keyframes fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none;} }
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif}
+  .fade-in{animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen">
 
-<!-- HEADER -->
-<header id="siteHeader" class="sticky top-0 z-30 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+<header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-200 dark:border-slate-700">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
     <button onclick="goHome()" class="flex items-center gap-2 shrink-0">
       <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white grid place-items-center font-bold">E</span>
       <span class="font-extrabold text-lg text-indigo-700 dark:text-indigo-300">ExamMock <span class="text-blue-600">Pro</span></span>
     </button>
-    <div class="flex-1 relative max-w-xl mx-auto">
-      <input id="searchInput" type="search" placeholder="परीक्षा, टेस्ट या विषय खोजें…" oninput="onSearch(this.value)"
-        class="w-full rounded-full border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-700 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    <div class="flex-1 max-w-xl mx-auto">
+      <input id="searchInput" type="search" placeholder="परीक्षा, टेस्ट या विषय खोजें…" oninput="onSearch(this.value)" class="w-full rounded-full border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-700 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
     </div>
-    <button onclick="toggleDark()" title="डार्क मोड" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-700 grid place-items-center" id="darkBtn">🌙</button>
+    <button onclick="toggleDark()" id="darkBtn" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-700 grid place-items-center">🌙</button>
     <div class="relative">
       <button onclick="toggleProfile()" class="flex items-center gap-2 rounded-full bg-indigo-100 dark:bg-indigo-900 px-2 py-1">
         <span class="w-7 h-7 rounded-full bg-indigo-600 text-white grid place-items-center text-sm font-bold">अ</span>
@@ -35,7 +33,7 @@
         <p class="font-semibold">अभ्यर्थी (Guest)</p>
         <p class="text-slate-500 dark:text-slate-400 mb-3">इस ब्राउज़र में दिए गए टेस्ट</p>
         <div id="profileStats"></div>
-        <button onclick="clearHistory()" class="mt-3 w-full rounded-lg border border-red-300 text-red-600 py-1.5 hover:bg-red-50 dark:hover:bg-red-950">इतिहास मिटाएँ</button>
+        <button onclick="clearHistory()" class="mt-3 w-full rounded-lg border border-red-300 text-red-600 py-1.5">इतिहास मिटाएँ</button>
       </div>
     </div>
   </div>
@@ -43,7 +41,6 @@
 
 <main id="app" class="max-w-7xl mx-auto px-4 py-6"></main>
 
-<!-- MODAL -->
 <div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 grid place-items-center p-4">
   <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
     <h3 id="modalTitle" class="text-lg font-bold mb-2"></h3>
@@ -53,154 +50,146 @@
 </div>
 
 <script>
-/* ============================================================
-   ExamMock Pro – single-file portal
-   NOTE: The question bank below is SAMPLE content (original practice
-   questions in exam style). Real PYQs must be loaded from a licensed /
-   verified source using  ExamMock.loadBank(examId, [ {q,o,a,e,s}, ... ]).
-   ============================================================ */
 (function () {
   'use strict';
+  var CARD = 'rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 ';
 
-  /* ---------- Exam catalogue (counts = planned catalogue size) ---------- */
   var EXAMS = [
-    { id: 'upsc', name: 'UPSC', sub: 'Civil Services / CDS / NDA', icon: '🏛️', color: 'from-indigo-600 to-blue-600', qs: 5200, sets: 3100, marks: 2, neg: 0.67, tags: 'upsc ias civil services cds nda' },
-    { id: 'ssc', name: 'SSC', sub: 'CGL, CHSL, MTS, CPO', icon: '📝', color: 'from-blue-600 to-cyan-600', qs: 6000, sets: 3800, marks: 2, neg: 0.5, tags: 'ssc cgl chsl mts cpo' },
-    { id: 'psc', name: 'राज्य PSC', sub: 'UPPSC, BPSC, MPPSC, RPSC', icon: '🗺️', color: 'from-emerald-600 to-teal-600', qs: 5400, sets: 3300, marks: 1, neg: 0.33, tags: 'state psc uppsc bpsc mppsc rpsc राज्य' },
-    { id: 'defence', name: 'डिफेंस', sub: 'CDS, AFCAT, Agniveer', icon: '🛡️', color: 'from-slate-700 to-slate-500', qs: 5100, sets: 2600, marks: 1, neg: 0.25, tags: 'defence cds afcat agniveer army navy airforce' },
-    { id: 'teaching', name: 'टीचिंग एग्जाम', sub: 'CTET, UPTET, KVS', icon: '🎓', color: 'from-amber-600 to-orange-600', qs: 5000, sets: 2400, marks: 1, neg: 0, tags: 'teaching ctet uptet kvs tet teacher' },
-    { id: 'rail', name: 'रेलवे', sub: 'NTPC & Group D', icon: '🚆', color: 'from-rose-600 to-pink-600', qs: 5600, sets: 3500, marks: 1, neg: 0.33, tags: 'railway rrb ntpc group d रेलवे' }
+    { id:'upsc', name:'UPSC', sub:'Civil Services / CDS / NDA', icon:'🏛️', color:'from-indigo-600 to-blue-600', qs:5200, sets:3100, marks:2, neg:0.67, tags:'upsc ias civil services cds nda' },
+    { id:'ssc', name:'SSC', sub:'CGL, CHSL, MTS, CPO', icon:'📝', color:'from-blue-600 to-cyan-600', qs:6000, sets:3800, marks:2, neg:0.5, tags:'ssc cgl chsl mts cpo' },
+    { id:'psc', name:'राज्य PSC', sub:'UPPSC, BPSC, MPPSC, RPSC', icon:'🗺️', color:'from-emerald-600 to-teal-600', qs:5400, sets:3300, marks:1, neg:0.33, tags:'state psc uppsc bpsc mppsc rpsc राज्य' },
+    { id:'defence', name:'डिफेंस', sub:'CDS, AFCAT, Agniveer', icon:'🛡️', color:'from-slate-700 to-slate-500', qs:5100, sets:2600, marks:1, neg:0.25, tags:'defence cds afcat agniveer army navy airforce' },
+    { id:'teaching', name:'टीचिंग एग्जाम', sub:'CTET, UPTET, KVS', icon:'🎓', color:'from-amber-600 to-orange-600', qs:5000, sets:2400, marks:1, neg:0, tags:'teaching ctet uptet kvs tet teacher' },
+    { id:'rail', name:'रेलवे', sub:'NTPC & Group D', icon:'🚆', color:'from-rose-600 to-pink-600', qs:5600, sets:3500, marks:1, neg:0.33, tags:'railway rrb ntpc group d रेलवे' },
+    { id:'upsssc', name:'UPSSSC / UP PSC', sub:'PET, लेखपाल, UPPSC', icon:'🌾', color:'from-green-600 to-lime-600', qs:4000, sets:2000, marks:1, neg:0.25, tags:'upsssc pet lekhpal uppsc up police उत्तर प्रदेश' },
+    { id:'bpsc', name:'BPSC / बिहार', sub:'BPSC, बिहार दारोगा, BSSC', icon:'🏯', color:'from-orange-600 to-red-600', qs:3500, sets:1800, marks:1, neg:0.25, tags:'bpsc bihar bssc बिहार daroga' },
+    { id:'bank', name:'बैंकिंग', sub:'IBPS PO/Clerk, SBI, RBI', icon:'🏦', color:'from-cyan-700 to-blue-700', qs:4500, sets:2200, marks:1, neg:0.25, tags:'bank ibps sbi rbi po clerk बैंक' }
   ];
 
   var TABS = [
-    { id: 'pyq', label: 'PYQ सेट', share: 0.12 },
-    { id: 'chapter', label: 'चैप्टर-वाइज टेस्ट', share: 0.45 },
-    { id: 'sectional', label: 'सेक्शनल टेस्ट', share: 0.30 },
-    { id: 'full', label: 'फुल मॉक टेस्ट', share: 0.13 }
+    { id:'pyq', label:'PYQ सेट', share:0.12 },
+    { id:'chapter', label:'चैप्टर-वाइज टेस्ट', share:0.45 },
+    { id:'sectional', label:'सेक्शनल टेस्ट', share:0.30 },
+    { id:'full', label:'फुल मॉक टेस्ट', share:0.13 }
   ];
 
-  /* ---------- Sample question bank ---------- */
-  function Q(s, q, o, a, e) { return { s: s, q: q, o: o, a: a, e: e }; }
+  function Q(s, q, o, a, e) { return { s:s, q:q, o:o, a:a, e:e }; }
   var BANK = {
     upsc: [
-      Q('भारतीय राजव्यवस्था', 'भारतीय संविधान के कौन-से अनुच्छेद समानता के अधिकार से संबंधित हैं?', ['अनुच्छेद 14–18', 'अनुच्छेद 19–22', 'अनुच्छेद 23–24', 'अनुच्छेद 25–28'], 0, 'अनुच्छेद 14 से 18 समानता का अधिकार देते हैं।'),
-      Q('भारतीय राजव्यवस्था', 'मौलिक कर्तव्य संविधान में किस संशोधन द्वारा जोड़े गए?', ['24वाँ', '42वाँ', '44वाँ', '73वाँ'], 1, '42वें संशोधन (1976) द्वारा भाग IV-A जोड़ा गया।'),
-      Q('भारतीय राजव्यवस्था', 'राज्यसभा के सदस्य का सामान्य कार्यकाल कितना होता है?', ['4 वर्ष', '5 वर्ष', '6 वर्ष', '7 वर्ष'], 2, 'राज्यसभा सदस्यों का कार्यकाल 6 वर्ष है।'),
-      Q('भारतीय राजव्यवस्था', 'वित्त आयोग का गठन संविधान के किस अनुच्छेद के अंतर्गत होता है?', ['अनुच्छेद 148', 'अनुच्छेद 265', 'अनुच्छेद 280', 'अनुच्छेद 324'], 2, 'अनुच्छेद 280 वित्त आयोग से संबंधित है।'),
-      Q('भारतीय राजव्यवस्था', 'पंचायती राज को संवैधानिक दर्जा किस संशोधन से मिला?', ['61वाँ', '73वाँ', '74वाँ', '86वाँ'], 1, '73वें संशोधन (1992) ने पंचायतों को संवैधानिक दर्जा दिया।'),
-      Q('इतिहास', 'भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?', ['1930', '1940', '1942', '1946'], 2, 'भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।'),
-      Q('इतिहास', 'चंपारण सत्याग्रह किस वर्ष हुआ?', ['1917', '1919', '1920', '1922'], 0, 'गांधीजी का चंपारण सत्याग्रह 1917 में हुआ।'),
-      Q('भूगोल', 'भारत में बहने वाली नदियों में सबसे लंबी नदी (भारत में प्रवाह) कौन-सी मानी जाती है?', ['यमुना', 'गोदावरी', 'गंगा', 'नर्मदा'], 2, 'गंगा भारत में लगभग 2,525 किमी बहती है।')
+      Q('भारतीय राजव्यवस्था','समानता का अधिकार संविधान के किन अनुच्छेदों में है?',['अनुच्छेद 14–18','अनुच्छेद 19–22','अनुच्छेद 23–24','अनुच्छेद 25–28'],0,'अनुच्छेद 14 से 18 समानता का अधिकार देते हैं।'),
+      Q('भारतीय राजव्यवस्था','मौलिक कर्तव्य किस संशोधन द्वारा जोड़े गए?',['24वाँ','42वाँ','44वाँ','73वाँ'],1,'42वें संशोधन (1976) से भाग IV-A जुड़ा।'),
+      Q('भारतीय राजव्यवस्था','राज्यसभा सदस्य का कार्यकाल कितना होता है?',['4 वर्ष','5 वर्ष','6 वर्ष','7 वर्ष'],2,'राज्यसभा सदस्यों का कार्यकाल 6 वर्ष है।'),
+      Q('भारतीय राजव्यवस्था','वित्त आयोग किस अनुच्छेद के अंतर्गत गठित होता है?',['अनुच्छेद 148','अनुच्छेद 265','अनुच्छेद 280','अनुच्छेद 324'],2,'अनुच्छेद 280 वित्त आयोग से संबंधित है।'),
+      Q('भारतीय राजव्यवस्था','पंचायती राज को संवैधानिक दर्जा किस संशोधन से मिला?',['61वाँ','73वाँ','74वाँ','86वाँ'],1,'73वें संशोधन (1992) से।'),
+      Q('इतिहास','भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?',['1930','1940','1942','1946'],2,'अगस्त 1942 में।'),
+      Q('इतिहास','चंपारण सत्याग्रह किस वर्ष हुआ?',['1917','1919','1920','1922'],0,'1917 में।'),
+      Q('भूगोल','भारत में सबसे लंबी बहने वाली नदी कौन-सी है?',['यमुना','गोदावरी','गंगा','नर्मदा'],2,'गंगा भारत में लगभग 2,525 किमी बहती है।')
     ],
     ssc: [
-      Q('सामान्य ज्ञान', 'सिंधु घाटी सभ्यता का प्रसिद्ध बंदरगाह नगर कौन-सा था?', ['हड़प्पा', 'लोथल', 'कालीबंगा', 'रोपड़'], 1, 'लोथल (गुजरात) में प्राचीन गोदी (डॉकयार्ड) मिली है।'),
-      Q('सामान्य ज्ञान', 'विटामिन C की कमी से कौन-सा रोग होता है?', ['रतौंधी', 'बेरी-बेरी', 'स्कर्वी', 'रिकेट्स'], 2, 'विटामिन C की कमी से स्कर्वी होता है।'),
-      Q('सामान्य ज्ञान', 'निर्वात में प्रकाश की चाल लगभग कितनी है?', ['3 × 10^6 m/s', '3 × 10^8 m/s', '3 × 10^10 m/s', '3 × 10^5 m/s'], 1, 'प्रकाश की चाल लगभग 3 × 10^8 मीटर/सेकंड है।'),
-      Q('गणित', '√144 का मान कितना है?', ['10', '11', '12', '14'], 2, '12 × 12 = 144।'),
-      Q('गणित', '200 का 15% कितना होगा?', ['20', '25', '30', '35'], 2, '200 × 15/100 = 30।'),
-      Q('गणित', 'एक ट्रेन 60 किमी/घंटा की चाल से 3 घंटे चलती है। कुल दूरी कितनी होगी?', ['120 किमी', '150 किमी', '180 किमी', '200 किमी'], 2, 'दूरी = चाल × समय = 60 × 3 = 180 किमी।'),
-      Q('अंग्रेज़ी', 'Choose the synonym of "Abundant".', ['Scarce', 'Plentiful', 'Rare', 'Little'], 1, '"Abundant" का अर्थ है बहुत अधिक – Plentiful।'),
-      Q('अंग्रेज़ी', 'Choose the antonym of "Brave".', ['Bold', 'Fearless', 'Cowardly', 'Strong'], 2, '"Brave" का विलोम "Cowardly" है।')
+      Q('सामान्य ज्ञान','सिंधु घाटी का प्रसिद्ध बंदरगाह नगर कौन-सा था?',['हड़प्पा','लोथल','कालीबंगा','रोपड़'],1,'लोथल में प्राचीन गोदी मिली है।'),
+      Q('सामान्य ज्ञान','विटामिन C की कमी से कौन-सा रोग होता है?',['रतौंधी','बेरी-बेरी','स्कर्वी','रिकेट्स'],2,'स्कर्वी।'),
+      Q('सामान्य ज्ञान','निर्वात में प्रकाश की चाल लगभग कितनी है?',['3×10^6 m/s','3×10^8 m/s','3×10^10 m/s','3×10^5 m/s'],1,'3×10^8 m/s।'),
+      Q('गणित','√144 का मान?',['10','11','12','14'],2,'12×12=144।'),
+      Q('गणित','200 का 15% कितना होगा?',['20','25','30','35'],2,'200×15/100=30।'),
+      Q('गणित','60 किमी/घंटा की चाल से 3 घंटे में दूरी?',['120 किमी','150 किमी','180 किमी','200 किमी'],2,'60×3=180।'),
+      Q('अंग्रेज़ी','Synonym of "Abundant".',['Scarce','Plentiful','Rare','Little'],1,'Abundant = Plentiful।'),
+      Q('अंग्रेज़ी','Antonym of "Brave".',['Bold','Fearless','Cowardly','Strong'],2,'Brave का विलोम Cowardly।')
     ],
     psc: [
-      Q('इतिहास/कला', 'ताजमहल किस नदी के किनारे स्थित है?', ['गंगा', 'यमुना', 'गोमती', 'चंबल'], 1, 'ताजमहल आगरा में यमुना के किनारे है।'),
-      Q('भूगोल', 'गंगा और यमुना का संगम किस स्थान पर है?', ['वाराणसी', 'हरिद्वार', 'प्रयागराज', 'कानपुर'], 2, 'त्रिवेणी संगम प्रयागराज में है।'),
-      Q('भूगोल', 'क्षेत्रफल की दृष्टि से राजस्थान का सबसे बड़ा जिला कौन-सा है?', ['बीकानेर', 'जोधपुर', 'जैसलमेर', 'बाड़मेर'], 2, 'जैसलमेर राजस्थान का सबसे बड़ा जिला है।'),
-      Q('भूगोल', 'थार मरुस्थल मुख्यतः किस राज्य में फैला है?', ['गुजरात', 'हरियाणा', 'राजस्थान', 'पंजाब'], 2, 'थार मरुस्थल का अधिकांश भाग राजस्थान में है।'),
-      Q('इतिहास/कला', 'सांची का स्तूप किस राज्य में स्थित है?', ['उत्तर प्रदेश', 'मध्य प्रदेश', 'बिहार', 'ओडिशा'], 1, 'सांची मध्य प्रदेश के रायसेन जिले में है।'),
-      Q('भूगोल', 'नर्मदा नदी को किस राज्य की जीवनरेखा कहा जाता है?', ['मध्य प्रदेश', 'बिहार', 'उत्तर प्रदेश', 'राजस्थान'], 0, 'नर्मदा को मध्य प्रदेश की जीवनरेखा कहा जाता है।'),
-      Q('भारतीय राजव्यवस्था', 'राज्य के राज्यपाल की नियुक्ति कौन करता है?', ['मुख्यमंत्री', 'राष्ट्रपति', 'प्रधानमंत्री', 'मुख्य न्यायाधीश'], 1, 'राज्यपाल की नियुक्ति राष्ट्रपति करता है।')
+      Q('इतिहास/कला','ताजमहल किस नदी के किनारे है?',['गंगा','यमुना','गोमती','चंबल'],1,'आगरा में यमुना किनारे।'),
+      Q('भूगोल','गंगा-यमुना का संगम कहाँ है?',['वाराणसी','हरिद्वार','प्रयागराज','कानपुर'],2,'प्रयागराज।'),
+      Q('भूगोल','राजस्थान का क्षेत्रफल में सबसे बड़ा जिला?',['बीकानेर','जोधपुर','जैसलमेर','बाड़मेर'],2,'जैसलमेर।'),
+      Q('भूगोल','थार मरुस्थल मुख्यतः किस राज्य में है?',['गुजरात','हरियाणा','राजस्थान','पंजाब'],2,'राजस्थान।'),
+      Q('इतिहास/कला','सांची का स्तूप किस राज्य में है?',['उत्तर प्रदेश','मध्य प्रदेश','बिहार','ओडिशा'],1,'रायसेन, मध्य प्रदेश।'),
+      Q('भारतीय राजव्यवस्था','राज्यपाल की नियुक्ति कौन करता है?',['मुख्यमंत्री','राष्ट्रपति','प्रधानमंत्री','मुख्य न्यायाधीश'],1,'राष्ट्रपति।')
     ],
     defence: [
-      Q('सामान्य ज्ञान', 'भारतीय वायु सेना दिवस कब मनाया जाता है?', ['8 अक्टूबर', '15 जनवरी', '4 दिसंबर', '1 अप्रैल'], 0, 'वायु सेना दिवस 8 अक्टूबर को मनाया जाता है।'),
-      Q('सामान्य ज्ञान', 'भारतीय नौसेना दिवस कब मनाया जाता है?', ['15 जनवरी', '8 अक्टूबर', '4 दिसंबर', '26 जुलाई'], 2, 'नौसेना दिवस 4 दिसंबर को मनाया जाता है।'),
-      Q('सामान्य ज्ञान', 'भारतीय थल सेना के प्रथम भारतीय कमांडर-इन-चीफ कौन थे?', ['के. एम. करिअप्पा', 'एस. एच. एफ. जे. मानेकशॉ', 'के. एस. थिमैया', 'राजेंद्रसिंहजी'], 0, 'जनरल के. एम. करिअप्पा 1949 में प्रथम भारतीय C-in-C बने।'),
-      Q('सामान्य ज्ञान', 'युद्धकाल का सर्वोच्च वीरता पुरस्कार कौन-सा है?', ['महावीर चक्र', 'वीर चक्र', 'परमवीर चक्र', 'अशोक चक्र'], 2, 'परमवीर चक्र सर्वोच्च युद्धकालीन वीरता सम्मान है।'),
-      Q('सामान्य ज्ञान', 'राष्ट्रीय रक्षा अकादमी (NDA) कहाँ स्थित है?', ['देहरादून', 'खडकवासला (पुणे)', 'चेन्नई', 'गया'], 1, 'NDA खडकवासला, पुणे में है।'),
-      Q('सामान्य ज्ञान', 'भारतीय सैन्य अकादमी (IMA) कहाँ स्थित है?', ['देहरादून', 'पुणे', 'हैदराबाद', 'भोपाल'], 0, 'IMA देहरादून में है।'),
-      Q('गणित', '25 का वर्ग कितना होता है?', ['525', '575', '625', '650'], 2, '25 × 25 = 625।')
+      Q('सामान्य ज्ञान','वायु सेना दिवस कब मनाया जाता है?',['8 अक्टूबर','15 जनवरी','4 दिसंबर','1 अप्रैल'],0,'8 अक्टूबर।'),
+      Q('सामान्य ज्ञान','नौसेना दिवस कब मनाया जाता है?',['15 जनवरी','8 अक्टूबर','4 दिसंबर','26 जुलाई'],2,'4 दिसंबर।'),
+      Q('सामान्य ज्ञान','थल सेना के प्रथम भारतीय C-in-C कौन थे?',['के. एम. करिअप्पा','मानेकशॉ','थिमैया','राजेंद्रसिंहजी'],0,'करिअप्पा, 1949।'),
+      Q('सामान्य ज्ञान','सर्वोच्च युद्धकालीन वीरता सम्मान?',['महावीर चक्र','वीर चक्र','परमवीर चक्र','अशोक चक्र'],2,'परमवीर चक्र।'),
+      Q('सामान्य ज्ञान','NDA कहाँ स्थित है?',['देहरादून','खडकवासला (पुणे)','चेन्नई','गया'],1,'खडकवासला, पुणे।'),
+      Q('सामान्य ज्ञान','IMA कहाँ स्थित है?',['देहरादून','पुणे','हैदराबाद','भोपाल'],0,'देहरादून।')
     ],
     teaching: [
-      Q('बाल विकास व शिक्षाशास्त्र', 'प्रयास और त्रुटि सिद्धांत के प्रतिपादक कौन हैं?', ['पावलोव', 'थॉर्नडाइक', 'स्किनर', 'कोहलर'], 1, 'थॉर्नडाइक ने प्रयास-त्रुटि का सिद्धांत दिया।'),
-      Q('बाल विकास व शिक्षाशास्त्र', 'शास्त्रीय अनुबंधन (Classical Conditioning) किसने दिया?', ['पावलोव', 'बंडूरा', 'वाटसन', 'पियाजे'], 0, 'इवान पावलोव ने शास्त्रीय अनुबंधन का प्रयोग किया।'),
-      Q('बाल विकास व शिक्षाशास्त्र', 'संज्ञानात्मक विकास की चार अवस्थाओं का सिद्धांत किसने दिया?', ['वाइगोत्स्की', 'पियाजे', 'कोहलबर्ग', 'एरिक्सन'], 1, 'जीन पियाजे ने चार अवस्थाएँ बताईं।'),
-      Q('बाल विकास व शिक्षाशास्त्र', 'Zone of Proximal Development की अवधारणा किससे संबंधित है?', ['वाइगोत्स्की', 'फ्रॉयड', 'ब्रूनर', 'मास्लो'], 0, 'ZPD वाइगोत्स्की की अवधारणा है।'),
-      Q('शिक्षा नीति/कानून', 'RTE अधिनियम 2009 के अंतर्गत निःशुल्क व अनिवार्य शिक्षा किस आयु वर्ग के बच्चों के लिए है?', ['3–10 वर्ष', '5–12 वर्ष', '6–14 वर्ष', '6–18 वर्ष'], 2, 'RTE 6 से 14 वर्ष के बच्चों के लिए है।'),
-      Q('शिक्षा नीति/कानून', 'NEP 2020 में विद्यालयी शिक्षा की नई संरचना क्या है?', ['10+2', '5+3+3+4', '8+4', '6+3+3'], 1, 'NEP 2020 ने 5+3+3+4 संरचना प्रस्तावित की।'),
-      Q('बाल विकास व शिक्षाशास्त्र', 'बुद्धि लब्धि (IQ) का सूत्र क्या है?', ['(वास्तविक आयु / मानसिक आयु) × 100', '(मानसिक आयु / वास्तविक आयु) × 100', 'मानसिक आयु × वास्तविक आयु', 'मानसिक आयु − वास्तविक आयु'], 1, 'IQ = (मानसिक आयु / वास्तविक आयु) × 100।'),
-      Q('भाषा (हिंदी)', '"कमल" का पर्यायवाची शब्द कौन-सा है?', ['जलज', 'नीरज़', 'गगन', 'सरिता'], 0, '"जलज" कमल का पर्यायवाची है।')
+      Q('बाल विकास','प्रयास-त्रुटि सिद्धांत के प्रतिपादक?',['पावलोव','थॉर्नडाइक','स्किनर','कोहलर'],1,'थॉर्नडाइक।'),
+      Q('बाल विकास','शास्त्रीय अनुबंधन किसने दिया?',['पावलोव','बंडूरा','वाटसन','पियाजे'],0,'इवान पावलोव।'),
+      Q('बाल विकास','संज्ञानात्मक विकास की चार अवस्थाएँ किसने दीं?',['वाइगोत्स्की','पियाजे','कोहलबर्ग','एरिक्सन'],1,'जीन पियाजे।'),
+      Q('बाल विकास','ZPD की अवधारणा किससे संबंधित है?',['वाइगोत्स्की','फ्रॉयड','ब्रूनर','मास्लो'],0,'वाइगोत्स्की।'),
+      Q('शिक्षा नीति','RTE 2009 किस आयु वर्ग के लिए है?',['3–10','5–12','6–14','6–18'],2,'6 से 14 वर्ष।'),
+      Q('शिक्षा नीति','NEP 2020 की विद्यालयी संरचना?',['10+2','5+3+3+4','8+4','6+3+3'],1,'5+3+3+4।')
     ],
     rail: [
-      Q('सामान्य ज्ञान', 'भारत में पहली यात्री रेल किस वर्ष चली?', ['1853', '1857', '1869', '1900'], 0, 'पहली यात्री ट्रेन 1853 में मुंबई (बोरीबंदर) से ठाणे चली।'),
-      Q('सामान्य विज्ञान', 'बल का SI मात्रक क्या है?', ['जूल', 'वॉट', 'न्यूटन', 'पास्कल'], 2, 'बल का SI मात्रक न्यूटन है।'),
-      Q('सामान्य विज्ञान', 'जल का रासायनिक सूत्र क्या है?', ['CO2', 'H2O', 'O2', 'NaCl'], 1, 'जल = H2O।'),
-      Q('सामान्य विज्ञान', 'हीमोग्लोबिन में कौन-सा तत्व पाया जाता है?', ['कैल्शियम', 'आयोडीन', 'लोहा (Fe)', 'सोडियम'], 2, 'हीमोग्लोबिन में आयरन होता है।'),
-      Q('सामान्य विज्ञान', 'सोने का रासायनिक प्रतीक क्या है?', ['Ag', 'Au', 'Gd', 'Go'], 1, 'सोना = Au (Aurum)।'),
-      Q('गणित', 'श्रेणी पूरी कीजिए: 2, 4, 8, 16, ?', ['24', '30', '32', '64'], 2, 'हर पद पिछले का दोगुना है; अगला पद 32।'),
-      Q('गणित', '₹500 की वस्तु पर 20% छूट के बाद मूल्य कितना होगा?', ['₹380', '₹400', '₹420', '₹450'], 1, '500 − 100 = ₹400।'),
-      Q('सामान्य ज्ञान', 'भारत का राष्ट्रीय पक्षी कौन-सा है?', ['मोर', 'हंस', 'तोता', 'कबूतर'], 0, 'भारत का राष्ट्रीय पक्षी मोर है।')
+      Q('सामान्य ज्ञान','भारत में पहली यात्री रेल किस वर्ष चली?',['1853','1857','1869','1900'],0,'1853, मुंबई से ठाणे।'),
+      Q('सामान्य विज्ञान','बल का SI मात्रक?',['जूल','वॉट','न्यूटन','पास्कल'],2,'न्यूटन।'),
+      Q('सामान्य विज्ञान','हीमोग्लोबिन में कौन-सा तत्व होता है?',['कैल्शियम','आयोडीन','लोहा','सोडियम'],2,'आयरन।'),
+      Q('सामान्य विज्ञान','सोने का रासायनिक प्रतीक?',['Ag','Au','Gd','Go'],1,'Au।'),
+      Q('गणित','श्रेणी: 2, 4, 8, 16, ?',['24','30','32','64'],2,'हर पद दोगुना; अगला 32।'),
+      Q('गणित','₹500 पर 20% छूट के बाद मूल्य?',['₹380','₹400','₹420','₹450'],1,'500−100=₹400।')
+    ],
+    upsssc: [
+      Q('उत्तर प्रदेश GK','उत्तर प्रदेश में कुल कितने जिले हैं?',['71','75','80','72'],1,'75 जिले।'),
+      Q('उत्तर प्रदेश GK','विधान परिषद में कुल कितने सदस्य होते हैं?',['75','100','125','403'],1,'100 सदस्य।'),
+      Q('उत्तर प्रदेश GK','विधानसभा में कुल कितनी सीटें हैं?',['350','403','425','300'],1,'403 सीटें।'),
+      Q('उत्तर प्रदेश GK','दुधवा राष्ट्रीय उद्यान किस जिले में है?',['बहराइच','पीलीभीत','लखीमपुर खीरी','सोनभद्र'],2,'लखीमपुर खीरी।'),
+      Q('उत्तर प्रदेश GK','गोरखपुर किस नदी के किनारे है?',['राप्ती','गोमती','घाघरा','यमुना'],0,'राप्ती।'),
+      Q('इतिहास','चौरी-चौरा कांड कब हुआ?',['1920','1921','1922','1930'],2,'4 फरवरी 1922।')
+    ],
+    bpsc: [
+      Q('बिहार GK','बिहार में कुल कितने जिले हैं?',['36','37','38','40'],2,'38 जिले।'),
+      Q('बिहार GK','कोसी नदी को बिहार का क्या कहा जाता है?',['जीवनरेखा','शोक','वरदान','गंगा'],1,'बिहार का शोक।'),
+      Q('बिहार GK','विक्रमशिला विश्वविद्यालय की स्थापना किसने की?',['अशोक','धर्मपाल','हर्षवर्धन','कुमारगुप्त'],1,'पाल शासक धर्मपाल।'),
+      Q('बिहार GK','बिहार का राज्य पक्षी?',['मोर','गौरैया','कोयल','तोता'],1,'गौरैया।'),
+      Q('इतिहास','नालंदा की स्थापना किस गुप्त शासक ने की?',['चंद्रगुप्त','समुद्रगुप्त','कुमारगुप्त प्रथम','स्कंदगुप्त'],2,'कुमारगुप्त प्रथम।')
+    ],
+    bank: [
+      Q('बैंकिंग जागरूकता','RBI की स्थापना किस वर्ष हुई?',['1935','1947','1949','1955'],0,'1 अप्रैल 1935।'),
+      Q('बैंकिंग जागरूकता','रेपो रेट वह दर है जिस पर—',['बैंक ग्राहकों को ऋण देते हैं','RBI बैंकों को ऋण देता है','बैंक RBI को ऋण देते हैं','सरकार बैंक को ऋण देती है'],1,'RBI बैंकों को अल्पकालिक ऋण देता है।'),
+      Q('बैंकिंग जागरूकता','NABARD किससे संबंधित है?',['उद्योग','कृषि व ग्रामीण विकास','आवास','विदेश व्यापार'],1,'कृषि व ग्रामीण विकास।'),
+      Q('बैंकिंग जागरूकता','CRR का पूर्ण रूप?',['Cash Reserve Ratio','Credit Reserve Rate','Central Reserve Ratio','Cash Rate Return'],0,'Cash Reserve Ratio।'),
+      Q('क्वांट','₹1200 पर 5% साधारण ब्याज से 2 वर्ष का ब्याज?',['₹100','₹110','₹120','₹130'],2,'1200×5×2/100=₹120।')
     ]
   };
 
-  /* ---------- State ---------- */
-  var S = {
-    view: 'home', examId: null, tab: 'pyq', search: '', shown: {},
-    test: null, result: null, timer: null
-  };
+  var S = { view:'home', examId:null, tab:'pyq', search:'', shown:{}, test:null, result:null, timer:null };
   var $app = document.getElementById('app');
 
-  /* ---------- Helpers ---------- */
   function $(id) { return document.getElementById(id); }
   function fmt(n) { return n.toLocaleString('en-IN'); }
   function getExam(id) { for (var i = 0; i < EXAMS.length; i++) if (EXAMS[i].id === id) return EXAMS[i]; return null; }
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function rng(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-  function shuffle(arr, rand) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rand() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function hash(str) { var h = 7; for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0; return h; }
+  function shuffle(arr, r) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function hash(s) { var h = 7; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
-  function subjectsOf(examId) { var seen = {}, out = []; BANK[examId].forEach(function (q) { if (!seen[q.s]) { seen[q.s] = 1; out.push(q.s); } }); return out; }
+  function subjectsOf(id) { var seen = {}, out = []; BANK[id].forEach(function (q) { if (!seen[q.s]) { seen[q.s] = 1; out.push(q.s); } }); return out; }
 
-  /* ---------- Test catalogue generator ---------- */
   function tabTotal(exam, tab) { return Math.round(exam.sets * tab.share); }
   function makeTest(exam, tabId, i) {
     var subs = subjectsOf(exam.id), name, subject = null, base = BANK[exam.id].length;
-    if (tabId === 'pyq') {
-      var yr = 2025 - Math.floor(i / 3), sh = (i % 3) + 1;
-      name = exam.name + ' ' + yr + ' – Shift ' + sh;
-    } else if (tabId === 'chapter') {
-      subject = subs[i % subs.length];
-      name = subject + ' – चैप्टर टेस्ट ' + (Math.floor(i / subs.length) + 1);
-    } else if (tabId === 'sectional') {
-      subject = subs[i % subs.length];
-      name = 'सेक्शनल: ' + subject + ' – सेट ' + (Math.floor(i / subs.length) + 1);
-    } else {
-      name = exam.name + ' फुल मॉक टेस्ट ' + (i + 1);
-    }
-    var n = tabId === 'full' || tabId === 'pyq' ? Math.min(base, 8) : Math.min(base, 5);
+    if (tabId === 'pyq') { name = exam.name + ' ' + (2025 - Math.floor(i / 3)) + ' – Shift ' + (i % 3 + 1); }
+    else if (tabId === 'chapter') { subject = subs[i % subs.length]; name = subject + ' – चैप्टर टेस्ट ' + (Math.floor(i / subs.length) + 1); }
+    else if (tabId === 'sectional') { subject = subs[i % subs.length]; name = 'सेक्शनल: ' + subject + ' – सेट ' + (Math.floor(i / subs.length) + 1); }
+    else name = exam.name + ' फुल मॉक टेस्ट ' + (i + 1);
+    var n = (tabId === 'full' || tabId === 'pyq') ? Math.min(base, 100) : Math.min(base, 25);
     return { id: exam.id + '-' + tabId + '-' + i, exam: exam.id, tab: tabId, index: i, name: name, subject: subject, n: n, minutes: Math.max(n, 5), marks: n * exam.marks };
   }
   function buildQuestions(t) {
-    var exam = getExam(t.exam), rand = rng(hash(t.id)), pool = BANK[t.exam].slice(), chosen;
+    var r = rng(hash(t.id)), pool = BANK[t.exam].slice(), chosen;
     if (t.subject) {
-      var own = shuffle(pool.filter(function (q) { return q.s === t.subject; }), rand);
-      var rest = shuffle(pool.filter(function (q) { return q.s !== t.subject; }), rand);
+      var own = shuffle(pool.filter(function (q) { return q.s === t.subject; }), r);
+      var rest = shuffle(pool.filter(function (q) { return q.s !== t.subject; }), r);
       chosen = own.concat(rest).slice(0, t.n);
-    } else chosen = shuffle(pool, rand).slice(0, t.n);
+    } else chosen = shuffle(pool, r).slice(0, t.n);
     return chosen.map(function (q) {
-      var opts = q.o.map(function (txt, idx) { return { t: txt, ok: idx === q.a }; });
-      opts = shuffle(opts, rand);
-      var correct = 0; opts.forEach(function (o, k) { if (o.ok) correct = k; });
-      return { q: q.q, o: opts.map(function (o) { return o.t; }), a: correct, e: q.e, s: q.s };
+      var opts = shuffle(q.o.map(function (txt, i) { return { t: txt, ok: i === q.a }; }), r), c = 0;
+      opts.forEach(function (o, k) { if (o.ok) c = k; });
+      return { q: q.q, o: opts.map(function (o) { return o.t; }), a: c, e: q.e, s: q.s };
     });
   }
 
-  /* ---------- Header controls ---------- */
-  window.toggleDark = function () {
-    var on = document.documentElement.classList.toggle('dark');
-    $('darkBtn').textContent = on ? '☀️' : '🌙';
-    store('em_dark', on);
-  };
+  window.toggleDark = function () { var on = document.documentElement.classList.toggle('dark'); $('darkBtn').textContent = on ? '☀️' : '🌙'; store('em_dark', on); };
   window.toggleProfile = function () { $('profileMenu').classList.toggle('hidden'); renderProfile(); };
   document.addEventListener('click', function (e) {
     var m = $('profileMenu');
@@ -209,27 +198,21 @@
   function renderProfile() {
     var h = store('em_history') || [];
     var avg = h.length ? Math.round(h.reduce(function (a, b) { return a + b.acc; }, 0) / h.length) : 0;
-    $('profileStats').innerHTML = '<div class="flex justify-between"><span>टेस्ट दिए</span><b>' + h.length + '</b></div>' +
-      '<div class="flex justify-between"><span>औसत सटीकता</span><b>' + avg + '%</b></div>' +
-      (h.length ? '<div class="mt-2 text-xs text-slate-500 dark:text-slate-400">अंतिम: ' + esc(h[h.length - 1].name) + '</div>' : '');
+    $('profileStats').innerHTML = '<div class="flex justify-between"><span>टेस्ट दिए</span><b>' + h.length + '</b></div><div class="flex justify-between"><span>औसत सटीकता</span><b>' + avg + '%</b></div>' + (h.length ? '<div class="mt-2 text-xs text-slate-500">अंतिम: ' + esc(h[h.length - 1].name) + '</div>' : '');
   }
   window.clearHistory = function () { store('em_history', []); renderProfile(); };
   window.onSearch = function (v) {
     S.search = v.trim().toLowerCase();
     if (S.view === 'test') return;
     if (S.view !== 'home' && S.view !== 'exam') S.view = 'home';
-    if (S.view === 'exam' && !S.examId) S.view = 'home';
     render();
   };
 
-  /* ---------- Modal ---------- */
   function showModal(title, body, actions) {
-    $('modalTitle').textContent = title;
-    $('modalBody').innerHTML = body;
+    $('modalTitle').textContent = title; $('modalBody').innerHTML = body;
     var box = $('modalActions'); box.innerHTML = '';
     actions.forEach(function (a) {
-      var b = document.createElement('button');
-      b.textContent = a.label;
+      var b = document.createElement('button'); b.textContent = a.label;
       b.className = a.primary ? 'rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 text-sm font-semibold' : 'rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm';
       b.onclick = function () { hideModal(); if (a.fn) a.fn(); };
       box.appendChild(b);
@@ -238,106 +221,82 @@
   }
   function hideModal() { $('modal').classList.add('hidden'); }
 
-  /* ---------- Navigation ---------- */
   window.goHome = function () {
-    if (S.view === 'test' && !S.test.done) { showModal('टेस्ट छोड़ें?', 'आपकी प्रगति खो जाएगी।', [{ label: 'रद्द करें' }, { label: 'हाँ, छोड़ें', primary: true, fn: function () { stopTimer(); S.test = null; S.view = 'home'; render(); } }]); return; }
+    if (S.view === 'test' && S.test && !S.test.done) { showModal('टेस्ट छोड़ें?', 'आपकी प्रगति खो जाएगी।', [{ label:'रद्द करें' }, { label:'हाँ, छोड़ें', primary:true, fn:function () { stopTimer(); S.test = null; S.view = 'home'; S.examId = null; render(); } }]); return; }
     stopTimer(); S.test = null; S.view = 'home'; S.examId = null; render(); window.scrollTo(0, 0);
   };
   window.openExam = function (id) { S.examId = id; S.view = 'exam'; S.tab = 'pyq'; S.search = ''; $('searchInput').value = ''; render(); window.scrollTo(0, 0); };
   window.setTab = function (t) { S.tab = t; render(); };
   window.loadMore = function () { var k = S.examId + S.tab; S.shown[k] = (S.shown[k] || 12) + 12; render(); };
 
-  /* ---------- Views ---------- */
   function render() {
-    if (S.view === 'home') renderHome();
-    else if (S.view === 'exam') renderExam();
-    else if (S.view === 'test') renderTest();
-    else if (S.view === 'result') renderResult();
+    if (S.view === 'home') renderHome(); else if (S.view === 'exam') renderExam();
+    else if (S.view === 'test') renderTest(); else if (S.view === 'result') renderResult();
   }
 
   function renderHome() {
     var list = EXAMS.filter(function (e) { return !S.search || (e.name + ' ' + e.sub + ' ' + e.tags).toLowerCase().indexOf(S.search) !== -1; });
     var totalQ = EXAMS.reduce(function (a, e) { return a + e.qs; }, 0), totalS = EXAMS.reduce(function (a, e) { return a + e.sets; }, 0);
-    var html = '<section class="fade-in">' +
-      '<div class="rounded-3xl bg-gradient-to-br from-indigo-600 via-blue-600 to-sky-500 text-white p-6 sm:p-10 mb-6">' +
+    var html = '<section class="fade-in"><div class="rounded-3xl bg-gradient-to-br from-indigo-600 via-blue-600 to-sky-500 text-white p-6 sm:p-10 mb-6">' +
       '<h1 class="text-2xl sm:text-4xl font-extrabold leading-tight">भारत की प्रमुख परीक्षाओं की तैयारी – एक ही जगह</h1>' +
       '<p class="mt-2 text-white/90 max-w-2xl">PYQ पैटर्न सेट, चैप्टर-वाइज व सेक्शनल टेस्ट और फुल मॉक – रियल एग्जाम इंटरफेस के साथ।</p>' +
-      '<div class="mt-5 flex flex-wrap gap-3 text-sm">' +
-      '<span class="bg-white/20 rounded-full px-4 py-1.5">' + fmt(totalQ) + '+ प्रश्न (कैटलॉग लक्ष्य)</span>' +
+      '<div class="mt-5 flex flex-wrap gap-3 text-sm"><span class="bg-white/20 rounded-full px-4 py-1.5">' + fmt(totalQ) + '+ प्रश्न (कैटलॉग लक्ष्य)</span>' +
       '<span class="bg-white/20 rounded-full px-4 py-1.5">' + fmt(totalS) + '+ टेस्ट/सेट (कैटलॉग लक्ष्य)</span>' +
-      '<span class="bg-white/20 rounded-full px-4 py-1.5">6 परीक्षा श्रेणियाँ</span></div></div>' +
-      '<div class="mb-6 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-sm p-3">' +
-      '<b>डेमो नोट:</b> अभी प्रत्येक परीक्षा में नमूना (sample) प्रश्न चालू हैं। कैटलॉग की संख्याएँ योजना/लक्ष्य दर्शाती हैं। असली PYQ डेटा अपने सत्यापित स्रोत से <code>ExamMock.loadBank()</code> द्वारा जोड़ें।</div>' +
+      '<span class="bg-white/20 rounded-full px-4 py-1.5">' + EXAMS.length + ' परीक्षा श्रेणियाँ</span></div></div>' +
+      '<div class="mb-6 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-sm p-3"><b>डेमो नोट:</b> अभी हर परीक्षा में नमूना (sample) प्रश्न हैं। असली प्रश्न <code>ExamMock.loadBank()</code> से जोड़ें।</div>' +
       '<h2 class="text-xl font-bold mb-4">परीक्षा चुनें</h2>';
     if (!list.length) html += '<p class="text-slate-500">कोई परीक्षा नहीं मिली।</p>';
     html += '<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">';
     list.forEach(function (e) {
       html += '<button onclick="openExam(\'' + e.id + '\')" class="text-left rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition overflow-hidden">' +
         '<div class="bg-gradient-to-r ' + e.color + ' text-white p-4 flex items-center gap-3"><span class="text-3xl">' + e.icon + '</span><div><div class="font-bold text-lg">' + esc(e.name) + '</div><div class="text-xs text-white/85">' + esc(e.sub) + '</div></div></div>' +
-        '<div class="p-4 grid grid-cols-2 gap-3 text-center"><div><div class="text-xl font-extrabold text-indigo-600 dark:text-indigo-300">' + fmt(e.qs) + '+</div><div class="text-xs text-slate-500 dark:text-slate-400">प्रश्न</div></div>' +
-        '<div><div class="text-xl font-extrabold text-indigo-600 dark:text-indigo-300">' + fmt(e.sets) + '+</div><div class="text-xs text-slate-500 dark:text-slate-400">प्रैक्टिस सेट / टेस्ट</div></div></div></button>';
+        '<div class="p-4 grid grid-cols-2 gap-3 text-center"><div><div class="text-xl font-extrabold text-indigo-600 dark:text-indigo-300">' + fmt(e.qs) + '+</div><div class="text-xs text-slate-500">प्रश्न</div></div>' +
+        '<div><div class="text-xl font-extrabold text-indigo-600 dark:text-indigo-300">' + fmt(e.sets) + '+</div><div class="text-xs text-slate-500">प्रैक्टिस सेट / टेस्ट</div></div></div></button>';
     });
-    html += '</div></section>';
-    $app.innerHTML = html;
+    $app.innerHTML = html + '</div></section>';
   }
 
   function renderExam() {
-    var e = getExam(S.examId);
-    if (!e) { S.view = 'home'; return render(); }
+    var e = getExam(S.examId); if (!e) { S.view = 'home'; return render(); }
     var tab = TABS.filter(function (t) { return t.id === S.tab; })[0];
-    var total = tabTotal(e, tab), key = e.id + tab.id, shown = Math.min(S.shown[key] || 12, total);
+    var total = tabTotal(e, tab), shown = Math.min(S.shown[e.id + tab.id] || 12, total);
     var html = '<section class="fade-in"><button onclick="goHome()" class="text-sm text-indigo-600 dark:text-indigo-300 mb-3">← सभी परीक्षाएँ</button>' +
-      '<div class="rounded-2xl bg-gradient-to-r ' + e.color + ' text-white p-5 mb-5 flex items-center gap-4"><span class="text-4xl">' + e.icon + '</span><div><h1 class="text-2xl font-extrabold">' + esc(e.name) + '</h1><p class="text-sm text-white/90">' + esc(e.sub) + ' • ' + fmt(e.qs) + '+ प्रश्न • ' + fmt(e.sets) + '+ सेट</p></div></div>' +
-      '<div class="flex gap-2 overflow-x-auto pb-2 mb-4">';
+      '<div class="rounded-2xl bg-gradient-to-r ' + e.color + ' text-white p-5 mb-5 flex items-center gap-4"><span class="text-4xl">' + e.icon + '</span><div><h1 class="text-2xl font-extrabold">' + esc(e.name) + '</h1><p class="text-sm text-white/90">' + esc(e.sub) + ' • ' + fmt(e.qs) + '+ प्रश्न • ' + fmt(e.sets) + '+ सेट</p></div></div><div class="flex gap-2 overflow-x-auto pb-2 mb-4">';
     TABS.forEach(function (t) {
-      var act = t.id === S.tab;
-      html += '<button onclick="setTab(\'' + t.id + '\')" class="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold border ' + (act ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600') + '">' + t.label + ' <span class="opacity-75">(' + fmt(tabTotal(e, t)) + ')</span></button>';
+      html += '<button onclick="setTab(\'' + t.id + '\')" class="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold border ' + (t.id === S.tab ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600') + '">' + t.label + ' <span class="opacity-75">(' + fmt(tabTotal(e, t)) + ')</span></button>';
     });
     html += '</div>';
     var items = [], q = S.search;
     if (q) {
-      // search across the full catalogue of this tab (bounded scan)
       for (var i = 0; i < total && items.length < 50; i++) { var t0 = makeTest(e, tab.id, i); if (t0.name.toLowerCase().indexOf(q) !== -1) items.push(t0); }
       html += '<p class="text-sm text-slate-500 mb-3">"' + esc(q) + '" के लिए ' + items.length + (items.length === 50 ? '+' : '') + ' परिणाम</p>';
-    } else {
-      for (var j = 0; j < shown; j++) items.push(makeTest(e, tab.id, j));
-    }
+    } else for (var j = 0; j < shown; j++) items.push(makeTest(e, tab.id, j));
+    var hist = store('em_history') || [];
     html += '<div class="grid md:grid-cols-2 gap-3">';
     items.forEach(function (t) {
-      var done = (store('em_history') || []).filter(function (h) { return h.id === t.id; });
-      html += '<div class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">' +
-        '<div><div class="font-semibold">' + esc(t.name) + '</div>' +
+      var done = hist.filter(function (h) { return h.id === t.id; });
+      html += '<div class="' + CARD + 'p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><div class="font-semibold">' + esc(t.name) + '</div>' +
         '<div class="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400"><span>📋 ' + t.n + ' प्रश्न</span><span>⏱ ' + t.minutes + ' मिनट</span><span>🎯 ' + t.marks + ' अंक</span>' + (e.neg ? '<span>➖ ' + e.neg + ' नेगेटिव</span>' : '<span>कोई नेगेटिव नहीं</span>') + '</div>' +
         (done.length ? '<div class="text-xs mt-1 text-emerald-600">✔ पिछला स्कोर: ' + done[done.length - 1].score + '</div>' : '') + '</div>' +
         '<button onclick="startTest(\'' + t.id + '\')" class="shrink-0 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2">Start Test</button></div>';
     });
     html += '</div>';
     if (!q && shown < total) html += '<div class="text-center mt-5"><button onclick="loadMore()" class="rounded-lg border border-indigo-500 text-indigo-600 dark:text-indigo-300 px-5 py-2 text-sm font-semibold">और टेस्ट दिखाएँ (' + fmt(total - shown) + ' शेष)</button></div>';
-    html += '<p class="text-xs text-slate-500 mt-6">ध्यान दें: डेमो में हर टेस्ट नमूना प्रश्न बैंक से बनता है। असली डेटा जोड़ने पर टेस्ट में पूरे प्रश्न आएँगे।</p></section>';
-    $app.innerHTML = html;
+    $app.innerHTML = html + '<p class="text-xs text-slate-500 mt-6">ध्यान दें: डेमो में हर टेस्ट नमूना प्रश्न बैंक से बनता है।</p></section>';
   }
 
-  /* ---------- Test engine ---------- */
-  function findTest(id) {
-    var p = id.split('-'), idx = parseInt(p[p.length - 1], 10), tab = p[p.length - 2], ex = getExam(p[0]);
-    return ex ? makeTest(ex, tab, idx) : null;
-  }
+  function findTest(id) { var p = id.split('-'), ex = getExam(p[0]); return ex ? makeTest(ex, p[p.length - 2], parseInt(p[p.length - 1], 10)) : null; }
   window.startTest = function (id) {
-    var meta = findTest(id);
-    if (!meta) return;
+    var meta = findTest(id); if (!meta) return;
     var qs = buildQuestions(meta);
     S.test = { meta: meta, qs: qs, ans: qs.map(function () { return -1; }), marked: qs.map(function () { return false; }), visited: qs.map(function () { return false; }), cur: 0, left: meta.minutes * 60, done: false, sel: -1 };
-    S.test.visited[0] = true;
-    S.view = 'test';
-    startTimer();
-    render(); window.scrollTo(0, 0);
+    S.test.visited[0] = true; S.view = 'test'; startTimer(); render(); window.scrollTo(0, 0);
   };
   function startTimer() {
     stopTimer();
     S.timer = setInterval(function () {
       if (!S.test || S.test.done) return stopTimer();
-      S.test.left--;
-      var el = $('timerBox'); if (el) el.textContent = timeStr(S.test.left);
+      S.test.left--; var el = $('timerBox'); if (el) el.textContent = timeStr(S.test.left);
       if (S.test.left <= 0) { stopTimer(); finishTest(true); }
     }, 1000);
   }
@@ -345,71 +304,61 @@
   function timeStr(s) { s = Math.max(0, s); return pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s % 3600 / 60)) + ':' + pad(s % 60); }
 
   function paletteClass(T, i) {
-    var a = T.ans[i] !== -1, m = T.marked[i], cur = i === T.cur, base;
+    var a = T.ans[i] !== -1, m = T.marked[i], base;
     if (m && a) base = 'bg-purple-600 text-white ring-2 ring-emerald-400';
     else if (m) base = 'bg-purple-600 text-white';
     else if (a) base = 'bg-emerald-500 text-white';
     else if (T.visited[i]) base = 'bg-rose-500 text-white';
     else base = 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200';
-    return base + (cur ? ' outline outline-2 outline-offset-2 outline-indigo-500' : '');
+    return base + (i === T.cur ? ' outline outline-2 outline-offset-2 outline-indigo-500' : '');
   }
 
   function renderTest() {
     var T = S.test; if (!T) { S.view = 'home'; return render(); }
-    var q = T.qs[T.cur], sel = T.sel;
-    var html = '<section class="fade-in"><div class="flex items-center justify-between gap-3 mb-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3">' +
-      '<div class="min-w-0"><div class="font-bold truncate">' + esc(T.meta.name) + '</div><div class="text-xs text-slate-500 dark:text-slate-400">प्रश्न ' + (T.cur + 1) + ' / ' + T.qs.length + ' • ' + esc(q.s) + '</div></div>' +
-      '<div class="text-center"><div class="text-[10px] uppercase tracking-wide text-slate-500">शेष समय</div><div id="timerBox" class="font-mono text-xl font-extrabold text-rose-600">' + timeStr(T.left) + '</div></div></div>' +
-      '<div class="grid lg:grid-cols-[1fr_300px] gap-4"><div class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-5">' +
-      '<p class="text-xs text-slate-500 mb-1">+' + getExam(T.meta.exam).marks + ' अंक' + (getExam(T.meta.exam).neg ? ' / −' + getExam(T.meta.exam).neg : '') + '</p>' +
-      '<h2 class="text-lg font-semibold mb-4">Q' + (T.cur + 1) + '. ' + esc(q.q) + '</h2><div class="space-y-2">';
+    var q = T.qs[T.cur], sel = T.sel, ex = getExam(T.meta.exam);
+    var html = '<section class="fade-in"><div class="' + CARD + 'flex items-center justify-between gap-3 mb-4 p-3"><div class="min-w-0"><div class="font-bold truncate">' + esc(T.meta.name) + '</div><div class="text-xs text-slate-500">प्रश्न ' + (T.cur + 1) + ' / ' + T.qs.length + ' • ' + esc(q.s) + '</div></div>' +
+      '<div class="text-center"><div class="text-[10px] uppercase text-slate-500">शेष समय</div><div id="timerBox" class="font-mono text-xl font-extrabold text-rose-600">' + timeStr(T.left) + '</div></div></div>' +
+      '<div class="grid lg:grid-cols-[1fr_300px] gap-4"><div class="' + CARD + 'p-5"><p class="text-xs text-slate-500 mb-1">+' + ex.marks + ' अंक' + (ex.neg ? ' / −' + ex.neg : '') + '</p><h2 class="text-lg font-semibold mb-4">Q' + (T.cur + 1) + '. ' + esc(q.q) + '</h2><div class="space-y-2">';
     q.o.forEach(function (o, k) {
-      var chosen = sel === k;
-      html += '<label class="flex items-center gap-3 rounded-lg border p-3 cursor-pointer ' + (chosen ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/50' : 'border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/50') + '">' +
-        '<input type="radio" name="opt" class="accent-indigo-600" ' + (chosen ? 'checked' : '') + ' onchange="pick(' + k + ')"><span class="font-semibold w-5">' + 'ABCD'.charAt(k) + '.</span><span>' + esc(o) + '</span></label>';
+      var ch = sel === k;
+      html += '<label class="flex items-center gap-3 rounded-lg border p-3 cursor-pointer ' + (ch ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/50' : 'border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/50') + '"><input type="radio" name="opt" class="accent-indigo-600" ' + (ch ? 'checked' : '') + ' onchange="pick(' + k + ')"><span class="font-semibold w-5">' + 'ABCD'.charAt(k) + '.</span><span>' + esc(o) + '</span></label>';
     });
     html += '</div><div class="mt-6 flex flex-wrap gap-2">' +
       '<button onclick="saveNext()" class="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-sm font-semibold">Save &amp; Next</button>' +
       '<button onclick="markNext()" class="rounded-lg bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 text-sm font-semibold">Mark for Review &amp; Next</button>' +
       '<button onclick="clearResp()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">Clear Response</button>' +
       '<button onclick="goTo(' + Math.max(0, T.cur - 1) + ')" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">← Previous</button></div></div>' +
-      '<aside class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 h-fit"><h3 class="font-bold mb-3">प्रश्न पैलेट</h3><div class="grid grid-cols-5 gap-2 mb-4">';
+      '<aside class="' + CARD + 'p-4 h-fit"><h3 class="font-bold mb-3">प्रश्न पैलेट</h3><div class="grid grid-cols-5 gap-2 mb-4">';
     T.qs.forEach(function (_, i) { html += '<button onclick="goTo(' + i + ')" class="h-9 rounded-md text-sm font-semibold ' + paletteClass(T, i) + '">' + (i + 1) + '</button>'; });
-    var att = T.ans.filter(function (a) { return a !== -1; }).length, mk = T.marked.filter(Boolean).length;
+    var att = T.ans.filter(function (a) { return a !== -1; }).length;
     html += '</div><div class="text-xs space-y-1 text-slate-600 dark:text-slate-300 mb-4">' +
       '<div><span class="inline-block w-3 h-3 rounded bg-emerald-500 mr-2"></span>Attempted: ' + att + '</div>' +
       '<div><span class="inline-block w-3 h-3 rounded bg-rose-500 mr-2"></span>Unattempted (देखे गए): ' + T.qs.filter(function (_, i) { return T.visited[i] && T.ans[i] === -1 && !T.marked[i]; }).length + '</div>' +
-      '<div><span class="inline-block w-3 h-3 rounded bg-purple-600 mr-2"></span>Marked for Review: ' + mk + '</div>' +
+      '<div><span class="inline-block w-3 h-3 rounded bg-purple-600 mr-2"></span>Marked for Review: ' + T.marked.filter(Boolean).length + '</div>' +
       '<div><span class="inline-block w-3 h-3 rounded bg-slate-300 dark:bg-slate-600 mr-2"></span>Not Visited: ' + T.visited.filter(function (v) { return !v; }).length + '</div></div>' +
       '<button onclick="confirmSubmit()" class="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 font-semibold">Submit Test</button></aside></div></section>';
     $app.innerHTML = html;
   }
 
   window.pick = function (k) { S.test.sel = k; renderTest(); };
-  function commitSel() { var T = S.test; T.ans[T.cur] = T.sel; }
-  function go(i) {
-    var T = S.test; if (i < 0) i = 0; if (i > T.qs.length - 1) i = T.qs.length - 1;
-    T.cur = i; T.visited[i] = true; T.sel = T.ans[i]; renderTest();
-  }
-  window.goTo = function (i) { var T = S.test; T.ans[T.cur] = T.sel; go(i); };   // keep selected option when navigating
-  window.saveNext = function () { var T = S.test; commitSel(); T.marked[T.cur] = false; go(T.cur + 1); };
-  window.markNext = function () { var T = S.test; commitSel(); T.marked[T.cur] = true; go(T.cur + 1); };
+  function go(i) { var T = S.test; i = Math.max(0, Math.min(i, T.qs.length - 1)); T.cur = i; T.visited[i] = true; T.sel = T.ans[i]; renderTest(); }
+  window.goTo = function (i) { var T = S.test; T.ans[T.cur] = T.sel; go(i); };
+  window.saveNext = function () { var T = S.test; T.ans[T.cur] = T.sel; T.marked[T.cur] = false; go(T.cur + 1); };
+  window.markNext = function () { var T = S.test; T.ans[T.cur] = T.sel; T.marked[T.cur] = true; go(T.cur + 1); };
   window.clearResp = function () { var T = S.test; T.sel = -1; T.ans[T.cur] = -1; renderTest(); };
   window.confirmSubmit = function () {
     var T = S.test; T.ans[T.cur] = T.sel;
     var att = T.ans.filter(function (a) { return a !== -1; }).length;
     showModal('टेस्ट सबमिट करें?', 'कुल प्रश्न: <b>' + T.qs.length + '</b><br>Attempted: <b>' + att + '</b><br>Unattempted: <b>' + (T.qs.length - att) + '</b><br>Marked for Review: <b>' + T.marked.filter(Boolean).length + '</b>',
-      [{ label: 'वापस जाएँ' }, { label: 'Submit', primary: true, fn: function () { finishTest(false); } }]);
+      [{ label:'वापस जाएँ' }, { label:'Submit', primary:true, fn:function () { finishTest(false); } }]);
   };
 
   function finishTest(auto) {
     var T = S.test; if (!T || T.done) return;
-    T.ans[T.cur] = T.sel;
-    T.done = true; stopTimer();
+    T.ans[T.cur] = T.sel; T.done = true; stopTimer();
     var ex = getExam(T.meta.exam), c = 0, w = 0, u = 0;
     T.qs.forEach(function (q, i) { if (T.ans[i] === -1) u++; else if (T.ans[i] === q.a) c++; else w++; });
-    var score = Math.round((c * ex.marks - w * ex.neg) * 100) / 100;
-    var acc = (c + w) ? Math.round(c / (c + w) * 100) : 0;
+    var score = Math.round((c * ex.marks - w * ex.neg) * 100) / 100, acc = (c + w) ? Math.round(c / (c + w) * 100) : 0;
     S.result = { meta: T.meta, qs: T.qs, ans: T.ans, c: c, w: w, u: u, score: score, max: T.qs.length * ex.marks, acc: acc, used: T.meta.minutes * 60 - Math.max(0, T.left), auto: auto };
     var h = store('em_history') || []; h.push({ id: T.meta.id, name: T.meta.name, score: score, acc: acc }); store('em_history', h.slice(-100));
     S.view = 'result'; render(); window.scrollTo(0, 0);
@@ -417,32 +366,27 @@
 
   function renderResult() {
     var R = S.result; if (!R) { S.view = 'home'; return render(); }
-    var html = '<section class="fade-in"><div class="rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-6 mb-5">' +
-      '<p class="text-sm text-white/80">' + esc(R.meta.name) + (R.auto ? ' • समय समाप्त, ऑटो-सबमिट' : '') + '</p>' +
-      '<div class="mt-1 text-4xl font-extrabold">' + R.score + ' <span class="text-xl font-semibold text-white/80">/ ' + R.max + '</span></div></div>' +
-      '<div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">';
-    [['सही', R.c, 'text-emerald-600'], ['गलत', R.w, 'text-rose-600'], ['अनुत्तरित', R.u, 'text-slate-500'], ['सटीकता', R.acc + '%', 'text-indigo-600'], ['लिया गया समय', pad(Math.floor(R.used / 60)) + ':' + pad(R.used % 60), 'text-blue-600']].forEach(function (x) {
-      html += '<div class="rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 text-center"><div class="text-2xl font-extrabold ' + x[2] + '">' + x[1] + '</div><div class="text-xs text-slate-500 dark:text-slate-400">' + x[0] + '</div></div>';
+    var html = '<section class="fade-in"><div class="rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-6 mb-5"><p class="text-sm text-white/80">' + esc(R.meta.name) + (R.auto ? ' • समय समाप्त, ऑटो-सबमिट' : '') + '</p>' +
+      '<div class="mt-1 text-4xl font-extrabold">' + R.score + ' <span class="text-xl font-semibold text-white/80">/ ' + R.max + '</span></div></div><div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">';
+    [['सही',R.c,'text-emerald-600'],['गलत',R.w,'text-rose-600'],['अनुत्तरित',R.u,'text-slate-500'],['सटीकता',R.acc + '%','text-indigo-600'],['लिया गया समय',pad(Math.floor(R.used / 60)) + ':' + pad(R.used % 60),'text-blue-600']].forEach(function (x) {
+      html += '<div class="' + CARD + 'p-4 text-center"><div class="text-2xl font-extrabold ' + x[2] + '">' + x[1] + '</div><div class="text-xs text-slate-500">' + x[0] + '</div></div>';
     });
     html += '</div><h2 class="text-lg font-bold mb-3">उत्तर व स्पष्टीकरण</h2><div class="space-y-4">';
     R.qs.forEach(function (q, i) {
       var ua = R.ans[i], ok = ua === q.a, skip = ua === -1;
-      html += '<div class="rounded-xl bg-white dark:bg-slate-800 border ' + (skip ? 'border-slate-200 dark:border-slate-700' : ok ? 'border-emerald-400' : 'border-rose-400') + ' p-4">' +
-        '<div class="flex justify-between gap-2 mb-2"><p class="font-semibold">Q' + (i + 1) + '. ' + esc(q.q) + '</p><span class="text-xs font-bold shrink-0 ' + (skip ? 'text-slate-500' : ok ? 'text-emerald-600' : 'text-rose-600') + '">' + (skip ? 'Unattempted' : ok ? 'सही ✔' : 'गलत ✘') + '</span></div><ul class="space-y-1 text-sm">';
+      html += '<div class="rounded-xl bg-white dark:bg-slate-800 border ' + (skip ? 'border-slate-200 dark:border-slate-700' : ok ? 'border-emerald-400' : 'border-rose-400') + ' p-4"><div class="flex justify-between gap-2 mb-2"><p class="font-semibold">Q' + (i + 1) + '. ' + esc(q.q) + '</p><span class="text-xs font-bold shrink-0 ' + (skip ? 'text-slate-500' : ok ? 'text-emerald-600' : 'text-rose-600') + '">' + (skip ? 'Unattempted' : ok ? 'सही ✔' : 'गलत ✘') + '</span></div><ul class="space-y-1 text-sm">';
       q.o.forEach(function (o, k) {
-        var cls = k === q.a ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-900 dark:text-emerald-100' : (k === ua ? 'bg-rose-100 dark:bg-rose-900/50 text-rose-900 dark:text-rose-100' : '');
+        var cls = k === q.a ? 'bg-emerald-100 dark:bg-emerald-900/50' : (k === ua ? 'bg-rose-100 dark:bg-rose-900/50' : '');
         html += '<li class="rounded px-2 py-1 ' + cls + '">' + 'ABCD'.charAt(k) + '. ' + esc(o) + (k === q.a ? ' ✔' : '') + (k === ua && k !== q.a ? ' (आपका उत्तर)' : '') + '</li>';
       });
       html += '</ul><p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><b>स्पष्टीकरण:</b> ' + esc(q.e) + '</p></div>';
     });
-    html += '</div><div class="mt-6 flex gap-3"><button onclick="retry()" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold">दोबारा दें</button>' +
-      '<button onclick="backToExam()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-5 py-2">टेस्ट सूची</button></div></section>';
-    $app.innerHTML = html;
+    $app.innerHTML = html + '</div><div class="mt-6 flex gap-3"><button onclick="retry()" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold">दोबारा दें</button><button onclick="backToExam()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-5 py-2">टेस्ट सूची</button></div></section>';
   }
   window.retry = function () { startTest(S.result.meta.id); };
   window.backToExam = function () { S.examId = S.result.meta.exam; S.tab = S.result.meta.tab; S.view = 'exam'; S.test = null; render(); window.scrollTo(0, 0); };
 
-  /* ---------- Public API for loading real data ---------- */
+  /* ---------- Public API: असली डेटा / नई परीक्षा जोड़ने के लिए ---------- */
   window.ExamMock = {
     // loadBank('ssc', [{ s:'विषय', q:'प्रश्न', o:['A','B','C','D'], a:1, e:'व्याख्या' }, ...])
     loadBank: function (examId, arr) {
@@ -451,10 +395,16 @@
         .map(function (x) { return { s: x.s || 'सामान्य', q: x.q, o: x.o, a: x.a, e: x.e || '' }; });
       if (!clean.length) return false;
       BANK[examId] = clean; if (S.view === 'exam' || S.view === 'home') render(); return true;
+    },
+    // addExam({id,name,sub,icon,color,marks,neg,qs,sets,tags}, [प्रश्न...])
+    addExam: function (exam, arr) {
+      if (getExam(exam.id)) return this.loadBank(exam.id, arr);
+      exam.tags = exam.tags || exam.id; exam.qs = exam.qs || 1000; exam.sets = exam.sets || 500;
+      EXAMS.push(exam); BANK[exam.id] = [Q('सामान्य', 'placeholder', ['a','b','c','d'], 0, '')];
+      return this.loadBank(exam.id, arr);
     }
   };
 
-  /* ---------- Init ---------- */
   if (store('em_dark')) { document.documentElement.classList.add('dark'); $('darkBtn').textContent = '☀️'; }
   window.addEventListener('beforeunload', function (e) { if (S.view === 'test' && S.test && !S.test.done) { e.preventDefault(); e.returnValue = ''; } });
   render();
