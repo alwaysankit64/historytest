@@ -41,6 +41,53 @@
 
 <main id="app" class="max-w-7xl mx-auto px-4 py-6"></main>
 
+<!-- ========== FOOTER ========== -->
+<footer class="mt-10 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white grid place-items-center font-bold">E</span>
+        <span class="font-extrabold text-lg text-indigo-700 dark:text-indigo-300">ExamMock <span class="text-blue-600">Pro</span></span>
+      </div>
+      <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">UPSSSC PET, UPSC, SSC, राज्य PSC, रेलवे, बैंकिंग और अन्य प्रतियोगी परीक्षाओं के लिए रियल एग्जाम इंटरफेस वाले मॉक टेस्ट – एक ही जगह।</p>
+    </div>
+    <div>
+      <h4 class="font-bold mb-3">उपयोगी लिंक</h4>
+      <ul class="space-y-2 text-sm">
+        <li><button type="button" onclick="openInfo('about')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">About Us (हमारे बारे में)</button></li>
+        <li><button type="button" onclick="openInfo('contact')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Contact Us (संपर्क करें)</button></li>
+        <li><button type="button" onclick="openInfo('privacy')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Privacy Policy (गोपनीयता नीति)</button></li>
+        <li><button type="button" onclick="openInfo('terms')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Terms &amp; Conditions (नियम और शर्तें)</button></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold mb-3">संपर्क</h4>
+      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">प्रश्न में गलती, सुझाव या तकनीकी समस्या के लिए ईमेल करें:</p>
+      <a href="mailto:youthindia33@gmail.com" class="inline-block text-sm font-semibold text-indigo-600 dark:text-indigo-300 hover:underline break-all">✉ youthindia33@gmail.com</a>
+    </div>
+  </div>
+  <div class="border-t border-slate-200 dark:border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between text-xs text-slate-500 dark:text-slate-400">
+      <p>© <span id="yr">2026</span> ExamMock Pro. सर्वाधिकार सुरक्षित।</p>
+      <p>यह एक स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है; किसी सरकारी विभाग या परीक्षा आयोजक संस्था से संबद्ध नहीं है।</p>
+    </div>
+  </div>
+</footer>
+
+<!-- फुटर पेज पॉपअप (About / Contact / Privacy / Terms) -->
+<div id="infoModal" class="hidden fixed inset-0 z-50 bg-black/60 grid place-items-center p-4" onclick="if(event.target===this)closeInfo()">
+  <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+    <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-200 dark:border-slate-700">
+      <h3 id="infoTitle" class="text-lg font-bold"></h3>
+      <button type="button" id="infoClose" onclick="closeInfo()" aria-label="बंद करें" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 grid place-items-center">✕</button>
+    </div>
+    <div id="infoBody" class="overflow-y-auto px-5 py-4 text-sm leading-relaxed space-y-5"></div>
+    <div class="px-5 py-3 border-t border-slate-200 dark:border-slate-700 text-right">
+      <button type="button" onclick="closeInfo()" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 text-sm font-semibold">बंद करें</button>
+    </div>
+  </div>
+</div>
+
 <div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 grid place-items-center p-4">
   <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
     <h3 id="modalTitle" class="text-lg font-bold mb-2"></h3>
@@ -301,6 +348,99 @@
     $('modal').classList.remove('hidden');
   }
   function hideModal() { $('modal').classList.add('hidden'); }
+
+  /* ---------- फुटर पेज: About / Contact / Privacy / Terms ---------- */
+  var MAIL = 'youthindia33@gmail.com';
+  var MAIL_LINK = '<a href="mailto:' + MAIL + '" class="font-semibold text-indigo-600 dark:text-indigo-300 underline break-all">' + MAIL + '</a>';
+  function sec(t, body) { return '<section><h4 class="font-bold text-base mb-1.5 text-indigo-700 dark:text-indigo-300">' + t + '</h4><div class="space-y-2">' + body + '</div></section>'; }
+  function para(t) { return '<p class="text-slate-600 dark:text-slate-300">' + t + '</p>'; }
+  function list(a) { return '<ul class="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">' + a.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>'; }
+  var UPD = '<p class="text-xs text-slate-500 dark:text-slate-400">अंतिम अपडेट: अक्टूबर 2026</p>';
+
+  var PAGES = {
+    about: { t: 'हमारे बारे में (About Us)', b: [
+      sec('ExamMock Pro क्या है?', para('ExamMock Pro एक ऑनलाइन मॉक टेस्ट पोर्टल है, जो प्रतियोगी परीक्षाओं की तैयारी करने वाले अभ्यर्थियों के लिए बनाया गया है। यहाँ आप असली परीक्षा जैसे इंटरफेस में टाइमर के साथ अभ्यास कर सकते हैं और हर टेस्ट के बाद अपना प्रदर्शन तुरंत देख सकते हैं।')),
+      sec('हमारा उद्देश्य', para('हमारा लक्ष्य है कि हर अभ्यर्थी को एक ही जगह पर व्यवस्थित, सरल और भरोसेमंद अभ्यास सामग्री मिले, ताकि वह अपनी कमज़ोरियाँ पहचानकर समय रहते सुधार कर सके।')),
+      sec('हम क्या प्रदान करते हैं', list([
+        'UPSSSC PET, UPSC, SSC, राज्य PSC, डिफेंस, टीचिंग, रेलवे, बिहार परीक्षाएँ और बैंकिंग के लिए टेस्ट',
+        'PYQ पैटर्न सेट, चैप्टर-वाइज, सेक्शनल और फुल मॉक टेस्ट – हर टेस्ट 100 प्रश्न का',
+        'रियल एग्जाम इंटरफेस: टाइमर, प्रश्न पैलेट, Mark for Review और नेगेटिव मार्किंग',
+        'टेस्ट के बाद सही/गलत उत्तर, सटीकता और हर प्रश्न का स्पष्टीकरण',
+        'डार्क मोड और मोबाइल-फ्रेंडली डिज़ाइन'
+      ])),
+      sec('महत्वपूर्ण सूचना', para('ExamMock Pro एक स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है। यह किसी सरकारी विभाग, आयोग या परीक्षा आयोजक संस्था से संबद्ध नहीं है। सभी परीक्षाओं के नाम उनके संबंधित स्वामियों के हैं और केवल पहचान के लिए उपयोग किए गए हैं।')),
+      sec('संपर्क', para('सुझाव, प्रश्न में त्रुटि या किसी भी सहायता के लिए हमें ईमेल करें: ' + MAIL_LINK))
+    ].join('') },
+    contact: { t: 'संपर्क करें (Contact Us)', b: [
+      '<div class="rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 p-4 text-center">' +
+        '<p class="text-xs text-slate-500 dark:text-slate-400 mb-1">हमारा ईमेल</p>' +
+        '<a href="mailto:' + MAIL + '" class="text-lg sm:text-xl font-extrabold text-indigo-700 dark:text-indigo-300 break-all hover:underline">' + MAIL + '</a>' +
+        '<div class="mt-3"><a href="mailto:' + MAIL + '" class="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 text-sm font-semibold">ईमेल भेजें</a></div>' +
+      '</div>',
+      sec('आप किन बातों के लिए लिख सकते हैं?', list([
+        'किसी प्रश्न, उत्तर या स्पष्टीकरण में गलती की जानकारी',
+        'तकनीकी समस्या (टेस्ट न खुलना, टाइमर या पैलेट की दिक्कत आदि)',
+        'नई परीक्षा, विषय या सुविधा का सुझाव',
+        'गोपनीयता नीति या नियम व शर्तों से जुड़े प्रश्न',
+        'सहयोग या साझेदारी का प्रस्ताव'
+      ])),
+      sec('बेहतर सहायता के लिए ईमेल में यह लिखें', list([
+        'टेस्ट का नाम और प्रश्न संख्या (यदि प्रश्न से संबंधित है)',
+        'समस्या का संक्षिप्त विवरण और संभव हो तो स्क्रीनशॉट',
+        'आपका डिवाइस और ब्राउज़र (जैसे Android – Chrome)'
+      ])),
+      para('हम आपके संदेश का यथाशीघ्र उत्तर देने का प्रयास करेंगे।')
+    ].join('') },
+    privacy: { t: 'गोपनीयता नीति (Privacy Policy)', b: [
+      UPD,
+      sec('1. परिचय', para('ExamMock Pro ("हम") आपकी गोपनीयता का सम्मान करता है। यह नीति बताती है कि इस वेबसाइट का उपयोग करते समय कौन-सी जानकारी कैसे उपयोग की जाती है। वेबसाइट का उपयोग करके आप इस नीति से सहमत होते हैं।')),
+      sec('2. हम कौन-सी जानकारी एकत्र करते हैं', list([
+        'वर्तमान में वेबसाइट पर रजिस्ट्रेशन या लॉगिन नहीं है। हम आपसे नाम, फ़ोन नंबर, पता या ईमेल नहीं माँगते।',
+        'आपके दिए गए टेस्ट का इतिहास (टेस्ट का नाम, स्कोर, सटीकता) और डार्क मोड की पसंद आपके अपने ब्राउज़र की स्थानीय मेमोरी (localStorage) में सहेजी जाती है।',
+        'यह जानकारी आपके डिवाइस पर ही रहती है; हम इसे अपने सर्वर पर नहीं भेजते।',
+        'यदि आप हमें ईमेल करते हैं, तो आपका ईमेल पता और संदेश केवल आपको उत्तर देने के लिए उपयोग किए जाएँगे।'
+      ])),
+      sec('3. डेटा कैसे हटाएँ', para('आप प्रोफ़ाइल मेन्यू में "इतिहास मिटाएँ" बटन से अपना टेस्ट इतिहास हटा सकते हैं। ब्राउज़र का डेटा/कैश साफ़ करने पर सभी सहेजी गई जानकारी हट जाती है।')),
+      sec('4. थर्ड-पार्टी सेवाएँ', para('यह वेबसाइट डिज़ाइन के लिए Tailwind CSS जैसी बाहरी सेवाओं (CDN) का उपयोग करती है, इसलिए पेज खुलते समय आपका ब्राउज़र उन सेवाओं से जुड़ता है और IP एड्रेस जैसी सामान्य तकनीकी जानकारी उन्हें मिल सकती है। भविष्य में हम एनालिटिक्स या विज्ञापन सेवाएँ जोड़ सकते हैं; ऐसा होने पर वे कुकीज़ का उपयोग कर सकती हैं और हम इस नीति को तदनुसार अपडेट करेंगे।')),
+      sec('5. कुकीज़', para('हम स्वयं कोई ट्रैकिंग कुकी नहीं लगाते। आप अपने ब्राउज़र की सेटिंग से कुकीज़ और स्थानीय डेटा को नियंत्रित कर सकते हैं।')),
+      sec('6. बच्चों की गोपनीयता', para('हम जानबूझकर किसी से भी, विशेषकर 13 वर्ष से कम आयु के बच्चों से, व्यक्तिगत जानकारी एकत्र नहीं करते।')),
+      sec('7. सुरक्षा', para('हम आपकी जानकारी को न्यूनतम रखने का प्रयास करते हैं। फिर भी इंटरनेट पर कोई भी प्रणाली पूरी तरह सुरक्षित होने की गारंटी नहीं दे सकती।')),
+      sec('8. नीति में बदलाव', para('हम समय-समय पर इस नीति को अपडेट कर सकते हैं। बदलाव इसी पेज पर "अंतिम अपडेट" तिथि के साथ दिखाए जाएँगे।')),
+      sec('9. संपर्क', para('गोपनीयता से जुड़े किसी प्रश्न के लिए ईमेल करें: ' + MAIL_LINK))
+    ].join('') },
+    terms: { t: 'नियम और शर्तें (Terms & Conditions)', b: [
+      UPD,
+      sec('1. शर्तों की स्वीकृति', para('ExamMock Pro का उपयोग करके आप इन नियमों और शर्तों को स्वीकार करते हैं। यदि आप सहमत नहीं हैं, तो कृपया वेबसाइट का उपयोग न करें।')),
+      sec('2. उपयोग का उद्देश्य', para('यह वेबसाइट केवल शैक्षिक अभ्यास और स्व-मूल्यांकन के लिए है। आप इसका उपयोग केवल वैध और व्यक्तिगत उद्देश्यों के लिए कर सकते हैं।')),
+      sec('3. सामग्री की सटीकता', list([
+        'हम प्रश्नों, उत्तरों और स्पष्टीकरणों को सही रखने का प्रयास करते हैं, परंतु उनमें त्रुटि या अद्यतन की कमी हो सकती है।',
+        'कुछ अभ्यास प्रश्न (जैसे गणित/रीज़निंग) स्वतः तैयार होते हैं।',
+        'जहाँ स्पष्ट रूप से उल्लेख न हो, PYQ सेट को असली पुराने प्रश्नपत्र न समझें; वे पैटर्न-आधारित अभ्यास सेट हो सकते हैं।',
+        'महत्वपूर्ण जानकारी (सिलेबस, पैटर्न, तिथियाँ, नेगेटिव मार्किंग) की पुष्टि हमेशा संबंधित संस्था की आधिकारिक वेबसाइट से करें।'
+      ])),
+      sec('4. कोई गारंटी नहीं', para('मॉक टेस्ट में प्राप्त अंक वास्तविक परीक्षा के परिणाम का संकेत मात्र हैं। हम किसी परीक्षा में चयन, अंक या रैंक की गारंटी नहीं देते।')),
+      sec('5. उपयोगकर्ता आचरण', list([
+        'वेबसाइट के संचालन में बाधा डालना या उसे हैक करने का प्रयास करना प्रतिबंधित है।',
+        'स्वचालित टूल से सामग्री की बड़े पैमाने पर नकल (स्क्रैपिंग) करना प्रतिबंधित है।',
+        'किसी भी गैरकानूनी उद्देश्य के लिए वेबसाइट का उपयोग न करें।'
+      ])),
+      sec('6. बौद्धिक संपदा', para('वेबसाइट का डिज़ाइन, कोड और मौलिक सामग्री ExamMock Pro की है। बिना लिखित अनुमति के इसे व्यावसायिक रूप से कॉपी, बेचने या पुनः प्रकाशित करने की अनुमति नहीं है। परीक्षाओं के नाम और चिह्न उनके संबंधित स्वामियों के हैं।')),
+      sec('7. संबद्धता', para('ExamMock Pro किसी सरकारी विभाग, आयोग या परीक्षा आयोजक संस्था से संबद्ध या अनुमोदित नहीं है।')),
+      sec('8. दायित्व की सीमा', para('वेबसाइट "जैसी है" के आधार पर उपलब्ध है। इसके उपयोग या अनुपलब्धता से होने वाली किसी हानि के लिए हम कानून द्वारा अनुमत सीमा तक उत्तरदायी नहीं होंगे।')),
+      sec('9. सेवा और शर्तों में बदलाव', para('हम किसी भी समय वेबसाइट की सामग्री, सुविधाओं या इन शर्तों में बदलाव कर सकते हैं। बदलाव के बाद वेबसाइट का उपयोग जारी रखने का अर्थ है कि आप नई शर्तें स्वीकार करते हैं।')),
+      sec('10. लागू कानून', para('ये शर्तें भारत के कानूनों के अनुसार लागू होंगी।')),
+      sec('11. संपर्क', para('इन शर्तों से जुड़े प्रश्न के लिए ईमेल करें: ' + MAIL_LINK))
+    ].join('') }
+  };
+  window.openInfo = function (k) {
+    var pg = PAGES[k]; if (!pg) return;
+    $('infoTitle').textContent = pg.t; $('infoBody').innerHTML = pg.b; $('infoBody').scrollTop = 0;
+    $('infoModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
+    $('infoClose').focus();
+  };
+  window.closeInfo = function () { $('infoModal').classList.add('hidden'); document.body.style.overflow = ''; };
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { window.closeInfo(); hideModal(); } });
+  var yr = $('yr'); if (yr) yr.textContent = new Date().getFullYear();
 
   window.goHome = function () {
     if (S.view === 'test' && S.test && !S.test.done) { showModal('टेस्ट छोड़ें?', 'आपकी प्रगति खो जाएगी।', [{ label:'रद्द करें' }, { label:'हाँ, छोड़ें', primary:true, fn:function () { stopTimer(); S.test = null; S.view = 'home'; S.examId = null; render(); } }]); return; }
