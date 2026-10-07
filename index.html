@@ -3,632 +3,366 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ExamMock Pro – प्रतियोगी परीक्षा मॉक टेस्ट पोर्टल</title>
+<title>ExamMock Pro – सिलेबस आधारित प्रतियोगी परीक्षा मॉक टेस्ट</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config = { darkMode: 'class' };</script>
+<script>tailwind.config={darkMode:'class'};</script>
 <style>
-  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif}
-  .fade-in{animation:fade .25s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;background:#f1f5ff}
+.dark body{background:#0b1020}
+.fade-in{animation:fade .3s ease}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.5;animation:fl 9s ease-in-out infinite}
+@keyframes fl{50%{transform:translate(30px,-25px) scale(1.15)}}
+.glass{background:rgba(255,255,255,.75);backdrop-filter:blur(10px)}.dark .glass{background:rgba(23,31,58,.7)}
+.card{transition:.25s}.card:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:0 18px 40px -12px rgba(79,70,229,.45)}
+.ring{transition:stroke-dashoffset 1s ease}
 </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen">
-
-<header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+<body class="text-slate-800 dark:text-slate-100 min-h-screen">
+<header class="sticky top-0 z-30 glass border-b border-slate-200 dark:border-slate-700">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
-    <button onclick="goHome()" class="flex items-center gap-2 shrink-0">
-      <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white grid place-items-center font-bold">E</span>
-      <span class="font-extrabold text-lg text-indigo-700 dark:text-indigo-300">ExamMock <span class="text-blue-600">Pro</span></span>
-    </button>
-    <div class="flex-1 max-w-xl mx-auto">
-      <input id="searchInput" type="search" placeholder="परीक्षा, टेस्ट या विषय खोजें…" oninput="onSearch(this.value)" class="w-full rounded-full border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-700 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-    </div>
-    <button onclick="toggleDark()" id="darkBtn" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-700 grid place-items-center">🌙</button>
+    <button onclick="goHome()" class="flex items-center gap-2 shrink-0"><span class="w-9 h-9 rounded-xl bg-gradient-to-br from-fuchsia-500 via-indigo-600 to-sky-500 text-white grid place-items-center font-bold">E</span><span class="font-extrabold text-lg text-indigo-700 dark:text-indigo-300">ExamMock <span class="text-fuchsia-500">Pro</span></span></button>
+    <input id="searchInput" type="search" placeholder="परीक्षा खोजें… (UPSC, SSC, PET)" oninput="onSearch(this.value)" class="flex-1 max-w-xl mx-auto rounded-full border border-slate-300 dark:border-slate-600 bg-white/70 dark:bg-slate-800 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    <button onclick="toggleDark()" id="darkBtn" class="w-9 h-9 rounded-full bg-white/70 dark:bg-slate-700 grid place-items-center">🌙</button>
     <div class="relative">
-      <button onclick="toggleProfile()" class="flex items-center gap-2 rounded-full bg-indigo-100 dark:bg-indigo-900 px-2 py-1">
-        <span class="w-7 h-7 rounded-full bg-indigo-600 text-white grid place-items-center text-sm font-bold">अ</span>
-        <span class="hidden sm:inline text-sm font-medium pr-1">अभ्यर्थी</span>
-      </button>
+      <button onclick="toggleProfile()" class="flex items-center gap-2 rounded-full bg-indigo-100 dark:bg-indigo-900 px-2 py-1"><span class="w-7 h-7 rounded-full bg-indigo-600 text-white grid place-items-center text-sm font-bold">अ</span><span class="hidden sm:inline text-sm font-medium pr-1">अभ्यर्थी</span></button>
       <div id="profileMenu" class="hidden absolute right-0 mt-2 w-60 rounded-xl bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 p-4 text-sm">
-        <p class="font-semibold">अभ्यर्थी (Guest)</p>
-        <p class="text-slate-500 dark:text-slate-400 mb-3">इस ब्राउज़र में दिए गए टेस्ट</p>
-        <div id="profileStats"></div>
+        <p class="font-semibold">अभ्यर्थी (Guest)</p><p class="text-slate-500 mb-3">इस ब्राउज़र में दिए गए टेस्ट</p><div id="profileStats"></div>
         <button onclick="clearHistory()" class="mt-3 w-full rounded-lg border border-red-300 text-red-600 py-1.5">इतिहास मिटाएँ</button>
       </div>
     </div>
   </div>
 </header>
-
 <main id="app" class="max-w-7xl mx-auto px-4 py-6"></main>
 
-<!-- ========== FOOTER ========== -->
-<footer class="mt-10 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-  <div class="max-w-7xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
-    <div>
-      <div class="flex items-center gap-2 mb-3">
-        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white grid place-items-center font-bold">E</span>
-        <span class="font-extrabold text-lg text-indigo-700 dark:text-indigo-300">ExamMock <span class="text-blue-600">Pro</span></span>
-      </div>
-      <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">UPSSSC PET, UPSC, SSC, राज्य PSC, रेलवे, बैंकिंग और अन्य प्रतियोगी परीक्षाओं के लिए रियल एग्जाम इंटरफेस वाले मॉक टेस्ट – एक ही जगह।</p>
-    </div>
-    <div>
-      <h4 class="font-bold mb-3">उपयोगी लिंक</h4>
-      <ul class="space-y-2 text-sm">
-        <li><button type="button" onclick="openInfo('about')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">About Us (हमारे बारे में)</button></li>
-        <li><button type="button" onclick="openInfo('contact')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Contact Us (संपर्क करें)</button></li>
-        <li><button type="button" onclick="openInfo('privacy')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Privacy Policy (गोपनीयता नीति)</button></li>
-        <li><button type="button" onclick="openInfo('terms')" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 hover:underline">Terms &amp; Conditions (नियम और शर्तें)</button></li>
-      </ul>
-    </div>
-    <div>
-      <h4 class="font-bold mb-3">संपर्क</h4>
-      <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">प्रश्न में गलती, सुझाव या तकनीकी समस्या के लिए ईमेल करें:</p>
-      <a href="mailto:yuthindia33@gmail.com" class="inline-block text-sm font-semibold text-indigo-600 dark:text-indigo-300 hover:underline break-all">✉ yuthindia33@gmail.com</a>
-    </div>
+<footer class="mt-10 border-t border-slate-200 dark:border-slate-700 glass">
+  <div class="max-w-7xl mx-auto px-4 py-8 grid gap-6 md:grid-cols-3">
+    <div><div class="font-extrabold text-lg text-indigo-700 dark:text-indigo-300 mb-2">ExamMock Pro</div><p class="text-sm text-slate-600 dark:text-slate-300">UPSC, UPSSSC PET, SSC, राज्य PSC, रेलवे, बैंकिंग, डिफेंस, टीचिंग – परीक्षा-पैटर्न व सिलेबस आधारित मॉक टेस्ट।</p></div>
+    <div><h4 class="font-bold mb-2">उपयोगी लिंक</h4><ul class="space-y-1.5 text-sm">
+      <li><button onclick="openInfo('about')" class="hover:underline">About Us (हमारे बारे में)</button></li>
+      <li><button onclick="openInfo('contact')" class="hover:underline">Contact Us (संपर्क करें)</button></li>
+      <li><button onclick="openInfo('privacy')" class="hover:underline">Privacy Policy (गोपनीयता नीति)</button></li>
+      <li><button onclick="openInfo('terms')" class="hover:underline">Terms &amp; Conditions (नियम और शर्तें)</button></li></ul></div>
+    <div><h4 class="font-bold mb-2">संपर्क</h4><p class="text-sm text-slate-600 dark:text-slate-300 mb-1">प्रश्न में गलती या सुझाव के लिए:</p><a href="mailto:yuthindia33@gmail.com" class="text-sm font-semibold text-indigo-600 dark:text-indigo-300 hover:underline break-all">✉ yuthindia33@gmail.com</a></div>
   </div>
-  <div class="border-t border-slate-200 dark:border-slate-700">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between text-xs text-slate-500 dark:text-slate-400">
-      <p>© <span id="yr">2026</span> ExamMock Pro. सर्वाधिकार सुरक्षित।</p>
-      <p>यह एक स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है; किसी सरकारी विभाग या परीक्षा आयोजक संस्था से संबद्ध नहीं है।</p>
-    </div>
-  </div>
+  <div class="border-t border-slate-200 dark:border-slate-700 max-w-7xl mx-auto px-4 py-3 text-xs text-slate-500 flex flex-col sm:flex-row gap-1 sm:justify-between"><p>© <span id="yr">2026</span> ExamMock Pro. सर्वाधिकार सुरक्षित।</p><p>यह स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है; किसी सरकारी विभाग या परीक्षा संस्था से संबद्ध नहीं है।</p></div>
 </footer>
 
-<!-- फुटर पेज पॉपअप (About / Contact / Privacy / Terms) -->
 <div id="infoModal" class="hidden fixed inset-0 z-50 bg-black/60 grid place-items-center p-4" onclick="if(event.target===this)closeInfo()">
-  <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
-    <div class="flex items-center justify-between gap-3 px-5 py-4 border-b border-slate-200 dark:border-slate-700">
-      <h3 id="infoTitle" class="text-lg font-bold"></h3>
-      <button type="button" id="infoClose" onclick="closeInfo()" aria-label="बंद करें" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 grid place-items-center">✕</button>
-    </div>
-    <div id="infoBody" class="overflow-y-auto px-5 py-4 text-sm leading-relaxed space-y-5"></div>
-    <div class="px-5 py-3 border-t border-slate-200 dark:border-slate-700 text-right">
-      <button type="button" onclick="closeInfo()" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 text-sm font-semibold">बंद करें</button>
-    </div>
+  <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700"><h3 id="infoTitle" class="text-lg font-bold"></h3><button onclick="closeInfo()" aria-label="बंद करें" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700">✕</button></div>
+    <div id="infoBody" class="overflow-y-auto px-5 py-4 text-sm leading-relaxed space-y-4"></div>
   </div>
 </div>
-
-<div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 grid place-items-center p-4">
-  <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
-    <h3 id="modalTitle" class="text-lg font-bold mb-2"></h3>
-    <div id="modalBody" class="text-sm text-slate-600 dark:text-slate-300 mb-5"></div>
-    <div class="flex justify-end gap-2" id="modalActions"></div>
-  </div>
-</div>
+<div id="modal" class="hidden fixed inset-0 z-50 bg-black/50 grid place-items-center p-4"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl"><h3 id="modalTitle" class="text-lg font-bold mb-2"></h3><div id="modalBody" class="text-sm text-slate-600 dark:text-slate-300 mb-5"></div><div class="flex justify-end gap-2" id="modalActions"></div></div></div>
 
 <script>
-(function () {
-  'use strict';
-  var CARD = 'rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 ';
-  var QCOUNT = 100; // हर टेस्ट में प्रश्नों की संख्या
+(function(){
+'use strict';
+const ST=['केवल 1','केवल 2','1 और 2 दोनों','न तो 1 न ही 2'];
+const LV=['सरल','मध्यम','कठिन'];
+const BADGE=['bg-emerald-500/15 text-emerald-600 dark:text-emerald-300','bg-amber-500/15 text-amber-600 dark:text-amber-300','bg-rose-500/15 text-rose-600 dark:text-rose-300'];
+const LM=[[.7,.25,.05],[.25,.55,.2],[.05,.3,.65]];
+const TABS=[{id:'y',l:'PYQ पैटर्न'},{id:'f',l:'फुल मॉक'},{id:'s',l:'सेक्शनल (सिलेबस-वार)'}];
+const SSCS=[['रीज़निंग',25],['गणित',20],['DI',5],['अंग्रेज़ी',25],['सामान्य ज्ञान',25]];
 
-  // time = 100 प्रश्न का समय (मिनट); न दें तो 100 मिनट
-  var EXAMS = [
-    { id:'upsssc', name:'UPSSSC PET', sub:'PET PYQ • प्रैक्टिस सेट • फुल मॉक', icon:'🌾', color:'from-green-600 to-lime-600', qs:6000, sets:3000, marks:1, neg:0.25, time:120, tags:'upsssc pet lekhpal uppsc up police उत्तर प्रदेश पेट' },
-    { id:'upsc', name:'UPSC', sub:'Civil Services / CDS / NDA', icon:'🏛️', color:'from-indigo-600 to-blue-600', qs:5200, sets:3100, marks:2, neg:0.67, tags:'upsc ias civil services cds nda' },
-    { id:'ssc', name:'SSC', sub:'CGL, CHSL, MTS, CPO', icon:'📝', color:'from-blue-600 to-cyan-600', qs:6000, sets:3800, marks:2, neg:0.5, tags:'ssc cgl chsl mts cpo' },
-    { id:'psc', name:'राज्य PSC', sub:'UPPSC, BPSC, MPPSC, RPSC', icon:'🗺️', color:'from-emerald-600 to-teal-600', qs:5400, sets:3300, marks:1, neg:0.33, tags:'state psc uppsc bpsc mppsc rpsc राज्य' },
-    { id:'defence', name:'डिफेंस', sub:'CDS, AFCAT, Agniveer', icon:'🛡️', color:'from-slate-700 to-slate-500', qs:5100, sets:2600, marks:1, neg:0.25, tags:'defence cds afcat agniveer army navy airforce' },
-    { id:'teaching', name:'टीचिंग एग्जाम', sub:'CTET, UPTET, KVS', icon:'🎓', color:'from-amber-600 to-orange-600', qs:5000, sets:2400, marks:1, neg:0, tags:'teaching ctet uptet kvs tet teacher' },
-    { id:'rail', name:'रेलवे', sub:'NTPC & Group D', icon:'🚆', color:'from-rose-600 to-pink-600', qs:5600, sets:3500, marks:1, neg:0.33, tags:'railway rrb ntpc group d रेलवे' },
-    { id:'bpsc', name:'BPSC / बिहार', sub:'BPSC, बिहार दारोगा, BSSC', icon:'🏯', color:'from-orange-600 to-red-600', qs:3500, sets:1800, marks:1, neg:0.25, tags:'bpsc bihar bssc बिहार daroga' },
-    { id:'bank', name:'बैंकिंग', sub:'IBPS PO/Clerk, SBI, RBI', icon:'🏦', color:'from-cyan-700 to-blue-700', qs:4500, sets:2200, marks:1, neg:0.25, tags:'bank ibps sbi rbi po clerk बैंक' }
-  ];
+/* पेपर: q=प्रश्न, m=मिनट, mk=अंक/प्रश्न, ng=नेगेटिव, S=[विषय, प्रश्न संख्या] (असली सिलेबस वितरण) */
+const EX=[
+{id:'upsc',name:'UPSC',sub:'सिविल सेवा प्रारंभिक – GS पेपर-1 व CSAT',icon:'🏛️',c:'from-indigo-600 to-violet-600',mix:[.05,.3,.65],tags:'upsc ias civil services csat gs',P:[
+ {n:'GS पेपर-1',q:100,m:120,mk:2,ng:.67,S:[['राजव्यवस्था',17],['इतिहास',17],['भूगोल',17],['अर्थव्यवस्था',17],['पर्यावरण',16],['विज्ञान',16]]},
+ {n:'CSAT पेपर-2',q:80,m:120,mk:2.5,ng:.83,S:[['गद्यांश',27],['रीज़निंग',27],['गणित',16],['DI',10]]}]},
+{id:'upsssc',name:'UPSSSC PET',sub:'पात्रता परीक्षा – 100 प्रश्न, 2 घंटे',icon:'🌾',c:'from-green-600 to-lime-600',mix:[.25,.55,.2],tags:'upsssc pet lekhpal up उत्तर प्रदेश पेट',P:[
+ {n:'PET (सामान्य)',q:100,m:120,mk:1,ng:.25,S:[['गणित',15],['रीज़निंग',10],['DI',5],['हिंदी',10],['UP GK',15],['राजव्यवस्था',10],['इतिहास',10],['भूगोल',10],['विज्ञान',10],['अर्थव्यवस्था',5]]}]},
+{id:'ssc',name:'SSC',sub:'CGL, CHSL टियर-1',icon:'📝',c:'from-blue-600 to-cyan-600',mix:[.2,.5,.3],tags:'ssc cgl chsl mts cpo',P:[
+ {n:'CGL टियर-1',q:100,m:60,mk:2,ng:.5,S:SSCS},{n:'CHSL टियर-1',q:100,m:60,mk:2,ng:.5,S:SSCS}]},
+{id:'psc',name:'राज्य PSC',sub:'UPPSC, MPPSC, RPSC प्रारंभिक',icon:'🗺️',c:'from-emerald-600 to-teal-600',mix:[.1,.4,.5],tags:'state psc uppsc mppsc rpsc राज्य pcs',P:[
+ {n:'GS प्रारंभिक',q:100,m:120,mk:1,ng:.33,S:[['राजव्यवस्था',20],['इतिहास',25],['भूगोल',20],['अर्थव्यवस्था',15],['विज्ञान',15],['UP GK',5]]}]},
+{id:'defence',name:'डिफेंस',sub:'AFCAT, Agniveer',icon:'🛡️',c:'from-slate-700 to-slate-500',mix:[.2,.5,.3],tags:'defence cds afcat agniveer army navy',P:[
+ {n:'AFCAT',q:100,m:120,mk:3,ng:1,S:[['सामान्य ज्ञान',30],['गणित',25],['रीज़निंग',25],['अंग्रेज़ी',20]]},
+ {n:'Agniveer GD',q:50,m:60,mk:2,ng:.5,S:[['सामान्य ज्ञान',15],['विज्ञान',15],['गणित',20]]}]},
+{id:'teaching',name:'टीचिंग एग्जाम',sub:'CTET, UPTET पेपर-1',icon:'🎓',c:'from-amber-600 to-orange-600',mix:[.2,.55,.25],tags:'teaching ctet uptet kvs tet teacher',P:[
+ {n:'CTET पेपर-1',q:150,m:150,mk:1,ng:0,S:[['बाल विकास',30],['हिंदी',30],['अंग्रेज़ी',30],['गणित',30],['पर्यावरण',30]]}]},
+{id:'rail',name:'रेलवे',sub:'RRB NTPC व Group D',icon:'🚆',c:'from-rose-600 to-pink-600',mix:[.3,.5,.2],tags:'railway rrb ntpc group d रेलवे',P:[
+ {n:'NTPC CBT-1',q:100,m:90,mk:1,ng:.33,S:[['गणित',30],['रीज़निंग',30],['सामान्य ज्ञान',40]]},
+ {n:'Group D',q:100,m:90,mk:1,ng:.33,S:[['गणित',25],['रीज़निंग',30],['विज्ञान',25],['सामान्य ज्ञान',20]]}]},
+{id:'bpsc',name:'BPSC / बिहार',sub:'BPSC प्रारंभिक – बिहार विशेष',icon:'🏯',c:'from-orange-600 to-red-600',mix:[.1,.4,.5],tags:'bpsc bihar bssc बिहार daroga',P:[
+ {n:'BPSC प्रारंभिक',q:150,m:120,mk:1,ng:.33,S:[['बिहार GK',30],['इतिहास',30],['भूगोल',25],['राजव्यवस्था',25],['अर्थव्यवस्था',15],['विज्ञान',25]]}]},
+{id:'bank',name:'बैंकिंग',sub:'IBPS PO / Clerk, SBI प्रारंभिक',icon:'🏦',c:'from-cyan-700 to-blue-700',mix:[.2,.5,.3],tags:'bank ibps sbi rbi po clerk बैंक',P:[
+ {n:'PO प्रारंभिक',q:100,m:60,mk:1,ng:.25,S:[['अंग्रेज़ी',30],['गणित',25],['DI',10],['रीज़निंग',35]]},
+ {n:'Clerk प्रारंभिक',q:100,m:60,mk:1,ng:.25,S:[['अंग्रेज़ी',30],['गणित',25],['DI',10],['रीज़निंग',35]]},
+ {n:'बैंकिंग जागरूकता',q:40,m:30,mk:1,ng:.25,S:[['बैंकिंग',40]]}]}
+];
 
-  var TABS = [
-    { id:'pyq', label:'PYQ सेट', share:0.12 },
-    { id:'chapter', label:'चैप्टर-वाइज टेस्ट', share:0.45 },
-    { id:'sectional', label:'सेक्शनल टेस्ट', share:0.30 },
-    { id:'full', label:'फुल मॉक टेस्ट', share:0.13 }
-  ];
-  var PETL = { pyq:'PET PYQ', chapter:'PET प्रैक्टिस (विषय-वार)', sectional:'PET सेक्शनल', full:'PET फुल मॉक' };
-  function tabLabel(e, t) { return e.id === 'upsssc' ? PETL[t.id] : t.label; }
+/* हस्तनिर्मित प्रश्न-बैंक: [विषय, कठिनाई 0/1/2, प्रश्न, विकल्प, सही-इंडेक्स, व्याख्या, गद्यांश] */
+const BANK=[];
+const B=(s,d,q,o,a,e,p)=>BANK.push({s,d,q,o,a,e,p});
+B('राजव्यवस्था',0,'लोकसभा सदस्य बनने की न्यूनतम आयु कितनी है?',['21','25','30','35'],1,'25 वर्ष (अनु. 84)।');
+B('राजव्यवस्था',1,'पंचायती राज को संवैधानिक दर्जा किस संशोधन से मिला?',['61वाँ','73वाँ','74वाँ','86वाँ'],1,'73वाँ संशोधन, 1992।');
+B('राजव्यवस्था',2,'निम्नलिखित कथनों पर विचार कीजिए:\n1. राष्ट्रपति शासन की घोषणा को संसद के दोनों सदनों से 2 माह के भीतर अनुमोदित होना आवश्यक है।\n2. अनुमोदन के बाद राष्ट्रपति शासन अधिकतम 3 वर्ष तक लागू रह सकता है।\nउपर्युक्त में से कौन-सा/से सही है/हैं?',ST,2,'अनु. 356: 2 माह में अनुमोदन; अधिकतम अवधि 3 वर्ष (शर्तों सहित)।');
+B('राजव्यवस्था',2,'मिनर्वा मिल्स (1980) मामले में किस संशोधन के प्रावधान रद्द किए गए?',['24वाँ','42वाँ','44वाँ','52वाँ'],1,'42वें संशोधन की धारा 55 रद्द हुई।');
+B('इतिहास',0,'भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?',['1930','1940','1942','1946'],2,'अगस्त 1942।');
+B('इतिहास',1,'स्थायी बंदोबस्त किसने लागू किया?',['वारेन हेस्टिंग्स','कार्नवालिस','वेलेजली','डलहौजी'],1,'लॉर्ड कार्नवालिस, 1793।');
+B('इतिहास',1,'चौरी-चौरा कांड कब हुआ?',['1920','1921','1922','1930'],2,'4 फरवरी 1922।');
+B('इतिहास',2,'निम्नलिखित कथनों पर विचार कीजिए:\n1. 1909 के अधिनियम ने मुसलमानों के लिए पृथक निर्वाचन की व्यवस्था की।\n2. 1919 के अधिनियम ने प्रांतों में द्वैध शासन लागू किया।\n3. 1935 के अधिनियम की संघीय व्यवस्था तुरंत लागू हो गई।\nकौन-से कथन सही हैं?',['केवल 1 और 2','केवल 2 और 3','केवल 1 और 3','1, 2 और 3'],0,'1935 की संघीय व्यवस्था कभी लागू नहीं हुई।');
+B('इतिहास',2,'कालक्रमानुसार व्यवस्थित कीजिए:\n1. लखनऊ समझौता 2. रौलेट एक्ट 3. जलियाँवाला बाग 4. असहयोग आंदोलन',['1-2-3-4','2-1-3-4','1-3-2-4','2-3-1-4'],0,'1916, मार्च 1919, अप्रैल 1919, 1920।');
+B('भूगोल',0,'गंगा-यमुना का संगम कहाँ है?',['वाराणसी','हरिद्वार','प्रयागराज','कानपुर'],2,'प्रयागराज।');
+B('भूगोल',1,'कर्क रेखा भारत के कितने राज्यों से गुजरती है?',['6','7','8','9'],2,'गुजरात, राजस्थान, मध्य प्रदेश, छत्तीसगढ़, झारखंड, प बंगाल, त्रिपुरा, मिज़ोरम।');
+B('भूगोल',2,'कौन-सी नदी भ्रंश घाटी से बहकर अरब सागर में गिरती है?',['गोदावरी','नर्मदा','कृष्णा','महानदी'],1,'नर्मदा (और ताप्ती) भ्रंश घाटी में बहती हैं।');
+B('अर्थव्यवस्था',1,'रेपो रेट वह दर है जिस पर—',['बैंक ग्राहकों को ऋण देते हैं','RBI बैंकों को ऋण देता है','बैंक RBI को ऋण देते हैं','सरकार बैंक को ऋण देती है'],1,'RBI बैंकों को अल्पकालिक ऋण देता है।');
+B('अर्थव्यवस्था',2,'कथनों पर विचार कीजिए:\n1. CRR घटाने से बैंकों की ऋण-क्षमता बढ़ती है।\n2. SLR का रखरखाव RBI के पास नकद रूप में होता है।\nसही कथन कौन-सा/से है/हैं?',ST,0,'SLR बैंक स्वयं तरल परिसंपत्तियों में रखते हैं।');
+B('अर्थव्यवस्था',0,'भारत में नोट छापने का अधिकार किसे है (₹1 को छोड़कर)?',['वित्त मंत्रालय','RBI','SBI','NABARD'],1,'RBI (RBI अधिनियम, 1934)।');
+B('पर्यावरण',1,'रामसर सम्मेलन किससे संबंधित है?',['वन','आर्द्रभूमि','मरुस्थलीकरण','ओज़ोन'],1,'आर्द्रभूमि संरक्षण।');
+B('पर्यावरण',2,'मॉन्ट्रियल प्रोटोकॉल किससे संबंधित है?',['जलवायु परिवर्तन','जैव विविधता','ओज़ोन परत क्षरण','आर्द्रभूमि'],2,'ओज़ोन-क्षयकारी पदार्थों का नियंत्रण।');
+B('विज्ञान',0,'विटामिन C की कमी से कौन-सा रोग होता है?',['रतौंधी','बेरी-बेरी','स्कर्वी','रिकेट्स'],2,'स्कर्वी।');
+B('विज्ञान',1,'हीमोग्लोबिन में कौन-सा तत्व होता है?',['कैल्शियम','आयोडीन','लोहा','सोडियम'],2,'आयरन।');
+B('विज्ञान',2,'CRISPR-Cas9 का मुख्य उपयोग क्या है?',['जीन संपादन','प्रोटीन पाचन','टीका वितरण','रक्त परीक्षण'],0,'DNA के विशिष्ट अनुक्रम को काटकर संपादित करना।');
+B('UP GK',0,'उत्तर प्रदेश में कुल कितने जिले हैं?',['71','75','80','72'],1,'75 जिले।');
+B('UP GK',1,'उत्तर प्रदेश में कुल कितने मंडल हैं?',['16','17','18','19'],2,'18 मंडल।');
+B('UP GK',1,'विधान परिषद में कुल कितने सदस्य होते हैं?',['75','100','125','403'],1,'100 सदस्य।');
+B('UP GK',1,'गोरखपुर किस नदी के किनारे है?',['राप्ती','गोमती','घाघरा','यमुना'],0,'राप्ती।');
+B('UP GK',2,'उत्तर प्रदेश का क्षेत्रफल में सबसे बड़ा जिला कौन-सा है?',['सोनभद्र','लखीमपुर खीरी','हरदोई','प्रयागराज'],1,'लखीमपुर खीरी।');
+B('बिहार GK',0,'बिहार में कुल कितने जिले हैं?',['36','37','38','40'],2,'38 जिले।');
+B('बिहार GK',1,'कोसी नदी को बिहार का क्या कहा जाता है?',['जीवनरेखा','शोक','वरदान','गंगा'],1,'बिहार का शोक।');
+B('बिहार GK',2,'विक्रमशिला विश्वविद्यालय की स्थापना किसने की?',['अशोक','धर्मपाल','हर्षवर्धन','कुमारगुप्त'],1,'पाल शासक धर्मपाल।');
+B('हिंदी',0,'"सूर्य" का पर्यायवाची कौन-सा है?',['रवि','शशि','सागर','पवन'],0,'रवि।');
+B('हिंदी',1,'"नौ दो ग्यारह होना" मुहावरे का अर्थ है—',['भाग जाना','जोड़ना','धनी होना','हार जाना'],0,'भाग जाना।');
+B('हिंदी',2,'"यथाशक्ति" में कौन-सा समास है?',['अव्ययीभाव','तत्पुरुष','द्वंद्व','बहुव्रीहि'],0,'यथा + शक्ति = अव्ययीभाव।');
+B('अंग्रेज़ी',0,'Synonym of "Abundant":',['Scarce','Plentiful','Rare','Little'],1,'Abundant = Plentiful.');
+B('अंग्रेज़ी',1,'She has been working here ___ 2015.',['for','since','from','by'],1,'Point of time के साथ since।');
+B('अंग्रेज़ी',2,'Choose the correct sentence:',['He is senior than me','He is senior to me','He is more senior than me','He is senior from me'],1,'Senior/junior के साथ "to" आता है।');
+B('बैंकिंग',0,'RBI की स्थापना किस वर्ष हुई?',['1935','1947','1949','1955'],0,'1 अप्रैल 1935।');
+B('बैंकिंग',1,'NABARD किससे संबंधित है?',['उद्योग','कृषि व ग्रामीण विकास','आवास','विदेश व्यापार'],1,'कृषि व ग्रामीण विकास।');
+B('बैंकिंग',2,'बेसल-III मानदंड किससे संबंधित हैं?',['बैंक पूँजी पर्याप्तता','फसल बीमा','विदेशी निवेश','डिजिटल भुगतान'],0,'बैंकों की पूँजी, लीवरेज व तरलता।');
+B('बाल विकास',0,'प्रयास-त्रुटि सिद्धांत के प्रतिपादक कौन हैं?',['पावलोव','थॉर्नडाइक','स्किनर','कोहलर'],1,'थॉर्नडाइक।');
+B('बाल विकास',1,'ZPD की अवधारणा किससे संबंधित है?',['वाइगोत्स्की','फ्रॉयड','ब्रूनर','मास्लो'],0,'वाइगोत्स्की।');
+B('बाल विकास',2,'नैतिक विकास का सिद्धांत किसने दिया?',['पियाजे','कोहलबर्ग','एरिक्सन','बंडूरा'],1,'कोहलबर्ग (3 स्तर, 6 अवस्थाएँ)।');
+B('सामान्य ज्ञान',0,'सिंधु घाटी का प्रसिद्ध बंदरगाह नगर कौन-सा था?',['हड़प्पा','लोथल','कालीबंगा','रोपड़'],1,'लोथल।');
+B('सामान्य ज्ञान',0,'भारत में पहली यात्री रेल किस वर्ष चली?',['1853','1857','1869','1900'],0,'1853, मुंबई से ठाणे।');
+B('सामान्य ज्ञान',1,'वायु सेना दिवस कब मनाया जाता है?',['8 अक्टूबर','15 जनवरी','4 दिसंबर','1 अप्रैल'],0,'8 अक्टूबर।');
+B('सामान्य ज्ञान',1,'सर्वोच्च युद्धकालीन वीरता सम्मान कौन-सा है?',['महावीर चक्र','वीर चक्र','परमवीर चक्र','अशोक चक्र'],2,'परमवीर चक्र।');
+const PG='आधुनिक शिक्षा का उद्देश्य केवल सूचनाएँ रटाना नहीं, बल्कि विश्लेषण की क्षमता विकसित करना है। जो समाज प्रश्न पूछना सिखाता है, वही नवाचार में आगे बढ़ता है।';
+B('गद्यांश',1,'गद्यांश के अनुसार नवाचार में कौन-सा समाज आगे रहता है?',['जो रटना सिखाए','जो प्रश्न पूछना सिखाए','जो सूचनाएँ जमा करे','जो परंपरा माने'],1,'गद्यांश की दूसरी पंक्ति।',PG);
+B('गद्यांश',2,'गद्यांश से कौन-सा निष्कर्ष निकाला जा सकता है?\n1. रटना शिक्षा का एकमात्र उद्देश्य नहीं है।\n2. सभी सूचनाएँ व्यर्थ हैं।',ST,0,'कथन 2 अतिवादी है, गद्यांश में नहीं है।',PG);
 
-  function Q(s, q, o, a, e) { return { s:s, q:q, o:o, a:a, e:e }; }
-  var BANK = {
-    upsc: [
-      Q('भारतीय राजव्यवस्था','समानता का अधिकार संविधान के किन अनुच्छेदों में है?',['अनुच्छेद 14–18','अनुच्छेद 19–22','अनुच्छेद 23–24','अनुच्छेद 25–28'],0,'अनुच्छेद 14 से 18 समानता का अधिकार देते हैं।'),
-      Q('भारतीय राजव्यवस्था','मौलिक कर्तव्य किस संशोधन द्वारा जोड़े गए?',['24वाँ','42वाँ','44वाँ','73वाँ'],1,'42वें संशोधन (1976) से भाग IV-A जुड़ा।'),
-      Q('भारतीय राजव्यवस्था','राज्यसभा सदस्य का कार्यकाल कितना होता है?',['4 वर्ष','5 वर्ष','6 वर्ष','7 वर्ष'],2,'राज्यसभा सदस्यों का कार्यकाल 6 वर्ष है।'),
-      Q('भारतीय राजव्यवस्था','वित्त आयोग किस अनुच्छेद के अंतर्गत गठित होता है?',['अनुच्छेद 148','अनुच्छेद 265','अनुच्छेद 280','अनुच्छेद 324'],2,'अनुच्छेद 280 वित्त आयोग से संबंधित है।'),
-      Q('भारतीय राजव्यवस्था','पंचायती राज को संवैधानिक दर्जा किस संशोधन से मिला?',['61वाँ','73वाँ','74वाँ','86वाँ'],1,'73वें संशोधन (1992) से।'),
-      Q('इतिहास','भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?',['1930','1940','1942','1946'],2,'अगस्त 1942 में।'),
-      Q('इतिहास','चंपारण सत्याग्रह किस वर्ष हुआ?',['1917','1919','1920','1922'],0,'1917 में।'),
-      Q('भूगोल','भारत में सबसे लंबी बहने वाली नदी कौन-सी है?',['यमुना','गोदावरी','गंगा','नर्मदा'],2,'गंगा भारत में लगभग 2,525 किमी बहती है।')
-    ],
-    ssc: [
-      Q('सामान्य ज्ञान','सिंधु घाटी का प्रसिद्ध बंदरगाह नगर कौन-सा था?',['हड़प्पा','लोथल','कालीबंगा','रोपड़'],1,'लोथल में प्राचीन गोदी मिली है।'),
-      Q('सामान्य ज्ञान','विटामिन C की कमी से कौन-सा रोग होता है?',['रतौंधी','बेरी-बेरी','स्कर्वी','रिकेट्स'],2,'स्कर्वी।'),
-      Q('सामान्य ज्ञान','निर्वात में प्रकाश की चाल लगभग कितनी है?',['3×10^6 m/s','3×10^8 m/s','3×10^10 m/s','3×10^5 m/s'],1,'3×10^8 m/s।'),
-      Q('गणित','√144 का मान?',['10','11','12','14'],2,'12×12=144।'),
-      Q('गणित','200 का 15% कितना होगा?',['20','25','30','35'],2,'200×15/100=30।'),
-      Q('गणित','60 किमी/घंटा की चाल से 3 घंटे में दूरी?',['120 किमी','150 किमी','180 किमी','200 किमी'],2,'60×3=180।'),
-      Q('अंग्रेज़ी','Synonym of "Abundant".',['Scarce','Plentiful','Rare','Little'],1,'Abundant = Plentiful।'),
-      Q('अंग्रेज़ी','Antonym of "Brave".',['Bold','Fearless','Cowardly','Strong'],2,'Brave का विलोम Cowardly।')
-    ],
-    psc: [
-      Q('इतिहास/कला','ताजमहल किस नदी के किनारे है?',['गंगा','यमुना','गोमती','चंबल'],1,'आगरा में यमुना किनारे।'),
-      Q('भूगोल','गंगा-यमुना का संगम कहाँ है?',['वाराणसी','हरिद्वार','प्रयागराज','कानपुर'],2,'प्रयागराज।'),
-      Q('भूगोल','राजस्थान का क्षेत्रफल में सबसे बड़ा जिला?',['बीकानेर','जोधपुर','जैसलमेर','बाड़मेर'],2,'जैसलमेर।'),
-      Q('भूगोल','थार मरुस्थल मुख्यतः किस राज्य में है?',['गुजरात','हरियाणा','राजस्थान','पंजाब'],2,'राजस्थान।'),
-      Q('इतिहास/कला','सांची का स्तूप किस राज्य में है?',['उत्तर प्रदेश','मध्य प्रदेश','बिहार','ओडिशा'],1,'रायसेन, मध्य प्रदेश।'),
-      Q('भारतीय राजव्यवस्था','राज्यपाल की नियुक्ति कौन करता है?',['मुख्यमंत्री','राष्ट्रपति','प्रधानमंत्री','मुख्य न्यायाधीश'],1,'राष्ट्रपति।')
-    ],
-    defence: [
-      Q('सामान्य ज्ञान','वायु सेना दिवस कब मनाया जाता है?',['8 अक्टूबर','15 जनवरी','4 दिसंबर','1 अप्रैल'],0,'8 अक्टूबर।'),
-      Q('सामान्य ज्ञान','नौसेना दिवस कब मनाया जाता है?',['15 जनवरी','8 अक्टूबर','4 दिसंबर','26 जुलाई'],2,'4 दिसंबर।'),
-      Q('सामान्य ज्ञान','थल सेना के प्रथम भारतीय C-in-C कौन थे?',['के. एम. करिअप्पा','मानेकशॉ','थिमैया','राजेंद्रसिंहजी'],0,'करिअप्पा, 1949।'),
-      Q('सामान्य ज्ञान','सर्वोच्च युद्धकालीन वीरता सम्मान?',['महावीर चक्र','वीर चक्र','परमवीर चक्र','अशोक चक्र'],2,'परमवीर चक्र।'),
-      Q('सामान्य ज्ञान','NDA कहाँ स्थित है?',['देहरादून','खडकवासला (पुणे)','चेन्नई','गया'],1,'खडकवासला, पुणे।'),
-      Q('सामान्य ज्ञान','IMA कहाँ स्थित है?',['देहरादून','पुणे','हैदराबाद','भोपाल'],0,'देहरादून।')
-    ],
-    teaching: [
-      Q('बाल विकास','प्रयास-त्रुटि सिद्धांत के प्रतिपादक?',['पावलोव','थॉर्नडाइक','स्किनर','कोहलर'],1,'थॉर्नडाइक।'),
-      Q('बाल विकास','शास्त्रीय अनुबंधन किसने दिया?',['पावलोव','बंडूरा','वाटसन','पियाजे'],0,'इवान पावलोव।'),
-      Q('बाल विकास','संज्ञानात्मक विकास की चार अवस्थाएँ किसने दीं?',['वाइगोत्स्की','पियाजे','कोहलबर्ग','एरिक्सन'],1,'जीन पियाजे।'),
-      Q('बाल विकास','ZPD की अवधारणा किससे संबंधित है?',['वाइगोत्स्की','फ्रॉयड','ब्रूनर','मास्लो'],0,'वाइगोत्स्की।'),
-      Q('शिक्षा नीति','RTE 2009 किस आयु वर्ग के लिए है?',['3–10','5–12','6–14','6–18'],2,'6 से 14 वर्ष।'),
-      Q('शिक्षा नीति','NEP 2020 की विद्यालयी संरचना?',['10+2','5+3+3+4','8+4','6+3+3'],1,'5+3+3+4।')
-    ],
-    rail: [
-      Q('सामान्य ज्ञान','भारत में पहली यात्री रेल किस वर्ष चली?',['1853','1857','1869','1900'],0,'1853, मुंबई से ठाणे।'),
-      Q('सामान्य विज्ञान','बल का SI मात्रक?',['जूल','वॉट','न्यूटन','पास्कल'],2,'न्यूटन।'),
-      Q('सामान्य विज्ञान','हीमोग्लोबिन में कौन-सा तत्व होता है?',['कैल्शियम','आयोडीन','लोहा','सोडियम'],2,'आयरन।'),
-      Q('सामान्य विज्ञान','सोने का रासायनिक प्रतीक?',['Ag','Au','Gd','Go'],1,'Au।'),
-      Q('गणित','श्रेणी: 2, 4, 8, 16, ?',['24','30','32','64'],2,'हर पद दोगुना; अगला 32।'),
-      Q('गणित','₹500 पर 20% छूट के बाद मूल्य?',['₹380','₹400','₹420','₹450'],1,'500−100=₹400।')
-    ],
-    upsssc: [
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश में कुल कितने जिले हैं?',['71','75','80','72'],1,'75 जिले।'),
-      Q('उत्तर प्रदेश GK','विधान परिषद में कुल कितने सदस्य होते हैं?',['75','100','125','403'],1,'100 सदस्य।'),
-      Q('उत्तर प्रदेश GK','विधानसभा में कुल कितनी सीटें हैं?',['350','403','425','300'],1,'403 सीटें।'),
-      Q('उत्तर प्रदेश GK','दुधवा राष्ट्रीय उद्यान किस जिले में है?',['बहराइच','पीलीभीत','लखीमपुर खीरी','सोनभद्र'],2,'लखीमपुर खीरी।'),
-      Q('उत्तर प्रदेश GK','गोरखपुर किस नदी के किनारे है?',['राप्ती','गोमती','घाघरा','यमुना'],0,'राप्ती।'),
-      Q('इतिहास','चौरी-चौरा कांड कब हुआ?',['1920','1921','1922','1930'],2,'4 फरवरी 1922।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश की राजधानी कौन-सी है?',['प्रयागराज','लखनऊ','कानपुर','वाराणसी'],1,'लखनऊ।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश का उच्च न्यायालय मुख्य रूप से कहाँ स्थित है?',['लखनऊ','आगरा','प्रयागराज','वाराणसी'],2,'प्रयागराज (लखनऊ में खंडपीठ)।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश से लोकसभा में कितने सदस्य चुने जाते हैं?',['60','70','80','90'],2,'80 सीटें।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश का राज्य पशु कौन-सा है?',['बाघ','बारहसिंगा','हाथी','तेंदुआ'],1,'बारहसिंगा (स्वैम्प डियर)।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश का राज्य पक्षी कौन-सा है?',['मोर','सारस क्रेन','गौरैया','कोयल'],1,'सारस क्रेन।'),
-      Q('उत्तर प्रदेश GK','स्वतंत्र भारत में उत्तर प्रदेश के प्रथम मुख्यमंत्री कौन थे?',['सम्पूर्णानंद','गोविंद बल्लभ पंत','चंद्रभानु गुप्त','सुचेता कृपलानी'],1,'गोविंद बल्लभ पंत।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश की प्रथम महिला राज्यपाल कौन थीं?',['सरोजिनी नायडू','सुचेता कृपलानी','विजयलक्ष्मी पंडित','इंदिरा गांधी'],0,'सरोजिनी नायडू।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश में कुल कितने मंडल हैं?',['16','17','18','19'],2,'18 मंडल।'),
-      Q('उत्तर प्रदेश GK','उत्तर प्रदेश क्षेत्रफल की दृष्टि से सबसे बड़ा जिला कौन-सा है?',['सोनभद्र','लखीमपुर खीरी','हरदोई','प्रयागराज'],1,'लखीमपुर खीरी।'),
-      Q('उत्तर प्रदेश GK','फिरोजाबाद किस उद्योग के लिए प्रसिद्ध है?',['कालीन','ताला','काँच','पीतल'],2,'काँच उद्योग।'),
-      Q('उत्तर प्रदेश GK','अलीगढ़ किस उद्योग के लिए प्रसिद्ध है?',['ताला','कालीन','चिकनकारी','चमड़ा'],0,'ताला उद्योग।'),
-      Q('उत्तर प्रदेश GK','भदोही-मिर्जापुर क्षेत्र किसके लिए प्रसिद्ध है?',['कालीन','चीनी','जूते','काँच'],0,'कालीन उद्योग।'),
-      Q('उत्तर प्रदेश GK','मुरादाबाद किसके लिए प्रसिद्ध है?',['पीतल के बर्तन','काँच','ताले','रेशम'],0,'पीतल नगरी।'),
-      Q('उत्तर प्रदेश GK','चिकनकारी कला किस शहर की प्रसिद्ध है?',['लखनऊ','आगरा','मेरठ','गोरखपुर'],0,'लखनऊ।'),
-      Q('इतिहास','उत्तर प्रदेश का गठन पूर्व में किस नाम से था (1950 से पहले)?',['संयुक्त प्रांत','मध्य प्रांत','अवध राज्य','आर्यावर्त'],0,'संयुक्त प्रांत (United Provinces)।'),
-      Q('भारतीय राजव्यवस्था','भारत का संविधान कब लागू हुआ?',['15 अगस्त 1947','26 नवंबर 1949','26 जनवरी 1950','2 अक्टूबर 1950'],2,'26 जनवरी 1950।'),
-      Q('भारतीय राजव्यवस्था','राष्ट्रपति का कार्यकाल कितने वर्ष का होता है?',['4','5','6','7'],1,'5 वर्ष।'),
-      Q('भारतीय राजव्यवस्था','लोकसभा सदस्य बनने की न्यूनतम आयु कितनी है?',['21','25','30','35'],1,'25 वर्ष।'),
-      Q('सामान्य विज्ञान','जल का रासायनिक सूत्र क्या है?',['CO2','H2O','O2','NaCl'],1,'H2O।'),
-      Q('सामान्य विज्ञान','मानव शरीर में हड्डियों की संख्या (वयस्क) कितनी होती है?',['206','208','300','212'],0,'206।'),
-      Q('सामान्य विज्ञान','ध्वनि की तीव्रता की इकाई क्या है?',['हर्ट्ज','डेसिबल','वोल्ट','ओम'],1,'डेसिबल।'),
-      Q('सामान्य विज्ञान','पारे (Mercury) का रासायनिक प्रतीक?',['Mg','Hg','Me','Pb'],1,'Hg।'),
-      Q('भूगोल','विश्व का सबसे बड़ा महासागर कौन-सा है?',['अटलांटिक','हिंद','प्रशांत','आर्कटिक'],2,'प्रशांत महासागर।'),
-      Q('सामान्य हिंदी','"सूर्य" का पर्यायवाची कौन-सा है?',['रवि','शशि','सागर','पवन'],0,'रवि, दिनकर, भास्कर।'),
-      Q('सामान्य हिंदी','"आदर" का विलोम शब्द क्या है?',['सम्मान','अनादर','मान','श्रद्धा'],1,'अनादर।'),
-      Q('सामान्य हिंदी','हिंदी दिवस कब मनाया जाता है?',['14 सितंबर','10 जनवरी','1 मई','15 अगस्त'],0,'14 सितंबर।')
-    ],
-    bpsc: [
-      Q('बिहार GK','बिहार में कुल कितने जिले हैं?',['36','37','38','40'],2,'38 जिले।'),
-      Q('बिहार GK','कोसी नदी को बिहार का क्या कहा जाता है?',['जीवनरेखा','शोक','वरदान','गंगा'],1,'बिहार का शोक।'),
-      Q('बिहार GK','विक्रमशिला विश्वविद्यालय की स्थापना किसने की?',['अशोक','धर्मपाल','हर्षवर्धन','कुमारगुप्त'],1,'पाल शासक धर्मपाल।'),
-      Q('बिहार GK','बिहार का राज्य पक्षी?',['मोर','गौरैया','कोयल','तोता'],1,'गौरैया।'),
-      Q('इतिहास','नालंदा की स्थापना किस गुप्त शासक ने की?',['चंद्रगुप्त','समुद्रगुप्त','कुमारगुप्त प्रथम','स्कंदगुप्त'],2,'कुमारगुप्त प्रथम।')
-    ],
-    bank: [
-      Q('बैंकिंग जागरूकता','RBI की स्थापना किस वर्ष हुई?',['1935','1947','1949','1955'],0,'1 अप्रैल 1935।'),
-      Q('बैंकिंग जागरूकता','रेपो रेट वह दर है जिस पर—',['बैंक ग्राहकों को ऋण देते हैं','RBI बैंकों को ऋण देता है','बैंक RBI को ऋण देते हैं','सरकार बैंक को ऋण देती है'],1,'RBI बैंकों को अल्पकालिक ऋण देता है।'),
-      Q('बैंकिंग जागरूकता','NABARD किससे संबंधित है?',['उद्योग','कृषि व ग्रामीण विकास','आवास','विदेश व्यापार'],1,'कृषि व ग्रामीण विकास।'),
-      Q('बैंकिंग जागरूकता','CRR का पूर्ण रूप?',['Cash Reserve Ratio','Credit Reserve Rate','Central Reserve Ratio','Cash Rate Return'],0,'Cash Reserve Ratio।'),
-      Q('क्वांट','₹1200 पर 5% साधारण ब्याज से 2 वर्ष का ब्याज?',['₹100','₹110','₹120','₹130'],2,'1200×5×2/100=₹120।')
-    ]
-  };
+/* ---------- स्वचालित प्रश्न (गणित / रीज़निंग / DI), d = कठिनाई 0-2 ---------- */
+const rng=s=>{let a=s>>>0;return()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}};
+const ri=(r,a,b)=>a+Math.floor(r()*(b-a+1));
+const pk=(r,a)=>a[ri(r,0,a.length-1)];
+const nr=v=>Math.round(v*100)/100;
+const shuffle=(arr,r)=>{const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const hash=s=>{let h=7;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h};
+function mc(r,s,q,v,st,pre,suf,e,p){const o=[pre+nr(v)+suf];for(const k of shuffle([-3,-2,-1,1,2,3],r)){const x=nr(v+k*st);if(x>0&&o.length<4)o.push(pre+x+suf)}return{s,d:0,q,o,a:0,e,p}}
+const sh=(w,k)=>[...w].map(c=>String.fromCharCode((c.charCodeAt(0)-65+k+26)%26+65)).join('');
+const GEN={
+'गणित':[
+ (r,d)=>{const x=pk(r,[10,20,25,50]),y=pk(r,[10,20,25]),n=ri(r,2,40)*100;
+  if(d==0)return mc(r,'गणित',n+' का '+x+'% कितना होगा?',n*x/100,Math.max(1,n/50),'','',n+'×'+x+'/100।');
+  if(d==1)return mc(r,'गणित','एक संख्या '+n+' में '+x+'% की वृद्धि की जाए तो नई संख्या क्या होगी?',n*(100+x)/100,Math.max(2,n/20),'','','नई = '+n+'×'+(100+x)+'/100।');
+  return mc(r,'गणित',n+' में पहले '+x+'% की वृद्धि और फिर '+y+'% की कमी की जाए तो अंतिम मान क्या होगा?',n*(100+x)*(100-y)/10000,Math.max(2,n/25),'','',n+'×'+(100+x)+'/100×'+(100-y)+'/100।')},
+ (r,d)=>{const p=ri(r,2,20)*1000,R=pk(r,[5,10,20]),t=ri(r,2,4);
+  if(d<2)return mc(r,'गणित','₹'+p+' पर '+R+'% वार्षिक साधारण ब्याज से '+t+' वर्ष का ब्याज?',p*R*t/100,R*10,'₹','','SI=PRT/100।');
+  return mc(r,'गणित','₹'+p+' पर '+R+'% वार्षिक चक्रवृद्धि ब्याज से 2 वर्ष का चक्रवृद्धि ब्याज?',p*((1+R/100)**2-1),R*10,'₹','','CI = P[(1+R/100)²−1]।')},
+ (r,d)=>{if(d==0){const s=ri(r,4,16)*5,t=ri(r,2,9);return mc(r,'गणित',s+' किमी/घंटा से '+t+' घंटे में दूरी?',s*t,5*t,'',' किमी','दूरी=चाल×समय।')}
+  if(d==1){const w=pk(r,[[40,60,48],[30,60,40],[20,30,24],[60,90,72],[10,15,12]]);return mc(r,'गणित','समान दूरी क्रमशः '+w[0]+' और '+w[1]+' किमी/घंटा की चाल से तय की गई। औसत चाल?',w[2],2,'',' किमी/घंटा','औसत = 2ab/(a+b)।')}
+  const s=pk(r,[36,54,72,90]),t=ri(r,5,20),L=s*5/18*t;return mc(r,'गणित',''+L+' मी लंबी ट्रेन '+s+' किमी/घंटा से चल रही है। वह खंभे को कितने सेकंड में पार करेगी?',t,1,'',' सेकंड','चाल '+s+'×5/18 मी/से; समय=L/चाल।')},
+ (r,d)=>{const a=ri(r,10,60),x=ri(r,-8,8),s4=4*a+x;return mc(r,'गणित','5 संख्याओं का औसत '+a+' है। 4 संख्याओं का योग '+s4+' हो तो पाँचवीं संख्या?',a-x,2,'','','5×'+a+'−'+s4+'।')},
+ (r,d)=>{const cp=ri(r,4,40)*50,p=pk(r,[10,20,25]);
+  if(d<2)return mc(r,'गणित','क्रय मूल्य ₹'+cp+' पर '+p+'% लाभ से विक्रय मूल्य?',cp*(100+p)/100,Math.max(5,cp/10),'₹','','SP=CP×(100+p)/100।');
+  const M=ri(r,3,30)*100;return mc(r,'गणित','अंकित मूल्य ₹'+M+' पर क्रमागत छूट 20% व 10% के बाद मूल्य?',M*.72,Math.max(5,M/20),'₹','','M×0.8×0.9।')},
+ (r,d)=>{const a=ri(r,2,7),b=a+ri(r,1,4),k=ri(r,2,12);return mc(r,'गणित','दो संख्याओं का अनुपात '+a+':'+b+' है, योग '+(a+b)*k+' है। बड़ी संख्या?',b*k,k,'','','एक भाग='+k+'।')},
+ (r,d)=>{const w=pk(r,[[12,6,4],[20,5,4],[10,15,6],[30,20,12],[12,4,3],[15,10,6],[24,8,6],[20,30,12]]);return mc(r,'गणित','A किसी काम को '+w[0]+' दिन में, B '+w[1]+' दिन में करता है। साथ मिलकर कितने दिन?',w[2],1,'',' दिन','1/'+w[0]+'+1/'+w[1]+'=1/'+w[2])},
+ (r,d)=>{const x=ri(r,2,20),a=ri(r,2,9),b=ri(r,1,30);return mc(r,'गणित',a+'x + '+b+' = '+(a*x+b)+' हो तो x=?',x,1,'','',a+'x='+a*x)}],
+'रीज़निंग':[
+ (r,d)=>{let arr=[],v,e,n,a,k;
+  if(d==0){a=ri(r,1,30);k=ri(r,2,9);for(let i=0;i<5;i++)arr.push(a+k*i);v=a+k*5;e='हर बार '+k+' जुड़ता है।'}
+  else if(d==1){n=ri(r,2,9);for(let i=0;i<5;i++)arr.push((n+i)**2);v=(n+5)**2;e='वर्ग संख्याएँ; अगला '+(n+5)+'²।'}
+  else{n=ri(r,1,6);for(let i=0;i<5;i++)arr.push((n+i)*(n+i+1));v=(n+5)*(n+6);e='पद = n(n+1) रूप में।'}
+  return mc(r,'रीज़निंग','श्रेणी पूरी करें: '+arr.join(', ')+', ?',v,d==1?3:(d==2?4:k),'','',e)},
+ (r,d)=>{const w=pk(r,['CAT','DOG','SUN','MAP','PEN','BAT']),w2=pk(r,['BOX','RAM','FAN','KEY']),k=d==0?1:(d==1?2:3),o=[sh(w2,k),sh(w2,k+1),sh(w2,k-1),sh(w2,k+2)];
+  return{s:'रीज़निंग',d:0,q:'यदि किसी कोड में '+w+' को '+sh(w,k)+' लिखा जाता है, तो '+w2+' को कैसे लिखा जाएगा?',o,a:0,e:'हर अक्षर '+k+' स्थान आगे बढ़ता है।'}},
+ (r,d)=>{const t=pk(r,[[3,4,5],[6,8,10],[5,12,13],[8,15,17]]),m=ri(r,1,3);return mc(r,'रीज़निंग','एक व्यक्ति '+t[0]*m+' किमी पूर्व, फिर '+t[1]*m+' किमी उत्तर चलता है। प्रारंभिक बिंदु से सीधी दूरी?',t[2]*m,m,'',' किमी','पाइथागोरस प्रमेय।')},
+ (r,d)=>{const x=ri(r,3,20),y=ri(r,3,20);return mc(r,'रीज़निंग','एक कक्षा में A का रैंक ऊपर से '+x+'वाँ और नीचे से '+y+'वाँ है। कुल छात्र कितने हैं?',x+y-1,1,'','','कुल = '+x+'+'+y+'−1।')}],
+'DI':[
+ (r,d)=>{const it=['A','B','C','D'],y1=it.map(()=>ri(r,5,20)*20),g=it.map(()=>pk(r,[10,20,25,50])),y2=y1.map((v,i)=>v*(100+g[i])/100);
+  const p='तालिका: बिक्री (करोड़ ₹) – 2023 → 2024\n'+it.map((n,i)=>'उत्पाद '+n+': '+y1[i]+' → '+y2[i]).join('\n');
+  if(d==0)return mc(r,'DI','2023 में उत्पाद A और B की कुल बिक्री कितनी थी?',y1[0]+y1[1],20,'₹',' करोड़','योग='+y1[0]+'+'+y1[1],p);
+  if(d==1)return mc(r,'DI','उत्पाद C की बिक्री में 2023 से 2024 में कितने प्रतिशत की वृद्धि हुई?',g[2],5,'','%','वृद्धि%=(अंतर/पुराना)×100।',p);
+  return mc(r,'DI','2024 में A और B की कुल बिक्री, 2023 में C और D की कुल बिक्री से कितनी अधिक/कम है? (निरपेक्ष अंतर)',Math.abs(y2[0]+y2[1]-y1[2]-y1[3])||10,20,'₹',' करोड़','दोनों योग निकालकर अंतर।',p)},
+ (r,d)=>{const tot=ri(r,5,40)*100,a=pk(r,[10,15,20,25]),b=pk(r,[20,30,35]),c=100-a-b-pk(r,[5,10]),p='पाई चार्ट: कुल खर्च ₹'+tot+' का वितरण – शिक्षा '+a+'%, भोजन '+b+'%, आवास '+c+'%, अन्य '+(100-a-b-c)+'%';
+  if(d<2)return mc(r,'DI','शिक्षा पर कितना खर्च हुआ?',tot*a/100,Math.max(5,tot/20),'₹','','कुल×'+a+'%',p);
+  return mc(r,'DI','भोजन और आवास पर कुल खर्च, शिक्षा पर खर्च से कितना अधिक है?',tot*(b+c-a)/100,Math.max(5,tot/20),'₹','','('+b+'+'+c+'−'+a+')% of '+tot,p)}]
+};
+GEN['DI'][1]=(f=>(r,d)=>{let q,n=0;do{q=f(r,d);n++}while(n<9&&q.o.some(x=>/-/.test(x)));return q})(GEN['DI'][1]);
 
-  /* ---------- स्वचालित गणित/रीज़निंग प्रश्न (हर टेस्ट में 100 पूरे करने के लिए) ---------- */
-  var GEN_SUBJECTS = ['गणित', 'रीज़निंग'];
-  function ri(r, a, b) { return a + Math.floor(r() * (b - a + 1)); }
-  function nr(v) { return Math.round(v * 100) / 100; }
-  function mc(r, s, q, v, st, pre, suf, e) {
-    var d = shuffle([-3, -2, -1, 1, 2, 3], r), o = [pre + nr(v) + suf];
-    for (var i = 0; i < d.length && o.length < 4; i++) { var x = nr(v + d[i] * st); if (x > 0) o.push(pre + x + suf); }
-    return { s: s, q: q, o: o, a: 0, e: e };
+/* ---------- ऐप ---------- */
+const S={view:'home',ex:null,pi:0,tab:'y',lv:'a',search:'',shown:{},test:null,result:null,timer:null};
+const $=id=>document.getElementById(id);
+const getEx=id=>EX.find(e=>e.id===id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>n<10?'0'+n:''+n;
+const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+const CARD='rounded-2xl glass border border-slate-200 dark:border-slate-700 ';
+const poolOf=s=>BANK.filter(q=>q.s===s);
+
+function meta(exId,pi,t,i,lv){
+ const ex=getEx(exId),P=ex.P[pi];let sec=P.S,name,sub=null;
+ const lvl=lv==='p'?-1:+lv,tag=lvl<0?'PYQ पैटर्न':LV[lvl];
+ if(t==='s'){sub=P.S[i%P.S.length];sec=[[sub[0],Math.max(20,sub[1])]];name=sub[0]+' – '+tag+' सेट '+(Math.floor(i/P.S.length)+1)}
+ else name=P.n+' '+(t==='y'?'PYQ पैटर्न सेट ':'फुल मॉक ')+(i+1)+' ('+tag+')';
+ const n=sec.reduce((a,x)=>a+x[1],0);
+ return{id:[exId,pi,t,i,lv].join('.'),ex:exId,pi,t,i,lv:lvl,name,sec,n,min:t==='s'?Math.max(10,Math.round(P.m*n/P.q)):P.m,marks:n*P.mk,P,mix:lvl<0?ex.mix:LM[lvl],paper:P.n};
+}
+function build(m){
+ const r=rng(hash(m.id)),used=new Set,out=[],pickL=()=>{const x=r();return x<m.mix[0]?0:x<m.mix[0]+m.mix[1]?1:2};
+ m.sec.forEach(([sj,n])=>{
+  let made=0,tries=0,seen={};
+  while(made<n&&tries<n*12){tries++;const d=pickL();let q=null;
+   let c=poolOf(sj).filter(x=>!used.has(x)&&x.d===d);
+   if(c.length)q=c[ri(r,0,c.length-1)];
+   else if(GEN[sj]){const g=GEN[sj][ri(r,0,GEN[sj].length-1)](r,d);if(seen[g.q+g.p])continue;seen[g.q+g.p]=1;q=g;q.d=d}
+   else{c=poolOf(sj).filter(x=>!used.has(x));if(!c.length)break;q=c[ri(r,0,c.length-1)]}
+   used.add(q);made++;
+   const o=shuffle(q.o.map((t,k)=>({t,ok:k===q.a})),r);out.push({s:sj,d:q.d,q:q.q,p:q.p,e:q.e,o:o.map(x=>x.t),a:o.findIndex(x=>x.ok)});
   }
-  var GENS = [
-    { s:'गणित', f:function (r) { var x = [5,10,12,15,20,25,30,40][ri(r,0,7)], n = ri(r,2,60) * 100, v = n * x / 100;
-      return mc(r,'गणित', n + ' का ' + x + '% कितना होगा?', v, Math.max(1, Math.round(n / 50)), '', '', n + '×' + x + '/100 = ' + v + '।'); } },
-    { s:'गणित', f:function (r) { var p = ri(r,2,40) * 500, R = [4,5,6,8,10][ri(r,0,4)], t = ri(r,2,5), v = p * R * t / 100;
-      return mc(r,'गणित', '₹' + p + ' पर ' + R + '% वार्षिक साधारण ब्याज की दर से ' + t + ' वर्ष का ब्याज कितना होगा?', v, Math.max(10, R * 10), '₹', '', 'SI = P×R×T/100 = ₹' + v + '।'); } },
-    { s:'गणित', f:function (r) { var s = ri(r,4,16) * 5, t = ri(r,2,9), v = s * t;
-      return mc(r,'गणित', s + ' किमी/घंटा की चाल से ' + t + ' घंटे में कितनी दूरी तय होगी?', v, 5 * t, '', ' किमी', 'दूरी = चाल × समय = ' + v + ' किमी।'); } },
-    { s:'गणित', f:function (r) { var a = ri(r,10,60), d = ri(r,-8,8), s4 = 4 * a + d, v = a - d;
-      return mc(r,'गणित', '5 संख्याओं का औसत ' + a + ' है। यदि 4 संख्याओं का योग ' + s4 + ' हो, तो पाँचवीं संख्या कौन-सी है?', v, 2, '', '', 'कुल योग 5×' + a + ' = ' + 5 * a + '; पाँचवीं = ' + 5 * a + ' − ' + s4 + ' = ' + v + '।'); } },
-    { s:'गणित', f:function (r) { var cp = ri(r,4,40) * 50, p = [10,20,30,40][ri(r,0,3)], v = cp * (100 + p) / 100;
-      return mc(r,'गणित', 'क्रय मूल्य ₹' + cp + ' है। ' + p + '% लाभ पर विक्रय मूल्य कितना होगा?', v, Math.max(5, cp / 10), '₹', '', 'SP = ' + cp + '×' + (100 + p) + '/100 = ₹' + v + '।'); } },
-    { s:'गणित', f:function (r) { var a = ri(r,2,7), b = a + ri(r,1,4), k = ri(r,2,12), v = b * k;
-      return mc(r,'गणित', 'दो संख्याओं का अनुपात ' + a + ' : ' + b + ' है और उनका योग ' + (a + b) * k + ' है। बड़ी संख्या कौन-सी है?', v, k, '', '', 'एक भाग = ' + k + '; बड़ी संख्या = ' + b + '×' + k + ' = ' + v + '।'); } },
-    { s:'गणित', f:function (r) { var w = [[12,6,4],[20,5,4],[10,15,6],[30,20,12],[12,4,3],[15,10,6],[24,8,6],[18,9,6],[20,30,12],[40,10,8]][ri(r,0,9)];
-      return mc(r,'गणित', 'A किसी कार्य को ' + w[0] + ' दिन में और B ' + w[1] + ' दिन में करता है। दोनों मिलकर कितने दिन में करेंगे?', w[2], 1, '', ' दिन', '1/' + w[0] + ' + 1/' + w[1] + ' = 1/' + w[2] + '।'); } },
-    { s:'गणित', f:function (r) { var x = ri(r,2,20), a = ri(r,2,9), b = ri(r,1,30);
-      return mc(r,'गणित', a + 'x + ' + b + ' = ' + (a * x + b) + ' हो, तो x का मान क्या होगा?', x, 1, '', '', a + 'x = ' + a * x + ' ⇒ x = ' + x + '।'); } },
-    { s:'गणित', f:function (r) { var l = ri(r,5,40), w = ri(r,2,l - 1), ar = ri(r,0,1);
-      return mc(r,'गणित', 'एक आयत की लंबाई ' + l + ' मी और चौड़ाई ' + w + ' मी है। उसका ' + (ar ? 'क्षेत्रफल' : 'परिमाप') + ' कितना है?', ar ? l * w : 2 * (l + w), 2, '', ar ? ' वर्ग मी' : ' मी', ar ? 'क्षेत्रफल = l×b।' : 'परिमाप = 2(l+b)।'); } },
-    { s:'रीज़निंग', f:function (r) { var t = ri(r,0,1), a, d, n, arr = [], v, e, i;
-      if (t) { n = ri(r,2,9); for (i = 0; i < 5; i++) arr.push((n + i) * (n + i)); v = (n + 5) * (n + 5); e = 'वर्ग संख्याओं की श्रेणी; अगला ' + (n + 5) + '² = ' + v + '।'; }
-      else { a = ri(r,1,30); d = ri(r,2,9); for (i = 0; i < 5; i++) arr.push(a + d * i); v = a + d * 5; e = 'हर बार ' + d + ' जुड़ता है; अगला = ' + v + '।'; }
-      return mc(r,'रीज़निंग', 'श्रेणी पूरी करें: ' + arr.join(', ') + ', ?', v, t ? 3 : d, '', '', e); } }
-  ];
-  function gen(r, k, only) {
-    var pool = GENS.filter(function (g) { return !only || g.s === only; }), out = [], seen = {}, tries = 0;
-    while (out.length < k && tries < k * 8) { tries++; var q = pool[ri(r, 0, pool.length - 1)].f(r); if (seen[q.q]) continue; seen[q.q] = 1; out.push(q); }
-    return out;
-  }
+ });
+ return out;
+}
 
-  var S = { view:'home', examId:null, tab:'pyq', search:'', shown:{}, test:null, result:null, timer:null };
-  var $app = document.getElementById('app');
+window.toggleDark=()=>{const on=document.documentElement.classList.toggle('dark');$('darkBtn').textContent=on?'☀️':'🌙';store('em_dark',on)};
+window.toggleProfile=()=>{$('profileMenu').classList.toggle('hidden');renderProfile()};
+document.addEventListener('click',e=>{const m=$('profileMenu');if(!m.classList.contains('hidden')&&!m.contains(e.target)&&!e.target.closest('[onclick="toggleProfile()"]'))m.classList.add('hidden')});
+function renderProfile(){const h=store('em_history')||[],avg=h.length?Math.round(h.reduce((a,b)=>a+b.acc,0)/h.length):0;
+ $('profileStats').innerHTML='<div class="flex justify-between"><span>टेस्ट दिए</span><b>'+h.length+'</b></div><div class="flex justify-between"><span>औसत सटीकता</span><b>'+avg+'%</b></div>'+(h.length?'<div class="mt-2 text-xs text-slate-500">अंतिम: '+esc(h[h.length-1].name)+'</div>':'')}
+window.clearHistory=()=>{store('em_history',[]);renderProfile()};
+window.onSearch=v=>{S.search=v.trim().toLowerCase();if(S.view==='test')return;if(S.view!=='home'&&S.view!=='exam')S.view='home';render()};
+function showModal(t,b,acts){$('modalTitle').textContent=t;$('modalBody').innerHTML=b;const box=$('modalActions');box.innerHTML='';
+ acts.forEach(a=>{const x=document.createElement('button');x.textContent=a.label;x.className=a.primary?'rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 text-sm font-semibold':'rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm';x.onclick=()=>{hideModal();a.fn&&a.fn()};box.appendChild(x)});$('modal').classList.remove('hidden')}
+const hideModal=()=>$('modal').classList.add('hidden');
 
-  function $(id) { return document.getElementById(id); }
-  function fmt(n) { return n.toLocaleString('en-IN'); }
-  function getExam(id) { for (var i = 0; i < EXAMS.length; i++) if (EXAMS[i].id === id) return EXAMS[i]; return null; }
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  function rng(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-  function shuffle(arr, r) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  function hash(s) { var h = 7; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
-  function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
-  function subjectsOf(id) {
-    var seen = {}, out = [];
-    BANK[id].forEach(function (q) { if (!seen[q.s]) { seen[q.s] = 1; out.push(q.s); } });
-    GEN_SUBJECTS.forEach(function (s) { if (!seen[s]) out.push(s); });
-    return out;
-  }
+/* ---------- फुटर पेज ---------- */
+const MAIL='yuthindia33@gmail.com',ML='<a href="mailto:'+MAIL+'" class="font-semibold text-indigo-600 dark:text-indigo-300 underline break-all">'+MAIL+'</a>';
+const sec=(t,b)=>'<section><h4 class="font-bold mb-1 text-indigo-700 dark:text-indigo-300">'+t+'</h4><p class="text-slate-600 dark:text-slate-300">'+b+'</p></section>';
+const PAGES={
+about:['हमारे बारे में (About Us)',sec('ExamMock Pro क्या है?','ExamMock Pro प्रतियोगी परीक्षाओं की तैयारी के लिए ऑनलाइन मॉक टेस्ट पोर्टल है। हर परीक्षा के पेपर-पैटर्न, सिलेबस-वितरण, नेगेटिव मार्किंग और सरल/मध्यम/कठिन स्तर के अनुसार टेस्ट उपलब्ध हैं।')+sec('सुविधाएँ','रियल एग्जाम इंटरफेस (टाइमर, प्रश्न पैलेट, Mark for Review), विषय-वार विश्लेषण, उत्तर-स्पष्टीकरण, डार्क मोड और मोबाइल-फ्रेंडली डिज़ाइन।')+sec('महत्वपूर्ण सूचना','यह स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है; किसी सरकारी विभाग, आयोग या परीक्षा आयोजक संस्था से संबद्ध नहीं है।')+sec('संपर्क','सुझाव या त्रुटि की सूचना: '+ML)],
+contact:['संपर्क करें (Contact Us)','<div class="rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 p-4 text-center"><p class="text-xs text-slate-500 mb-1">हमारा ईमेल</p><a href="mailto:'+MAIL+'" class="text-lg font-extrabold text-indigo-700 dark:text-indigo-300 break-all">'+MAIL+'</a></div>'+sec('किसलिए लिखें?','प्रश्न/उत्तर में गलती, तकनीकी समस्या, नई परीक्षा या सुविधा का सुझाव, गोपनीयता/शर्तों से जुड़े प्रश्न।')+sec('बेहतर सहायता के लिए','टेस्ट का नाम, प्रश्न संख्या, समस्या का विवरण/स्क्रीनशॉट और अपना डिवाइस-ब्राउज़र लिखें। हम यथाशीघ्र उत्तर देने का प्रयास करेंगे।')],
+privacy:['गोपनीयता नीति (Privacy Policy)','<p class="text-xs text-slate-500">अंतिम अपडेट: अक्टूबर 2026</p>'+sec('1. एकत्र जानकारी','वेबसाइट पर रजिस्ट्रेशन/लॉगिन नहीं है; हम नाम, फ़ोन या पता नहीं माँगते। आपका टेस्ट इतिहास और डार्क-मोड पसंद आपके ब्राउज़र की localStorage में रहती है और हमारे सर्वर पर नहीं भेजी जाती। ईमेल करने पर आपका पता केवल उत्तर देने के लिए उपयोग होगा।')+sec('2. डेटा हटाना','प्रोफ़ाइल मेन्यू के "इतिहास मिटाएँ" बटन या ब्राउज़र डेटा साफ़ करके सब कुछ हटा सकते हैं।')+sec('3. थर्ड-पार्टी सेवाएँ','डिज़ाइन के लिए Tailwind CSS CDN का उपयोग होता है, जिससे आपका IP जैसी सामान्य तकनीकी जानकारी उन्हें मिल सकती है। भविष्य में एनालिटिक्स/विज्ञापन सेवाएँ जुड़ने पर वे कुकीज़ उपयोग कर सकती हैं और यह नीति अपडेट होगी।')+sec('4. कुकीज़ व बच्चे','हम स्वयं ट्रैकिंग कुकी नहीं लगाते और 13 वर्ष से कम के बच्चों से जानबूझकर जानकारी एकत्र नहीं करते।')+sec('5. संपर्क','प्रश्न के लिए: '+ML)],
+terms:['नियम और शर्तें (Terms &amp; Conditions)','<p class="text-xs text-slate-500">अंतिम अपडेट: अक्टूबर 2026</p>'+sec('1. स्वीकृति व उपयोग','वेबसाइट के उपयोग से आप इन शर्तों को स्वीकार करते हैं। यह केवल शैक्षिक अभ्यास और स्व-मूल्यांकन के लिए है।')+sec('2. सामग्री की सटीकता','प्रश्नों में त्रुटि हो सकती है। कुछ प्रश्न (गणित, रीज़निंग, DI) स्वतः तैयार होते हैं। "PYQ पैटर्न" सेट असली पुराने प्रश्नपत्र नहीं, परीक्षा-पैटर्न व कठिनाई पर आधारित अभ्यास सेट हैं। सिलेबस, पैटर्न व तिथियाँ आधिकारिक वेबसाइट से जाँचें।')+sec('3. कोई गारंटी नहीं','मॉक टेस्ट के अंक वास्तविक परिणाम का संकेत मात्र हैं; चयन या रैंक की गारंटी नहीं है।')+sec('4. आचरण व बौद्धिक संपदा','वेबसाइट में बाधा, हैकिंग, स्क्रैपिंग या गैरकानूनी उपयोग प्रतिबंधित है। डिज़ाइन, कोड व मौलिक सामग्री ExamMock Pro की है; परीक्षाओं के नाम उनके स्वामियों के हैं।')+sec('5. दायित्व, बदलाव व कानून','सेवा "जैसी है" उपलब्ध है; हम कानून-अनुमत सीमा तक उत्तरदायी नहीं हैं। शर्तें बदली जा सकती हैं। ये शर्तें भारतीय कानून के अधीन हैं।')+sec('6. संपर्क','प्रश्न के लिए: '+ML)]};
+window.openInfo=k=>{const p=PAGES[k];$('infoTitle').innerHTML=p[0];$('infoBody').innerHTML=p[1];$('infoBody').scrollTop=0;$('infoModal').classList.remove('hidden');document.body.style.overflow='hidden'};
+window.closeInfo=()=>{$('infoModal').classList.add('hidden');document.body.style.overflow=''};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeInfo();hideModal()}});
+$('yr').textContent=new Date().getFullYear();
 
-  function tabTotal(exam, tab) { return Math.round(exam.sets * tab.share); }
-  function makeTest(exam, tabId, i) {
-    var subs = subjectsOf(exam.id), name, subject = null, pet = exam.id === 'upsssc', k;
-    if (tabId === 'pyq') name = (pet ? 'UPSSSC PET PYQ सेट ' : exam.name + ' PYQ सेट ') + (i + 1);
-    else if (tabId === 'chapter') { subject = subs[i % subs.length]; k = Math.floor(i / subs.length) + 1; name = (pet ? 'PET प्रैक्टिस: ' : '') + subject + ' – चैप्टर टेस्ट ' + k; }
-    else if (tabId === 'sectional') { subject = subs[i % subs.length]; k = Math.floor(i / subs.length) + 1; name = (pet ? 'PET सेक्शनल: ' : 'सेक्शनल: ') + subject + ' – सेट ' + k; }
-    else name = exam.name + ' फुल मॉक टेस्ट ' + (i + 1);
-    var n = QCOUNT;
-    return { id: exam.id + '-' + tabId + '-' + i, exam: exam.id, tab: tabId, index: i, name: name, subject: subject, n: n, minutes: exam.time || n, marks: n * exam.marks };
-  }
-  function buildQuestions(t) {
-    var r = rng(hash(t.id)), pool = BANK[t.exam].slice(), n = t.n, chosen;
-    if (t.subject) {
-      if (GEN_SUBJECTS.indexOf(t.subject) !== -1) chosen = gen(r, n, t.subject);
-      else {
-        var own = shuffle(pool.filter(function (q) { return q.s === t.subject; }), r);
-        var rest = shuffle(pool.filter(function (q) { return q.s !== t.subject; }), r);
-        chosen = own.concat(rest).slice(0, n);
-        chosen = chosen.concat(gen(r, n - chosen.length));
-      }
-    } else {
-      chosen = shuffle(pool, r).slice(0, n);
-      chosen = shuffle(chosen.concat(gen(r, n - chosen.length)), r);
-    }
-    return chosen.map(function (q) {
-      var opts = shuffle(q.o.map(function (txt, i) { return { t: txt, ok: i === q.a }; }), r), c = 0;
-      opts.forEach(function (o, k) { if (o.ok) c = k; });
-      return { q: q.q, o: opts.map(function (o) { return o.t; }), a: c, e: q.e, s: q.s };
-    });
-  }
+window.goHome=()=>{
+ if(S.view==='test'&&S.test&&!S.test.done){showModal('टेस्ट छोड़ें?','आपकी प्रगति खो जाएगी।',[{label:'रद्द करें'},{label:'हाँ, छोड़ें',primary:true,fn:()=>{stopTimer();S.test=null;S.view='home';render()}}]);return}
+ stopTimer();S.test=null;S.view='home';render();scrollTo(0,0)};
+window.openExam=id=>{S.ex=id;S.view='exam';S.pi=0;S.tab='y';S.lv='a';S.search='';$('searchInput').value='';render();scrollTo(0,0)};
+window.setPaper=i=>{S.pi=i;render()};window.setTab=t=>{S.tab=t;render()};window.setLv=l=>{S.lv=l;render()};
+window.loadMore=()=>{const k=S.ex+S.pi+S.tab;S.shown[k]=(S.shown[k]||12)+12;render()};
+function render(){({home:renderHome,exam:renderExam,test:renderTest,result:renderResult})[S.view]()}
 
-  window.toggleDark = function () { var on = document.documentElement.classList.toggle('dark'); $('darkBtn').textContent = on ? '☀️' : '🌙'; store('em_dark', on); };
-  window.toggleProfile = function () { $('profileMenu').classList.toggle('hidden'); renderProfile(); };
-  document.addEventListener('click', function (e) {
-    var m = $('profileMenu');
-    if (!m.classList.contains('hidden') && !m.contains(e.target) && !e.target.closest('[onclick="toggleProfile()"]')) m.classList.add('hidden');
-  });
-  function renderProfile() {
-    var h = store('em_history') || [];
-    var avg = h.length ? Math.round(h.reduce(function (a, b) { return a + b.acc; }, 0) / h.length) : 0;
-    $('profileStats').innerHTML = '<div class="flex justify-between"><span>टेस्ट दिए</span><b>' + h.length + '</b></div><div class="flex justify-between"><span>औसत सटीकता</span><b>' + avg + '%</b></div>' + (h.length ? '<div class="mt-2 text-xs text-slate-500">अंतिम: ' + esc(h[h.length - 1].name) + '</div>' : '');
-  }
-  window.clearHistory = function () { store('em_history', []); renderProfile(); };
-  window.onSearch = function (v) {
-    S.search = v.trim().toLowerCase();
-    if (S.view === 'test') return;
-    if (S.view !== 'home' && S.view !== 'exam') S.view = 'home';
-    render();
-  };
+function renderHome(){
+ const list=EX.filter(e=>!S.search||(e.name+' '+e.sub+' '+e.tags).toLowerCase().includes(S.search)),papers=EX.reduce((a,e)=>a+e.P.length,0);
+ let h='<section class="fade-in"><div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-700 via-fuchsia-600 to-sky-500 text-white p-6 sm:p-12 mb-8">'+
+ '<span class="blob w-60 h-60 bg-pink-300 -top-10 -left-10"></span><span class="blob w-72 h-72 bg-cyan-300 -bottom-16 right-0" style="animation-delay:-4s"></span>'+
+ '<div class="relative"><span class="inline-block bg-white/20 rounded-full px-3 py-1 text-xs mb-3">सरल • मध्यम • कठिन – असली परीक्षा स्तर</span>'+
+ '<h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">परीक्षा का असली स्तर,<br>अपने सिलेबस के हिसाब से</h1>'+
+ '<p class="mt-3 text-white/90 max-w-2xl">UPSC के कथन-आधारित कठिन प्रश्न, CSAT, PET में DI/गणित, SSC-बैंक-रेलवे के पैटर्न – हर पेपर में विषय-वार प्रश्न वितरण, नेगेटिव मार्किंग और रियल टाइमर।</p>'+
+ '<div class="mt-5 flex flex-wrap gap-2 text-sm"><span class="bg-white/20 rounded-full px-4 py-1.5">'+EX.length+' परीक्षाएँ</span><span class="bg-white/20 rounded-full px-4 py-1.5">'+papers+' पेपर पैटर्न</span><span class="bg-white/20 rounded-full px-4 py-1.5">3 कठिनाई स्तर</span></div></div></div>'+
+ '<div class="mb-6 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-xs p-3"><b>डेमो नोट:</b> GK/विषय के प्रश्न अभी सीमित नमूना बैंक से आते हैं (उतने ही प्रश्न बनते हैं जितने उपलब्ध हों); गणित, रीज़निंग और DI पूरे प्रश्न स्वतः बनते हैं। असली प्रश्न <code>ExamMock.addQuestions()</code> से जोड़ें।</div>'+
+ '<h2 class="text-xl font-bold mb-4">परीक्षा चुनें</h2>';
+ if(!list.length)h+='<p class="text-slate-500">कोई परीक्षा नहीं मिली।</p>';
+ h+='<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">';
+ list.forEach(e=>{h+='<button onclick="openExam(\''+e.id+'\')" class="card text-left '+CARD+'overflow-hidden"><div class="bg-gradient-to-r '+e.c+' text-white p-4 flex items-center gap-3"><span class="text-4xl">'+e.icon+'</span><div><div class="font-bold text-lg">'+esc(e.name)+'</div><div class="text-xs text-white/90">'+esc(e.sub)+'</div></div></div><div class="p-4 text-xs flex flex-wrap gap-2">'+e.P.map(p=>'<span class="rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-200 px-3 py-1">'+esc(p.n)+'</span>').join('')+'</div></button>'});
+ $('app').innerHTML=h+'</div></section>';
+}
 
-  function showModal(title, body, actions) {
-    $('modalTitle').textContent = title; $('modalBody').innerHTML = body;
-    var box = $('modalActions'); box.innerHTML = '';
-    actions.forEach(function (a) {
-      var b = document.createElement('button'); b.textContent = a.label;
-      b.className = a.primary ? 'rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 text-sm font-semibold' : 'rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm';
-      b.onclick = function () { hideModal(); if (a.fn) a.fn(); };
-      box.appendChild(b);
-    });
-    $('modal').classList.remove('hidden');
-  }
-  function hideModal() { $('modal').classList.add('hidden'); }
+function renderExam(){
+ const e=getEx(S.ex);if(!e){S.view='home';return render()}
+ const P=e.P[S.pi],tab=TABS.find(t=>t.id===S.tab),key=e.id+S.pi+S.tab,total=60,shown=Math.min(S.shown[key]||12,total);
+ let h='<section class="fade-in"><button onclick="goHome()" class="text-sm text-indigo-600 dark:text-indigo-300 mb-3">← सभी परीक्षाएँ</button><div class="rounded-2xl bg-gradient-to-r '+e.c+' text-white p-5 mb-4 flex items-center gap-4"><span class="text-5xl">'+e.icon+'</span><div><h1 class="text-2xl font-extrabold">'+esc(e.name)+'</h1><p class="text-sm text-white/90">'+esc(e.sub)+'</p></div></div>';
+ if(e.P.length>1)h+='<div class="flex gap-2 overflow-x-auto pb-2 mb-2">'+e.P.map((p,i)=>'<button onclick="setPaper('+i+')" class="whitespace-nowrap rounded-xl px-4 py-2 text-sm font-bold '+(i===S.pi?'bg-slate-800 text-white dark:bg-white dark:text-slate-900':CARD)+'">'+esc(p.n)+'</button>').join('')+'</div>';
+ h+='<div class="'+CARD+'p-4 mb-4"><div class="flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold mb-2"><span>📋 '+P.q+' प्रश्न</span><span>⏱ '+P.m+' मिनट</span><span>🎯 +'+P.mk+' अंक</span><span>'+(P.ng?'➖ '+P.ng+' नेगेटिव':'कोई नेगेटिव नहीं')+'</span></div><div class="text-xs text-slate-500 mb-1">सिलेबस वितरण:</div><div class="flex flex-wrap gap-1.5">'+P.S.map(s=>'<span class="rounded-full bg-slate-100 dark:bg-slate-700 px-2.5 py-1 text-xs">'+esc(s[0])+' <b>'+s[1]+'</b></span>').join('')+'</div></div>';
+ h+='<div class="flex gap-2 overflow-x-auto pb-2 mb-3">'+TABS.map(t=>'<button onclick="setTab(\''+t.id+'\')" class="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold border '+(t.id===S.tab?'bg-indigo-600 text-white border-indigo-600':'glass border-slate-300 dark:border-slate-600')+'">'+t.l+'</button>').join('')+'</div>';
+ if(S.tab!=='y')h+='<div class="flex flex-wrap gap-2 mb-4 text-xs items-center"><span class="text-slate-500">कठिनाई:</span>'+['a',0,1,2].map(l=>'<button onclick="setLv(\''+l+'\')" class="rounded-full px-3 py-1 font-semibold border '+(String(S.lv)===String(l)?'bg-slate-800 text-white dark:bg-white dark:text-slate-900':'border-slate-300 dark:border-slate-600')+'">'+(l==='a'?'सभी':LV[l])+'</button>').join('')+'</div>';
+ else h+='<p class="text-xs text-slate-500 mb-4">PYQ पैटर्न: '+esc(e.name)+' के असली कठिनाई-अनुपात (सरल '+Math.round(e.mix[0]*100)+'% • मध्यम '+Math.round(e.mix[1]*100)+'% • कठिन '+Math.round(e.mix[2]*100)+'%) पर आधारित।</p>';
+ const hist=store('em_history')||[];h+='<div class="grid md:grid-cols-2 gap-3">';
+ for(let i=0;i<shown;i++){
+  const lv=S.tab==='y'?'p':(S.lv==='a'?i%3:S.lv),m=meta(e.id,S.pi,S.tab,i,lv),done=hist.filter(x=>x.id===m.id),b=m.lv<0?'bg-indigo-500/15 text-indigo-600 dark:text-indigo-300':BADGE[m.lv];
+  h+='<div class="card '+CARD+'p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><div class="font-semibold">'+esc(m.name)+'</div><div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400"><span class="rounded-full px-2 py-0.5 font-bold '+b+'">'+(m.lv<0?'PYQ पैटर्न':LV[m.lv])+'</span><span>📋 '+m.n+'</span><span>⏱ '+m.min+' मि.</span><span>🎯 '+m.marks+'</span></div>'+(done.length?'<div class="text-xs mt-1 text-emerald-600">✔ पिछला स्कोर: '+done[done.length-1].score+'</div>':'')+'</div><button onclick="startTest(\''+m.id+'\')" class="shrink-0 rounded-lg bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:opacity-90 text-white text-sm font-semibold px-4 py-2">Start Test</button></div>';
+ }
+ h+='</div>';if(shown<total)h+='<div class="text-center mt-5"><button onclick="loadMore()" class="rounded-lg border border-indigo-500 text-indigo-600 dark:text-indigo-300 px-5 py-2 text-sm font-semibold">और टेस्ट दिखाएँ</button></div>';
+ $('app').innerHTML=h+'</section>';
+}
 
-  /* ---------- फुटर पेज: About / Contact / Privacy / Terms ---------- */
-  var MAIL = 'yuthindia33@gmail.com';
-  var MAIL_LINK = '<a href="mailto:' + MAIL + '" class="font-semibold text-indigo-600 dark:text-indigo-300 underline break-all">' + MAIL + '</a>';
-  function sec(t, body) { return '<section><h4 class="font-bold text-base mb-1.5 text-indigo-700 dark:text-indigo-300">' + t + '</h4><div class="space-y-2">' + body + '</div></section>'; }
-  function para(t) { return '<p class="text-slate-600 dark:text-slate-300">' + t + '</p>'; }
-  function list(a) { return '<ul class="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">' + a.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>'; }
-  var UPD = '<p class="text-xs text-slate-500 dark:text-slate-400">अंतिम अपडेट: अक्टूबर 2026</p>';
+const findTest=id=>{const p=id.split('.');return meta(p[0],+p[1],p[2],+p[3],p[4]==='p'?'p':+p[4])};
+window.startTest=id=>{
+ const m=findTest(id),qs=build(m);
+ if(!qs.length){showModal('प्रश्न उपलब्ध नहीं','इस विषय का प्रश्न-बैंक अभी खाली है। <code>ExamMock.addQuestions()</code> से प्रश्न जोड़ें।',[{label:'ठीक है',primary:true}]);return}
+ m.n=qs.length;m.marks=qs.length*m.P.mk;
+ S.test={meta:m,qs,ans:qs.map(()=>-1),marked:qs.map(()=>false),visited:qs.map(()=>false),cur:0,left:m.min*60,done:false,sel:-1};
+ S.test.visited[0]=true;S.view='test';startTimer();render();scrollTo(0,0)};
+function startTimer(){stopTimer();S.timer=setInterval(()=>{if(!S.test||S.test.done)return stopTimer();S.test.left--;const el=$('timerBox');if(el)el.textContent=timeStr(S.test.left);if(S.test.left<=0){stopTimer();finishTest(true)}},1000)}
+function stopTimer(){if(S.timer){clearInterval(S.timer);S.timer=null}}
+const timeStr=s=>{s=Math.max(0,s);return pad(Math.floor(s/3600))+':'+pad(Math.floor(s%3600/60))+':'+pad(s%60)};
+function palClass(T,i){const a=T.ans[i]!==-1,m=T.marked[i];let b;
+ if(m&&a)b='bg-purple-600 text-white ring-2 ring-emerald-400';else if(m)b='bg-purple-600 text-white';else if(a)b='bg-emerald-500 text-white';else if(T.visited[i])b='bg-rose-500 text-white';else b='bg-slate-200 dark:bg-slate-700';
+ return b+(i===T.cur?' outline outline-2 outline-offset-2 outline-indigo-500':'')}
 
-  var PAGES = {
-    about: { t: 'हमारे बारे में (About Us)', b: [
-      sec('ExamMock Pro क्या है?', para('ExamMock Pro एक ऑनलाइन मॉक टेस्ट पोर्टल है, जो प्रतियोगी परीक्षाओं की तैयारी करने वाले अभ्यर्थियों के लिए बनाया गया है। यहाँ आप असली परीक्षा जैसे इंटरफेस में टाइमर के साथ अभ्यास कर सकते हैं और हर टेस्ट के बाद अपना प्रदर्शन तुरंत देख सकते हैं।')),
-      sec('हमारा उद्देश्य', para('हमारा लक्ष्य है कि हर अभ्यर्थी को एक ही जगह पर व्यवस्थित, सरल और भरोसेमंद अभ्यास सामग्री मिले, ताकि वह अपनी कमज़ोरियाँ पहचानकर समय रहते सुधार कर सके।')),
-      sec('हम क्या प्रदान करते हैं', list([
-        'UPSSSC PET, UPSC, SSC, राज्य PSC, डिफेंस, टीचिंग, रेलवे, बिहार परीक्षाएँ और बैंकिंग के लिए टेस्ट',
-        'PYQ पैटर्न सेट, चैप्टर-वाइज, सेक्शनल और फुल मॉक टेस्ट – हर टेस्ट 100 प्रश्न का',
-        'रियल एग्जाम इंटरफेस: टाइमर, प्रश्न पैलेट, Mark for Review और नेगेटिव मार्किंग',
-        'टेस्ट के बाद सही/गलत उत्तर, सटीकता और हर प्रश्न का स्पष्टीकरण',
-        'डार्क मोड और मोबाइल-फ्रेंडली डिज़ाइन'
-      ])),
-      sec('महत्वपूर्ण सूचना', para('ExamMock Pro एक स्वतंत्र शैक्षिक प्लेटफ़ॉर्म है। यह किसी सरकारी विभाग, आयोग या परीक्षा आयोजक संस्था से संबद्ध नहीं है। सभी परीक्षाओं के नाम उनके संबंधित स्वामियों के हैं और केवल पहचान के लिए उपयोग किए गए हैं।')),
-      sec('संपर्क', para('सुझाव, प्रश्न में त्रुटि या किसी भी सहायता के लिए हमें ईमेल करें: ' + MAIL_LINK))
-    ].join('') },
-    contact: { t: 'संपर्क करें (Contact Us)', b: [
-      '<div class="rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 p-4 text-center">' +
-        '<p class="text-xs text-slate-500 dark:text-slate-400 mb-1">हमारा ईमेल</p>' +
-        '<a href="mailto:' + MAIL + '" class="text-lg sm:text-xl font-extrabold text-indigo-700 dark:text-indigo-300 break-all hover:underline">' + MAIL + '</a>' +
-        '<div class="mt-3"><a href="mailto:' + MAIL + '" class="inline-block rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 text-sm font-semibold">ईमेल भेजें</a></div>' +
-      '</div>',
-      sec('आप किन बातों के लिए लिख सकते हैं?', list([
-        'किसी प्रश्न, उत्तर या स्पष्टीकरण में गलती की जानकारी',
-        'तकनीकी समस्या (टेस्ट न खुलना, टाइमर या पैलेट की दिक्कत आदि)',
-        'नई परीक्षा, विषय या सुविधा का सुझाव',
-        'गोपनीयता नीति या नियम व शर्तों से जुड़े प्रश्न',
-        'सहयोग या साझेदारी का प्रस्ताव'
-      ])),
-      sec('बेहतर सहायता के लिए ईमेल में यह लिखें', list([
-        'टेस्ट का नाम और प्रश्न संख्या (यदि प्रश्न से संबंधित है)',
-        'समस्या का संक्षिप्त विवरण और संभव हो तो स्क्रीनशॉट',
-        'आपका डिवाइस और ब्राउज़र (जैसे Android – Chrome)'
-      ])),
-      para('हम आपके संदेश का यथाशीघ्र उत्तर देने का प्रयास करेंगे।')
-    ].join('') },
-    privacy: { t: 'गोपनीयता नीति (Privacy Policy)', b: [
-      UPD,
-      sec('1. परिचय', para('ExamMock Pro ("हम") आपकी गोपनीयता का सम्मान करता है। यह नीति बताती है कि इस वेबसाइट का उपयोग करते समय कौन-सी जानकारी कैसे उपयोग की जाती है। वेबसाइट का उपयोग करके आप इस नीति से सहमत होते हैं।')),
-      sec('2. हम कौन-सी जानकारी एकत्र करते हैं', list([
-        'वर्तमान में वेबसाइट पर रजिस्ट्रेशन या लॉगिन नहीं है। हम आपसे नाम, फ़ोन नंबर, पता या ईमेल नहीं माँगते।',
-        'आपके दिए गए टेस्ट का इतिहास (टेस्ट का नाम, स्कोर, सटीकता) और डार्क मोड की पसंद आपके अपने ब्राउज़र की स्थानीय मेमोरी (localStorage) में सहेजी जाती है।',
-        'यह जानकारी आपके डिवाइस पर ही रहती है; हम इसे अपने सर्वर पर नहीं भेजते।',
-        'यदि आप हमें ईमेल करते हैं, तो आपका ईमेल पता और संदेश केवल आपको उत्तर देने के लिए उपयोग किए जाएँगे।'
-      ])),
-      sec('3. डेटा कैसे हटाएँ', para('आप प्रोफ़ाइल मेन्यू में "इतिहास मिटाएँ" बटन से अपना टेस्ट इतिहास हटा सकते हैं। ब्राउज़र का डेटा/कैश साफ़ करने पर सभी सहेजी गई जानकारी हट जाती है।')),
-      sec('4. थर्ड-पार्टी सेवाएँ', para('यह वेबसाइट डिज़ाइन के लिए Tailwind CSS जैसी बाहरी सेवाओं (CDN) का उपयोग करती है, इसलिए पेज खुलते समय आपका ब्राउज़र उन सेवाओं से जुड़ता है और IP एड्रेस जैसी सामान्य तकनीकी जानकारी उन्हें मिल सकती है। भविष्य में हम एनालिटिक्स या विज्ञापन सेवाएँ जोड़ सकते हैं; ऐसा होने पर वे कुकीज़ का उपयोग कर सकती हैं और हम इस नीति को तदनुसार अपडेट करेंगे।')),
-      sec('5. कुकीज़', para('हम स्वयं कोई ट्रैकिंग कुकी नहीं लगाते। आप अपने ब्राउज़र की सेटिंग से कुकीज़ और स्थानीय डेटा को नियंत्रित कर सकते हैं।')),
-      sec('6. बच्चों की गोपनीयता', para('हम जानबूझकर किसी से भी, विशेषकर 13 वर्ष से कम आयु के बच्चों से, व्यक्तिगत जानकारी एकत्र नहीं करते।')),
-      sec('7. सुरक्षा', para('हम आपकी जानकारी को न्यूनतम रखने का प्रयास करते हैं। फिर भी इंटरनेट पर कोई भी प्रणाली पूरी तरह सुरक्षित होने की गारंटी नहीं दे सकती।')),
-      sec('8. नीति में बदलाव', para('हम समय-समय पर इस नीति को अपडेट कर सकते हैं। बदलाव इसी पेज पर "अंतिम अपडेट" तिथि के साथ दिखाए जाएँगे।')),
-      sec('9. संपर्क', para('गोपनीयता से जुड़े किसी प्रश्न के लिए ईमेल करें: ' + MAIL_LINK))
-    ].join('') },
-    terms: { t: 'नियम और शर्तें (Terms & Conditions)', b: [
-      UPD,
-      sec('1. शर्तों की स्वीकृति', para('ExamMock Pro का उपयोग करके आप इन नियमों और शर्तों को स्वीकार करते हैं। यदि आप सहमत नहीं हैं, तो कृपया वेबसाइट का उपयोग न करें।')),
-      sec('2. उपयोग का उद्देश्य', para('यह वेबसाइट केवल शैक्षिक अभ्यास और स्व-मूल्यांकन के लिए है। आप इसका उपयोग केवल वैध और व्यक्तिगत उद्देश्यों के लिए कर सकते हैं।')),
-      sec('3. सामग्री की सटीकता', list([
-        'हम प्रश्नों, उत्तरों और स्पष्टीकरणों को सही रखने का प्रयास करते हैं, परंतु उनमें त्रुटि या अद्यतन की कमी हो सकती है।',
-        'कुछ अभ्यास प्रश्न (जैसे गणित/रीज़निंग) स्वतः तैयार होते हैं।',
-        'जहाँ स्पष्ट रूप से उल्लेख न हो, PYQ सेट को असली पुराने प्रश्नपत्र न समझें; वे पैटर्न-आधारित अभ्यास सेट हो सकते हैं।',
-        'महत्वपूर्ण जानकारी (सिलेबस, पैटर्न, तिथियाँ, नेगेटिव मार्किंग) की पुष्टि हमेशा संबंधित संस्था की आधिकारिक वेबसाइट से करें।'
-      ])),
-      sec('4. कोई गारंटी नहीं', para('मॉक टेस्ट में प्राप्त अंक वास्तविक परीक्षा के परिणाम का संकेत मात्र हैं। हम किसी परीक्षा में चयन, अंक या रैंक की गारंटी नहीं देते।')),
-      sec('5. उपयोगकर्ता आचरण', list([
-        'वेबसाइट के संचालन में बाधा डालना या उसे हैक करने का प्रयास करना प्रतिबंधित है।',
-        'स्वचालित टूल से सामग्री की बड़े पैमाने पर नकल (स्क्रैपिंग) करना प्रतिबंधित है।',
-        'किसी भी गैरकानूनी उद्देश्य के लिए वेबसाइट का उपयोग न करें।'
-      ])),
-      sec('6. बौद्धिक संपदा', para('वेबसाइट का डिज़ाइन, कोड और मौलिक सामग्री ExamMock Pro की है। बिना लिखित अनुमति के इसे व्यावसायिक रूप से कॉपी, बेचने या पुनः प्रकाशित करने की अनुमति नहीं है। परीक्षाओं के नाम और चिह्न उनके संबंधित स्वामियों के हैं।')),
-      sec('7. संबद्धता', para('ExamMock Pro किसी सरकारी विभाग, आयोग या परीक्षा आयोजक संस्था से संबद्ध या अनुमोदित नहीं है।')),
-      sec('8. दायित्व की सीमा', para('वेबसाइट "जैसी है" के आधार पर उपलब्ध है। इसके उपयोग या अनुपलब्धता से होने वाली किसी हानि के लिए हम कानून द्वारा अनुमत सीमा तक उत्तरदायी नहीं होंगे।')),
-      sec('9. सेवा और शर्तों में बदलाव', para('हम किसी भी समय वेबसाइट की सामग्री, सुविधाओं या इन शर्तों में बदलाव कर सकते हैं। बदलाव के बाद वेबसाइट का उपयोग जारी रखने का अर्थ है कि आप नई शर्तें स्वीकार करते हैं।')),
-      sec('10. लागू कानून', para('ये शर्तें भारत के कानूनों के अनुसार लागू होंगी।')),
-      sec('11. संपर्क', para('इन शर्तों से जुड़े प्रश्न के लिए ईमेल करें: ' + MAIL_LINK))
-    ].join('') }
-  };
-  window.openInfo = function (k) {
-    var pg = PAGES[k]; if (!pg) return;
-    $('infoTitle').textContent = pg.t; $('infoBody').innerHTML = pg.b; $('infoBody').scrollTop = 0;
-    $('infoModal').classList.remove('hidden'); document.body.style.overflow = 'hidden';
-    $('infoClose').focus();
-  };
-  window.closeInfo = function () { $('infoModal').classList.add('hidden'); document.body.style.overflow = ''; };
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { window.closeInfo(); hideModal(); } });
-  var yr = $('yr'); if (yr) yr.textContent = new Date().getFullYear();
+function renderTest(){
+ const T=S.test;if(!T){S.view='home';return render()}
+ const q=T.qs[T.cur],sel=T.sel,P=T.meta.P;
+ let h='<section class="fade-in"><div class="'+CARD+'flex items-center justify-between gap-3 mb-4 p-3 sticky top-16 z-20"><div class="min-w-0"><div class="font-bold truncate">'+esc(T.meta.name)+'</div><div class="text-xs text-slate-500">प्रश्न '+(T.cur+1)+'/'+T.qs.length+' • '+esc(q.s)+'</div></div><div class="text-center"><div class="text-[10px] uppercase text-slate-500">शेष समय</div><div id="timerBox" class="font-mono text-xl font-extrabold text-rose-600">'+timeStr(T.left)+'</div></div></div>'+
+ '<div class="grid lg:grid-cols-[1fr_300px] gap-4"><div class="'+CARD+'p-5"><div class="flex items-center gap-2 mb-2 text-xs text-slate-500"><span>+'+P.mk+(P.ng?' / −'+P.ng:'')+'</span><span class="rounded-full px-2 py-0.5 font-bold '+BADGE[q.d]+'">'+LV[q.d]+'</span></div>'+
+ (q.p?'<div class="mb-3 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 p-3 text-sm whitespace-pre-line">'+esc(q.p)+'</div>':'')+
+ '<h2 class="text-lg font-semibold mb-4 whitespace-pre-line">Q'+(T.cur+1)+'. '+esc(q.q)+'</h2><div class="space-y-2">';
+ q.o.forEach((o,k)=>{const c=sel===k;h+='<label class="flex items-center gap-3 rounded-xl border p-3 cursor-pointer '+(c?'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/50':'border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/50')+'"><input type="radio" name="opt" class="accent-indigo-600" '+(c?'checked':'')+' onchange="pick('+k+')"><span class="font-semibold w-5">'+'ABCD'[k]+'.</span><span>'+esc(o)+'</span></label>'});
+ h+='</div><div class="mt-6 flex flex-wrap gap-2"><button onclick="saveNext()" class="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-sm font-semibold">Save &amp; Next</button><button onclick="markNext()" class="rounded-lg bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 text-sm font-semibold">Mark for Review &amp; Next</button><button onclick="clearResp()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">Clear</button><button onclick="goTo('+Math.max(0,T.cur-1)+')" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">← Previous</button></div></div>'+
+ '<aside class="'+CARD+'p-4 h-fit lg:sticky lg:top-36"><h3 class="font-bold mb-3">प्रश्न पैलेट</h3><div class="grid grid-cols-5 gap-2 mb-4 max-h-72 overflow-y-auto p-1">'+T.qs.map((_,i)=>'<button onclick="goTo('+i+')" class="h-9 rounded-md text-sm font-semibold '+palClass(T,i)+'">'+(i+1)+'</button>').join('')+'</div>'+
+ '<div class="text-xs space-y-1 mb-4"><div><span class="inline-block w-3 h-3 rounded bg-emerald-500 mr-2"></span>Attempted: '+T.ans.filter(a=>a!==-1).length+'</div><div><span class="inline-block w-3 h-3 rounded bg-rose-500 mr-2"></span>Unattempted: '+T.qs.filter((_,i)=>T.visited[i]&&T.ans[i]===-1&&!T.marked[i]).length+'</div><div><span class="inline-block w-3 h-3 rounded bg-purple-600 mr-2"></span>Marked: '+T.marked.filter(Boolean).length+'</div><div><span class="inline-block w-3 h-3 rounded bg-slate-300 dark:bg-slate-600 mr-2"></span>Not Visited: '+T.visited.filter(v=>!v).length+'</div></div><button onclick="confirmSubmit()" class="w-full rounded-lg bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white py-2.5 font-semibold">Submit Test</button></aside></div></section>';
+ $('app').innerHTML=h;
+}
+window.pick=k=>{S.test.sel=k;renderTest()};
+function go(i){const T=S.test;i=Math.max(0,Math.min(i,T.qs.length-1));T.cur=i;T.visited[i]=true;T.sel=T.ans[i];renderTest()}
+window.goTo=i=>{const T=S.test;T.ans[T.cur]=T.sel;go(i)};
+window.saveNext=()=>{const T=S.test;T.ans[T.cur]=T.sel;T.marked[T.cur]=false;go(T.cur+1)};
+window.markNext=()=>{const T=S.test;T.ans[T.cur]=T.sel;T.marked[T.cur]=true;go(T.cur+1)};
+window.clearResp=()=>{const T=S.test;T.sel=-1;T.ans[T.cur]=-1;renderTest()};
+window.confirmSubmit=()=>{const T=S.test;T.ans[T.cur]=T.sel;const a=T.ans.filter(x=>x!==-1).length;
+ showModal('टेस्ट सबमिट करें?','कुल प्रश्न: <b>'+T.qs.length+'</b><br>Attempted: <b>'+a+'</b><br>Unattempted: <b>'+(T.qs.length-a)+'</b><br>Marked: <b>'+T.marked.filter(Boolean).length+'</b>',[{label:'वापस जाएँ'},{label:'Submit',primary:true,fn:()=>finishTest(false)}])};
 
-  window.goHome = function () {
-    if (S.view === 'test' && S.test && !S.test.done) { showModal('टेस्ट छोड़ें?', 'आपकी प्रगति खो जाएगी।', [{ label:'रद्द करें' }, { label:'हाँ, छोड़ें', primary:true, fn:function () { stopTimer(); S.test = null; S.view = 'home'; S.examId = null; render(); } }]); return; }
-    stopTimer(); S.test = null; S.view = 'home'; S.examId = null; render(); window.scrollTo(0, 0);
-  };
-  window.openExam = function (id) { S.examId = id; S.view = 'exam'; S.tab = 'pyq'; S.search = ''; $('searchInput').value = ''; render(); window.scrollTo(0, 0); };
-  window.setTab = function (t) { S.tab = t; render(); };
-  window.loadMore = function () { var k = S.examId + S.tab; S.shown[k] = (S.shown[k] || 12) + 12; render(); };
+function finishTest(auto){
+ const T=S.test;if(!T||T.done)return;T.ans[T.cur]=T.sel;T.done=true;stopTimer();
+ const P=T.meta.P;let c=0,w=0,u=0;const by={};
+ T.qs.forEach((q,i)=>{const b=by[q.s]=by[q.s]||[0,0,0];if(T.ans[i]===-1){u++;b[2]++}else if(T.ans[i]===q.a){c++;b[0]++}else{w++;b[1]++}});
+ const score=nr(c*P.mk-w*P.ng),acc=(c+w)?Math.round(c/(c+w)*100):0;
+ S.result={meta:T.meta,qs:T.qs,ans:T.ans,c,w,u,by,score,max:T.qs.length*P.mk,acc,used:T.meta.min*60-Math.max(0,T.left),auto,f:'all'};
+ const hs=store('em_history')||[];hs.push({id:T.meta.id,name:T.meta.name,score,acc});store('em_history',hs.slice(-100));
+ S.view='result';render();scrollTo(0,0);
+}
+window.setF=f=>{S.result.f=f;renderResult()};
+function renderResult(){
+ const R=S.result;if(!R){S.view='home';return render()}
+ const pct=Math.max(0,Math.round(R.score/R.max*100)),C=2*Math.PI*52;
+ let h='<section class="fade-in"><div class="rounded-3xl bg-gradient-to-r from-indigo-700 to-fuchsia-600 text-white p-6 mb-5 flex flex-col sm:flex-row items-center gap-6"><svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="52" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="12"/><circle class="ring" cx="65" cy="65" r="52" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+C*(1-pct/100)+'" transform="rotate(-90 65 65)"/><text x="65" y="72" text-anchor="middle" fill="#fff" font-size="26" font-weight="800">'+pct+'%</text></svg><div><p class="text-sm text-white/80">'+esc(R.meta.name)+(R.auto?' • समय समाप्त, ऑटो-सबमिट':'')+'</p><div class="text-4xl font-extrabold">'+R.score+' <span class="text-xl text-white/80">/ '+R.max+'</span></div></div></div><div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">';
+ [['सही',R.c,'text-emerald-600'],['गलत',R.w,'text-rose-600'],['अनुत्तरित',R.u,'text-slate-500'],['सटीकता',R.acc+'%','text-indigo-600'],['समय',pad(Math.floor(R.used/60))+':'+pad(R.used%60),'text-blue-600']].forEach(x=>h+='<div class="'+CARD+'p-4 text-center"><div class="text-2xl font-extrabold '+x[2]+'">'+x[1]+'</div><div class="text-xs text-slate-500">'+x[0]+'</div></div>');
+ h+='</div><h2 class="text-lg font-bold mb-2">विषय-वार विश्लेषण</h2><div class="'+CARD+'p-4 mb-6 space-y-3">';
+ Object.keys(R.by).forEach(s=>{const b=R.by[s],t=b[0]+b[1]+b[2],ac=(b[0]+b[1])?Math.round(b[0]/(b[0]+b[1])*100):0;
+  h+='<div><div class="flex justify-between text-sm mb-1"><b>'+esc(s)+'</b><span class="text-slate-500">✔'+b[0]+' ✘'+b[1]+' —'+b[2]+' (सटीकता '+ac+'%)</span></div><div class="h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex"><div class="bg-emerald-500" style="width:'+b[0]/t*100+'%"></div><div class="bg-rose-500" style="width:'+b[1]/t*100+'%"></div></div></div>'});
+ h+='</div><div class="flex flex-wrap items-center gap-2 mb-3"><h2 class="text-lg font-bold mr-2">उत्तर व स्पष्टीकरण</h2>'+[['all','सभी'],['w','गलत'],['u','अनुत्तरित']].map(f=>'<button onclick="setF(\''+f[0]+'\')" class="rounded-full px-3 py-1 text-xs font-semibold border '+(R.f===f[0]?'bg-indigo-600 text-white border-indigo-600':'border-slate-300 dark:border-slate-600')+'">'+f[1]+'</button>').join('')+'</div><div class="space-y-4">';
+ R.qs.forEach((q,i)=>{const ua=R.ans[i],ok=ua===q.a,skip=ua===-1;if((R.f==='w'&&(skip||ok))||(R.f==='u'&&!skip))return;
+  h+='<div class="'+CARD+'border-l-4 p-4 '+(skip?'!border-l-slate-400':ok?'!border-l-emerald-500':'!border-l-rose-500')+'"><div class="flex justify-between gap-2 mb-2"><p class="font-semibold whitespace-pre-line">Q'+(i+1)+'. '+esc(q.q)+'</p><span class="text-xs font-bold shrink-0 '+(skip?'text-slate-500':ok?'text-emerald-600':'text-rose-600')+'">'+(skip?'Unattempted':ok?'सही ✔':'गलत ✘')+'</span></div>'+(q.p?'<div class="mb-2 rounded bg-slate-100 dark:bg-slate-700/60 p-2 text-xs whitespace-pre-line">'+esc(q.p)+'</div>':'')+'<ul class="space-y-1 text-sm">'+q.o.map((o,k)=>'<li class="rounded px-2 py-1 '+(k===q.a?'bg-emerald-100 dark:bg-emerald-900/50':k===ua?'bg-rose-100 dark:bg-rose-900/50':'')+'">'+'ABCD'[k]+'. '+esc(o)+(k===q.a?' ✔':'')+(k===ua&&k!==q.a?' (आपका उत्तर)':'')+'</li>').join('')+'</ul><p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><b>स्पष्टीकरण:</b> '+esc(q.e||'')+'</p></div>'});
+ $('app').innerHTML=h+'</div><div class="mt-6 flex gap-3"><button onclick="retry()" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold">दोबारा दें</button><button onclick="backToExam()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-5 py-2">टेस्ट सूची</button></div></section>';
+}
+window.retry=()=>startTest(S.result.meta.id);
+window.backToExam=()=>{const m=S.result.meta;S.ex=m.ex;S.pi=m.pi;S.tab=m.t;S.view='exam';S.test=null;render();scrollTo(0,0)};
 
-  function render() {
-    if (S.view === 'home') renderHome(); else if (S.view === 'exam') renderExam();
-    else if (S.view === 'test') renderTest(); else if (S.view === 'result') renderResult();
-  }
+/* ---------- Public API: असली प्रश्न जोड़ने के लिए ----------
+ ExamMock.addQuestions([{s:'राजव्यवस्था', d:2, q:'प्रश्न', o:['A','B','C','D'], a:1, e:'व्याख्या', p:'गद्यांश/डेटा (वैकल्पिक)'}])
+ s = सिलेबस में लिखा विषय-नाम (जैसे राजव्यवस्था, इतिहास, UP GK, बिहार GK), d = 0 सरल / 1 मध्यम / 2 कठिन */
+window.ExamMock={addQuestions:arr=>{let n=0;(arr||[]).forEach(x=>{if(x&&x.q&&Array.isArray(x.o)&&x.o.length===4&&x.a>=0&&x.a<4&&x.s){BANK.push({s:x.s,d:x.d>=0&&x.d<=2?x.d:1,q:x.q,o:x.o,a:x.a,e:x.e||'',p:x.p});n++}});if(S.view==='exam'||S.view==='home')render();return n}};
 
-  function renderHome() {
-    var list = EXAMS.filter(function (e) { return !S.search || (e.name + ' ' + e.sub + ' ' + e.tags).toLowerCase().indexOf(S.search) !== -1; });
-    var totalQ = EXAMS.reduce(function (a, e) { return a + e.qs; }, 0), totalS = EXAMS.reduce(function (a, e) { return a + e.sets; }, 0);
-    var html = '<section class="fade-in"><div class="rounded-3xl bg-gradient-to-br from-indigo-600 via-blue-600 to-sky-500 text-white p-6 sm:p-10 mb-6">' +
-      '<h1 class="text-2xl sm:text-4xl font-extrabold leading-tight">भारत की प्रमुख परीक्षाओं की तैयारी – एक ही जगह</h1>' +
-      '<p class="mt-2 text-white/90 max-w-2xl">PYQ पैटर्न सेट, चैप्टर-वाइज व सेक्शनल टेस्ट और 100 प्रश्न के फुल मॉक – रियल एग्जाम इंटरफेस के साथ।</p>' +
-      '<div class="mt-5 flex flex-wrap gap-3 text-sm"><span class="bg-white/20 rounded-full px-4 py-1.5">' + fmt(totalQ) + '+ प्रश्न (कैटलॉग लक्ष्य)</span>' +
-      '<span class="bg-white/20 rounded-full px-4 py-1.5">' + fmt(totalS) + '+ टेस्ट/सेट (कैटलॉग लक्ष्य)</span>' +
-      '<span class="bg-white/20 rounded-full px-4 py-1.5">हर टेस्ट: ' + QCOUNT + ' प्रश्न</span></div></div>' +
-      '<div class="mb-6 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-sm p-3"><b>डेमो नोट:</b> हर टेस्ट में ' + QCOUNT + ' प्रश्न हैं। GK/विषय के नमूना प्रश्न सीमित हैं; बाकी प्रश्न गणित/रीज़निंग के स्वतः बनते हैं। असली प्रश्न <code>ExamMock.loadBank()</code> से जोड़ें।</div>' +
-      '<h2 class="text-xl font-bold mb-4">परीक्षा चुनें</h2>';
-    if (!list.length) html += '<p class="text-slate-500">कोई परीक्षा नहीं मिली।</p>';
-    html += '<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">';
-    list.forEach(function (e) {
-      html += '<button onclick="openExam(\'' + e.id + '\')" class="text-left rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition overflow-hidden">' +
-        '<div class="bg-gradient-to-r ' + e.color + ' text-white p-4 flex items-center gap-3"><span class="text-3xl">' + e.icon + '</span><div><div class="font-bold text-lg">' + esc(e.name) + '</div><div class="text-xs text-white/85">' + esc(e.sub) + '</div></div></div>' +
-        '<div class="p-4 grid grid-cols-2 gap-3 text-center"><div><div class="text-xl font-extrabold text-indigo-600 dark:text-indigo-300">' + fmt(e.qs) + '+</div><div class="text-xs text-slate-500">प्रश्न</div></div>' +
-        '<div><div class="text-xl font-extrabold text-indigo-600 dark:text-indigo-300">' + fmt(e.sets) + '+</div><div class="text-xs text-slate-500">प्रैक्टिस सेट / टेस्ट</div></div></div></button>';
-    });
-    $app.innerHTML = html + '</div></section>';
-  }
-
-  function renderExam() {
-    var e = getExam(S.examId); if (!e) { S.view = 'home'; return render(); }
-    var tab = TABS.filter(function (t) { return t.id === S.tab; })[0];
-    var total = tabTotal(e, tab), shown = Math.min(S.shown[e.id + tab.id] || 12, total);
-    var html = '<section class="fade-in"><button onclick="goHome()" class="text-sm text-indigo-600 dark:text-indigo-300 mb-3">← सभी परीक्षाएँ</button>' +
-      '<div class="rounded-2xl bg-gradient-to-r ' + e.color + ' text-white p-5 mb-5 flex items-center gap-4"><span class="text-4xl">' + e.icon + '</span><div><h1 class="text-2xl font-extrabold">' + esc(e.name) + '</h1><p class="text-sm text-white/90">' + esc(e.sub) + ' • ' + fmt(e.qs) + '+ प्रश्न • ' + fmt(e.sets) + '+ सेट</p></div></div><div class="flex gap-2 overflow-x-auto pb-2 mb-4">';
-    TABS.forEach(function (t) {
-      html += '<button onclick="setTab(\'' + t.id + '\')" class="whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold border ' + (t.id === S.tab ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600') + '">' + tabLabel(e, t) + ' <span class="opacity-75">(' + fmt(tabTotal(e, t)) + ')</span></button>';
-    });
-    html += '</div>';
-    var items = [], q = S.search;
-    if (q) {
-      for (var i = 0; i < total && items.length < 50; i++) { var t0 = makeTest(e, tab.id, i); if (t0.name.toLowerCase().indexOf(q) !== -1) items.push(t0); }
-      html += '<p class="text-sm text-slate-500 mb-3">"' + esc(q) + '" के लिए ' + items.length + (items.length === 50 ? '+' : '') + ' परिणाम</p>';
-    } else for (var j = 0; j < shown; j++) items.push(makeTest(e, tab.id, j));
-    var hist = store('em_history') || [];
-    html += '<div class="grid md:grid-cols-2 gap-3">';
-    items.forEach(function (t) {
-      var done = hist.filter(function (h) { return h.id === t.id; });
-      html += '<div class="' + CARD + 'p-4 flex flex-col sm:flex-row sm:items-center gap-3 justify-between"><div><div class="font-semibold">' + esc(t.name) + '</div>' +
-        '<div class="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400"><span>📋 ' + t.n + ' प्रश्न</span><span>⏱ ' + t.minutes + ' मिनट</span><span>🎯 ' + t.marks + ' अंक</span>' + (e.neg ? '<span>➖ ' + e.neg + ' नेगेटिव</span>' : '<span>कोई नेगेटिव नहीं</span>') + '</div>' +
-        (done.length ? '<div class="text-xs mt-1 text-emerald-600">✔ पिछला स्कोर: ' + done[done.length - 1].score + '</div>' : '') + '</div>' +
-        '<button onclick="startTest(\'' + t.id + '\')" class="shrink-0 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2">Start Test</button></div>';
-    });
-    html += '</div>';
-    if (!q && shown < total) html += '<div class="text-center mt-5"><button onclick="loadMore()" class="rounded-lg border border-indigo-500 text-indigo-600 dark:text-indigo-300 px-5 py-2 text-sm font-semibold">और टेस्ट दिखाएँ (' + fmt(total - shown) + ' शेष)</button></div>';
-    $app.innerHTML = html + '<p class="text-xs text-slate-500 mt-6">ध्यान दें: डेमो में PYQ सेट असली पुराने पेपर नहीं, पैटर्न-आधारित सेट हैं। असली PYQ <code>ExamMock.loadBank()</code> से जोड़ें।</p></section>';
-  }
-
-  function findTest(id) { var p = id.split('-'), ex = getExam(p[0]); return ex ? makeTest(ex, p[p.length - 2], parseInt(p[p.length - 1], 10)) : null; }
-  window.startTest = function (id) {
-    var meta = findTest(id); if (!meta) return;
-    var qs = buildQuestions(meta);
-    S.test = { meta: meta, qs: qs, ans: qs.map(function () { return -1; }), marked: qs.map(function () { return false; }), visited: qs.map(function () { return false; }), cur: 0, left: meta.minutes * 60, done: false, sel: -1 };
-    S.test.visited[0] = true; S.view = 'test'; startTimer(); render(); window.scrollTo(0, 0);
-  };
-  function startTimer() {
-    stopTimer();
-    S.timer = setInterval(function () {
-      if (!S.test || S.test.done) return stopTimer();
-      S.test.left--; var el = $('timerBox'); if (el) el.textContent = timeStr(S.test.left);
-      if (S.test.left <= 0) { stopTimer(); finishTest(true); }
-    }, 1000);
-  }
-  function stopTimer() { if (S.timer) { clearInterval(S.timer); S.timer = null; } }
-  function timeStr(s) { s = Math.max(0, s); return pad(Math.floor(s / 3600)) + ':' + pad(Math.floor(s % 3600 / 60)) + ':' + pad(s % 60); }
-
-  function paletteClass(T, i) {
-    var a = T.ans[i] !== -1, m = T.marked[i], base;
-    if (m && a) base = 'bg-purple-600 text-white ring-2 ring-emerald-400';
-    else if (m) base = 'bg-purple-600 text-white';
-    else if (a) base = 'bg-emerald-500 text-white';
-    else if (T.visited[i]) base = 'bg-rose-500 text-white';
-    else base = 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200';
-    return base + (i === T.cur ? ' outline outline-2 outline-offset-2 outline-indigo-500' : '');
-  }
-
-  function renderTest() {
-    var T = S.test; if (!T) { S.view = 'home'; return render(); }
-    var q = T.qs[T.cur], sel = T.sel, ex = getExam(T.meta.exam);
-    var html = '<section class="fade-in"><div class="' + CARD + 'flex items-center justify-between gap-3 mb-4 p-3"><div class="min-w-0"><div class="font-bold truncate">' + esc(T.meta.name) + '</div><div class="text-xs text-slate-500">प्रश्न ' + (T.cur + 1) + ' / ' + T.qs.length + ' • ' + esc(q.s) + '</div></div>' +
-      '<div class="text-center"><div class="text-[10px] uppercase text-slate-500">शेष समय</div><div id="timerBox" class="font-mono text-xl font-extrabold text-rose-600">' + timeStr(T.left) + '</div></div></div>' +
-      '<div class="grid lg:grid-cols-[1fr_300px] gap-4"><div class="' + CARD + 'p-5"><p class="text-xs text-slate-500 mb-1">+' + ex.marks + ' अंक' + (ex.neg ? ' / −' + ex.neg : '') + '</p><h2 class="text-lg font-semibold mb-4">Q' + (T.cur + 1) + '. ' + esc(q.q) + '</h2><div class="space-y-2">';
-    q.o.forEach(function (o, k) {
-      var ch = sel === k;
-      html += '<label class="flex items-center gap-3 rounded-lg border p-3 cursor-pointer ' + (ch ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/50' : 'border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/50') + '"><input type="radio" name="opt" class="accent-indigo-600" ' + (ch ? 'checked' : '') + ' onchange="pick(' + k + ')"><span class="font-semibold w-5">' + 'ABCD'.charAt(k) + '.</span><span>' + esc(o) + '</span></label>';
-    });
-    html += '</div><div class="mt-6 flex flex-wrap gap-2">' +
-      '<button onclick="saveNext()" class="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-sm font-semibold">Save &amp; Next</button>' +
-      '<button onclick="markNext()" class="rounded-lg bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 text-sm font-semibold">Mark for Review &amp; Next</button>' +
-      '<button onclick="clearResp()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">Clear Response</button>' +
-      '<button onclick="goTo(' + Math.max(0, T.cur - 1) + ')" class="rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm">← Previous</button></div></div>' +
-      '<aside class="' + CARD + 'p-4 h-fit lg:sticky lg:top-20"><h3 class="font-bold mb-3">प्रश्न पैलेट</h3><div class="grid grid-cols-5 gap-2 mb-4 max-h-72 overflow-y-auto p-1">';
-    T.qs.forEach(function (_, i) { html += '<button onclick="goTo(' + i + ')" class="h-9 rounded-md text-sm font-semibold ' + paletteClass(T, i) + '">' + (i + 1) + '</button>'; });
-    var att = T.ans.filter(function (a) { return a !== -1; }).length;
-    html += '</div><div class="text-xs space-y-1 text-slate-600 dark:text-slate-300 mb-4">' +
-      '<div><span class="inline-block w-3 h-3 rounded bg-emerald-500 mr-2"></span>Attempted: ' + att + '</div>' +
-      '<div><span class="inline-block w-3 h-3 rounded bg-rose-500 mr-2"></span>Unattempted (देखे गए): ' + T.qs.filter(function (_, i) { return T.visited[i] && T.ans[i] === -1 && !T.marked[i]; }).length + '</div>' +
-      '<div><span class="inline-block w-3 h-3 rounded bg-purple-600 mr-2"></span>Marked for Review: ' + T.marked.filter(Boolean).length + '</div>' +
-      '<div><span class="inline-block w-3 h-3 rounded bg-slate-300 dark:bg-slate-600 mr-2"></span>Not Visited: ' + T.visited.filter(function (v) { return !v; }).length + '</div></div>' +
-      '<button onclick="confirmSubmit()" class="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 font-semibold">Submit Test</button></aside></div></section>';
-    $app.innerHTML = html;
-  }
-
-  window.pick = function (k) { S.test.sel = k; renderTest(); };
-  function go(i) { var T = S.test; i = Math.max(0, Math.min(i, T.qs.length - 1)); T.cur = i; T.visited[i] = true; T.sel = T.ans[i]; renderTest(); }
-  window.goTo = function (i) { var T = S.test; T.ans[T.cur] = T.sel; go(i); };
-  window.saveNext = function () { var T = S.test; T.ans[T.cur] = T.sel; T.marked[T.cur] = false; go(T.cur + 1); };
-  window.markNext = function () { var T = S.test; T.ans[T.cur] = T.sel; T.marked[T.cur] = true; go(T.cur + 1); };
-  window.clearResp = function () { var T = S.test; T.sel = -1; T.ans[T.cur] = -1; renderTest(); };
-  window.confirmSubmit = function () {
-    var T = S.test; T.ans[T.cur] = T.sel;
-    var att = T.ans.filter(function (a) { return a !== -1; }).length;
-    showModal('टेस्ट सबमिट करें?', 'कुल प्रश्न: <b>' + T.qs.length + '</b><br>Attempted: <b>' + att + '</b><br>Unattempted: <b>' + (T.qs.length - att) + '</b><br>Marked for Review: <b>' + T.marked.filter(Boolean).length + '</b>',
-      [{ label:'वापस जाएँ' }, { label:'Submit', primary:true, fn:function () { finishTest(false); } }]);
-  };
-
-  function finishTest(auto) {
-    var T = S.test; if (!T || T.done) return;
-    T.ans[T.cur] = T.sel; T.done = true; stopTimer();
-    var ex = getExam(T.meta.exam), c = 0, w = 0, u = 0;
-    T.qs.forEach(function (q, i) { if (T.ans[i] === -1) u++; else if (T.ans[i] === q.a) c++; else w++; });
-    var score = Math.round((c * ex.marks - w * ex.neg) * 100) / 100, acc = (c + w) ? Math.round(c / (c + w) * 100) : 0;
-    S.result = { meta: T.meta, qs: T.qs, ans: T.ans, c: c, w: w, u: u, score: score, max: T.qs.length * ex.marks, acc: acc, used: T.meta.minutes * 60 - Math.max(0, T.left), auto: auto };
-    var h = store('em_history') || []; h.push({ id: T.meta.id, name: T.meta.name, score: score, acc: acc }); store('em_history', h.slice(-100));
-    S.view = 'result'; render(); window.scrollTo(0, 0);
-  }
-
-  function renderResult() {
-    var R = S.result; if (!R) { S.view = 'home'; return render(); }
-    var html = '<section class="fade-in"><div class="rounded-2xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-6 mb-5"><p class="text-sm text-white/80">' + esc(R.meta.name) + (R.auto ? ' • समय समाप्त, ऑटो-सबमिट' : '') + '</p>' +
-      '<div class="mt-1 text-4xl font-extrabold">' + R.score + ' <span class="text-xl font-semibold text-white/80">/ ' + R.max + '</span></div></div><div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">';
-    [['सही',R.c,'text-emerald-600'],['गलत',R.w,'text-rose-600'],['अनुत्तरित',R.u,'text-slate-500'],['सटीकता',R.acc + '%','text-indigo-600'],['लिया गया समय',pad(Math.floor(R.used / 60)) + ':' + pad(R.used % 60),'text-blue-600']].forEach(function (x) {
-      html += '<div class="' + CARD + 'p-4 text-center"><div class="text-2xl font-extrabold ' + x[2] + '">' + x[1] + '</div><div class="text-xs text-slate-500">' + x[0] + '</div></div>';
-    });
-    html += '</div><h2 class="text-lg font-bold mb-3">उत्तर व स्पष्टीकरण</h2><div class="space-y-4">';
-    R.qs.forEach(function (q, i) {
-      var ua = R.ans[i], ok = ua === q.a, skip = ua === -1;
-      html += '<div class="rounded-xl bg-white dark:bg-slate-800 border ' + (skip ? 'border-slate-200 dark:border-slate-700' : ok ? 'border-emerald-400' : 'border-rose-400') + ' p-4"><div class="flex justify-between gap-2 mb-2"><p class="font-semibold">Q' + (i + 1) + '. ' + esc(q.q) + '</p><span class="text-xs font-bold shrink-0 ' + (skip ? 'text-slate-500' : ok ? 'text-emerald-600' : 'text-rose-600') + '">' + (skip ? 'Unattempted' : ok ? 'सही ✔' : 'गलत ✘') + '</span></div><ul class="space-y-1 text-sm">';
-      q.o.forEach(function (o, k) {
-        var cls = k === q.a ? 'bg-emerald-100 dark:bg-emerald-900/50' : (k === ua ? 'bg-rose-100 dark:bg-rose-900/50' : '');
-        html += '<li class="rounded px-2 py-1 ' + cls + '">' + 'ABCD'.charAt(k) + '. ' + esc(o) + (k === q.a ? ' ✔' : '') + (k === ua && k !== q.a ? ' (आपका उत्तर)' : '') + '</li>';
-      });
-      html += '</ul><p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><b>स्पष्टीकरण:</b> ' + esc(q.e) + '</p></div>';
-    });
-    $app.innerHTML = html + '</div><div class="mt-6 flex gap-3"><button onclick="retry()" class="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold">दोबारा दें</button><button onclick="backToExam()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-5 py-2">टेस्ट सूची</button></div></section>';
-  }
-  window.retry = function () { startTest(S.result.meta.id); };
-  window.backToExam = function () { S.examId = S.result.meta.exam; S.tab = S.result.meta.tab; S.view = 'exam'; S.test = null; render(); window.scrollTo(0, 0); };
-
-  /* ---------- Public API: असली डेटा / नई परीक्षा जोड़ने के लिए ---------- */
-  window.ExamMock = {
-    // loadBank('upsssc', [{ s:'विषय', q:'प्रश्न', o:['A','B','C','D'], a:1, e:'व्याख्या' }, ...])
-    loadBank: function (examId, arr) {
-      if (!BANK[examId] || !Array.isArray(arr)) return false;
-      var clean = arr.filter(function (x) { return x && x.q && Array.isArray(x.o) && x.o.length === 4 && x.a >= 0 && x.a < 4; })
-        .map(function (x) { return { s: x.s || 'सामान्य', q: x.q, o: x.o, a: x.a, e: x.e || '' }; });
-      if (!clean.length) return false;
-      BANK[examId] = clean; if (S.view === 'exam' || S.view === 'home') render(); return true;
-    },
-    // addExam({id,name,sub,icon,color,marks,neg,time,qs,sets,tags}, [प्रश्न...])
-    addExam: function (exam, arr) {
-      if (getExam(exam.id)) return this.loadBank(exam.id, arr);
-      exam.tags = exam.tags || exam.id; exam.qs = exam.qs || 1000; exam.sets = exam.sets || 500;
-      EXAMS.push(exam); BANK[exam.id] = [Q('सामान्य', 'placeholder', ['a','b','c','d'], 0, '')];
-      return this.loadBank(exam.id, arr);
-    }
-  };
-
-  if (store('em_dark')) { document.documentElement.classList.add('dark'); $('darkBtn').textContent = '☀️'; }
-  window.addEventListener('beforeunload', function (e) { if (S.view === 'test' && S.test && !S.test.done) { e.preventDefault(); e.returnValue = ''; } });
-  render();
+if(store('em_dark')){document.documentElement.classList.add('dark');$('darkBtn').textContent='☀️'}
+addEventListener('beforeunload',e=>{if(S.view==='test'&&S.test&&!S.test.done){e.preventDefault();e.returnValue=''}});
+render();
 })();
 </script>
 </body>
