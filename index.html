@@ -9,7 +9,7 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0f1f4b">
 <meta property="og:title" content="ExamMock Pro – UPSC, UPPCS, राज्य PCS मॉक टेस्ट">
-<meta property="og:description" content="GS व CSAT के 100 प्रश्न वाले मॉक टेस्ट, हिंदी में।">
+<meta property="og:description" content="GS व CSAT के 100 प्रश्न वाले मॉक टेस्ट, हिंदी व English में।">
 <meta property="og:type" content="website">
 <!-- नीचे your-domain.com अपने डोमेन से बदलें -->
 <link rel="canonical" href="https://your-domain.com/">
@@ -113,6 +113,233 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari
 </div>
 
 <script>
+/* ===== English pack for ExamMock Pro =====
+   1) EN_PACK  : GS bank questions (राजव्यवस्था, इतिहास, भूगोल, अर्थव्यवस्था, पर्यावरण, विज्ञान)
+      format per entry: [Hindi-question-prefix, correct-index, English question, [4 English options], English explanation]
+      (prefix + correct-index are a safety check: if they don't match the Hindi bank entry, Hindi is shown instead)
+   2) enGen    : English for auto-generated Maths / Reasoning / DI questions
+*/
+window.EN_PACK={
+'राजव्यवस्था':[
+['लोकसभा',1,"What is the minimum age to become a member of the Lok Sabha?",['21','25','30','35'],"25 years (Art. 84)."],
+['पंचायती',1,"Panchayati Raj got constitutional status through which Amendment?",['61st','73rd','74th','86th'],"73rd Amendment, 1992."],
+['निम्न',2,"Consider the following statements:\n1. A proclamation of President's Rule must be approved by both Houses of Parliament within 2 months.\n2. After approval, President's Rule can remain in force for a maximum of 3 years.\nWhich of the above is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Art. 356: approval within 2 months; maximum duration 3 years (subject to conditions)."],
+['मिनर्वा',1,"In the Minerva Mills (1980) case, provisions of which Amendment were struck down?",['24th','42nd','44th','52nd'],"Section 55 of the 42nd Amendment was struck down."],
+['भारत का',1,"On which date was the Constitution of India adopted?",['15 August 1947','26 November 1949','26 January 1950','9 December 1946'],"Adopted: 26 Nov 1949; came into force: 26 Jan 1950."],
+['मौलिक कर्तव्य',0,"Fundamental Duties were added to the Constitution by which Amendment?",['42nd','44th','52nd','73rd'],"42nd Amendment 1976 (Swaran Singh Committee)."],
+['राष्ट्रपति के',1,"Which of the following is not part of the electoral college for the President?",['Elected members of the Lok Sabha','Nominated members of the Rajya Sabha','Elected members of State Legislative Assemblies','Elected members of the Delhi Legislative Assembly'],"Nominated members are not part of the electoral college."],
+['धन विधेयक',1,"In which Article of the Constitution is a Money Bill defined?",['Art. 108','Art. 110','Art. 112','Art. 123'],"Article 110."],
+['"बंदी',0,"The writ of \"Habeas Corpus\" means—",['To have the body produced','Stop the action','Issue an order','Show the proof'],"Habeas Corpus = \"have the body\"."],
+['शिक्षा का',2,"The Right to Education (Art. 21A) was added by which Amendment?",['42nd','73rd','86th','97th'],"86th Amendment 2002; children aged 6–14."],
+['कथनों',2,"Consider the statements:\n1. The Rajya Sabha is not subject to dissolution.\n2. One-third of its members retire every second year.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Rajya Sabha is a permanent House; 1/3 retire every 2 years."],
+['दल',2,"In which Schedule of the Constitution are the anti-defection provisions?",['8th','9th','10th','11th'],"Tenth Schedule (52nd Amendment, 1985)."],
+['नियंत्रक',1,"How can the Comptroller and Auditor General (CAG) be removed?",["At the pleasure of the President","Like a judge of the Supreme Court","On the Prime Minister's recommendation","By a resolution of the Rajya Sabha"],"The CAG is removed by the same procedure as a Supreme Court judge."],
+['वित्त',2,"Under which Article is the Finance Commission constituted?",['Art. 266','Art. 275','Art. 280','Art. 300'],"Art. 280; generally every 5 years."],
+['कथनों',0,"Consider the statements:\n1. The Governor can reserve a Bill for the consideration of the President.\n2. The Governor can grant a full pardon to a person sentenced to death.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"The Governor can suspend, remit or commute a death sentence, but cannot grant a full pardon (Art. 161)."],
+['संसद',2,"Who presides over a joint sitting of Parliament?",['President','Vice-President','Speaker of the Lok Sabha','Prime Minister'],"Speaker of the Lok Sabha."],
+['"संविधान',1,"In which case was the \"Basic Structure\" doctrine laid down?",['Golaknath','Kesavananda Bharati','Maneka Gandhi','Berubari'],"Kesavananda Bharati v. State of Kerala (1973)."],
+['निर्वाचन',2,"Provisions relating to the Election Commission are in which Article?",['Art. 280','Art. 315','Art. 324','Art. 356'],"Article 324."],
+['42वें',0,"Which words were added to the Preamble by the 42nd Amendment?\n1. Socialist 2. Secular 3. Integrity 4. Sovereign",['1, 2 and 3','1 and 2 only','2, 3 and 4','1, 3 and 4'],"Socialist, Secular and Integrity were added; \"Sovereign\" was in the original."],
+['भारत के',1,"Who appoints the Attorney General of India?",['Prime Minister','President','Chief Justice','Parliament'],"Art. 76: the President."],
+['मंत्रिपरिषद',2,"To whom is the Council of Ministers collectively responsible?",['President','Rajya Sabha','Lok Sabha','Supreme Court'],"Art. 75(3): the Lok Sabha."],
+['समान',2,"In which Article is the Uniform Civil Code mentioned?",['Art. 25','Art. 36','Art. 44','Art. 51'],"Art. 44 (Directive Principles)."],
+['राज्यपाल',1,"An ordinance promulgated by the Governor expires how long after the State Legislature reassembles, if not approved?",['4 weeks','6 weeks','6 months','1 year'],"Art. 213: 6 weeks after reassembly."],
+['वर्तमान',1,"How many Fundamental Rights are there in the Constitution at present?",['5','6','7','8'],"Six (the Right to Property was removed by the 44th Amendment)."]
+],
+'इतिहास':[
+['भारत छोड़ो',2,"In which year did the Quit India Movement begin?",['1930','1940','1942','1946'],"August 1942."],
+['स्थायी',1,"Who introduced the Permanent Settlement?",['Warren Hastings','Cornwallis','Wellesley','Dalhousie'],"Lord Cornwallis, 1793."],
+['चौरी',2,"When did the Chauri Chaura incident occur?",['1920','1921','1922','1930'],"4 February 1922."],
+['निम्न',0,"Consider the following statements:\n1. The Act of 1909 provided for separate electorates for Muslims.\n2. The Act of 1919 introduced dyarchy in the provinces.\n3. The federal scheme of the 1935 Act came into force immediately.\nWhich statements are correct?",['1 and 2 only','2 and 3 only','1 and 3 only','1, 2 and 3'],"The federal part of the 1935 Act never came into force."],
+['कालक्रमानुसार',0,"Arrange chronologically:\n1. Lucknow Pact 2. Rowlatt Act 3. Jallianwala Bagh 4. Non-Cooperation Movement",['1-2-3-4','2-1-3-4','1-3-2-4','2-3-1-4'],"1916, March 1919, April 1919, 1920."],
+['प्लासी',0,"In which year was the Battle of Plassey fought?",['1757','1764','1857','1699'],"1757."],
+['पानीपत',1,"Between whom was the First Battle of Panipat (1526) fought?",['Akbar–Hemu','Babur–Ibrahim Lodi','Humayun–Sher Shah','Ahmad Shah Abdali–Marathas'],"Babur defeated Ibrahim Lodi."],
+['विजयनगर',1,"Who founded the Vijayanagara Empire?",['Krishnadevaraya','Harihara and Bukka','Devaraya I','Tuluva Narasa'],"1336 CE, Harihara and Bukka."],
+['"व्यपगत',1,"The \"Doctrine of Lapse\" is associated with which Governor-General?",['Wellesley','Dalhousie','Canning','Ripon'],"Lord Dalhousie."],
+['कलिंग',2,"The Kalinga War is associated with which Mauryan ruler?",['Chandragupta','Bindusara','Ashoka','Brihadratha'],"Around 261 BCE, Ashoka."],
+['दांडी',1,"When did the Dandi March (Salt Satyagraha) take place?",['1919','1930','1932','1942'],"March–April 1930."],
+['"भारतीय',1,"Which Gupta ruler is called the \"Napoleon of India\"?",['Chandragupta I','Samudragupta','Skandagupta','Kumaragupta'],"Vincent Smith gave this title to Samudragupta."],
+['वुड्स',1,"Wood's Despatch (1854) relates to—",['Land revenue','Education','Railways','Police'],"The \"Magna Carta\" of English education in India."],
+['निम्न',0,"Arrange the following events chronologically:\n1. Poona Pact 2. Gandhi–Irwin Pact 3. Communal Award 4. Dandi March",['4-2-3-1','2-4-3-1','4-3-2-1','2-4-1-3'],"1930, 1931, August 1932, September 1932."],
+['"विशाल',1,"The \"Great Bath\" was found at which Harappan site?",['Harappa','Mohenjo-daro','Lothal','Dholavira'],"Mohenjo-daro."],
+['संगम',2,"In which language is Sangam literature composed?",['Sanskrit','Prakrit','Tamil','Kannada'],"Tamil."],
+['कथनों',2,"Consider the statements:\n1. The Uttaramerur inscriptions give information about Chola local self-government.\n2. Gangaikondacholapuram was founded by Rajendra I.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Both statements are correct."],
+['"ज़ब्ती',1,"The \"Zabti system\" is associated with which Mughal official?",['Birbal','Todar Mal','Abdul Rahim','Man Singh'],"Raja Todar Mal (Akbar)."],
+['भारतीय',1,"Who played a key role in the founding of the Indian National Congress (1885)?",['Dadabhai Naoroji','A.O. Hume','Gokhale','Tilak'],"A.O. Hume."],
+['वर्नाक्युलर',1,"Under which Viceroy was the Vernacular Press Act (1878) passed?",['Ripon','Lytton','Curzon','Mayo'],"Lord Lytton."],
+['कथनों',2,"Consider the statements:\n1. The Regulating Act of 1773 created the post of Governor-General of Bengal.\n2. Pitt's India Act of 1784 established the Board of Control.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Both are correct."],
+['स्वराज',1,"Who founded the Swaraj Party?",['Gandhi and Nehru','C.R. Das and Motilal Nehru','Tilak and Gokhale','Patel and Rajendra Prasad'],"1923, C.R. Das and Motilal Nehru."]
+],
+'भूगोल':[
+['गंगा',2,"Where is the confluence of the Ganga and Yamuna?",['Varanasi','Haridwar','Prayagraj','Kanpur'],"Prayagraj."],
+['कर्क',2,"Through how many Indian states does the Tropic of Cancer pass?",['6','7','8','9'],"Gujarat, Rajasthan, Madhya Pradesh, Chhattisgarh, Jharkhand, West Bengal, Tripura, Mizoram."],
+['कौन-सी नदी भ्रंश',1,"Which river flows through a rift valley and falls into the Arabian Sea?",['Godavari','Narmada','Krishna','Mahanadi'],"The Narmada (and Tapti) flow through rift valleys."],
+['प्रायद्वीपीय',2,"Which is the longest river of Peninsular India?",['Krishna','Kaveri','Godavari','Mahanadi'],"Godavari (Dakshin Ganga)."],
+['भारत की सबसे',1,"Which is the highest mountain peak in India (within Indian territory)?",['Nanda Devi','Kanchenjunga','K2','Annapurna'],"Kanchenjunga (Sikkim)."],
+['दक्कन',1,"Which soil is found in the Deccan lava region?",['Alluvial','Black','Red','Laterite'],"Black (regur) soil, suitable for cotton."],
+['पश्चिमी घाट',0,"Which is the highest peak of the Western Ghats?",['Anamudi','Doddabetta','Mahendragiri','Guru Shikhar'],"Anamudi (Kerala)."],
+['दक्षिण-पश्चिम',1,"When does the south-west monsoon normally reach Kerala?",['Around 1 May','Around 1 June','Around 1 July','Around 15 August'],"Around 1 June."],
+['चिल्का',1,"In which state is Chilika Lake located?",['Andhra Pradesh','Odisha','Tamil Nadu','West Bengal'],"Odisha; Asia's largest brackish-water lagoon."],
+['भारत की मानक',2,"Which is India's standard meridian?",['75°E','80°E','82°30′E','90°E'],"82°30′E (near Mirzapur)."],
+['वृष्टि',1,"Which region lies in the rain-shadow area?",['Konkan coast','Deccan Plateau (east of the Western Ghats)','Meghalaya Plateau','Northern Plains'],"Low rainfall on the leeward eastern slope of the Western Ghats."],
+['कथनों',2,"Consider the statements:\n1. The Himalayas are young fold mountains.\n2. The Aravallis are among the oldest fold mountain ranges in India.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Both are correct."],
+['निम्न में से कौन-सी नदी',3,"Which of the following rivers is not a tributary of the Ganga?",['Son','Gandak','Chambal (via the Yamuna)','Narmada'],"The Narmada flows west into the Arabian Sea."],
+['भारत व',0,"Which strait separates India and Sri Lanka?",['Palk Strait','Strait of Malacca','Hormuz','Bab-el-Mandeb'],"Palk Strait (north of the Gulf of Mannar)."],
+['क्षेत्रफल',1,"Which is the largest Indian state by area?",['Madhya Pradesh','Rajasthan','Maharashtra','Uttar Pradesh'],"Rajasthan."],
+['कथनों',2,"Consider the statements:\n1. 'Loo' is a hot wind blowing in North India in summer.\n2. Western disturbances bring winter rainfall to north-west India.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Both are correct."],
+['गल्फ',1,"The Gulf Stream is a warm current of which ocean?",['Pacific','Atlantic','Indian','Arctic'],"North Atlantic."],
+['भारत का सबसे',0,"Which is India's largest desert?",['Thar','Rann of Kutch','Ladakh desert','Registan-e-Sindh'],"Thar (Rajasthan)."],
+['तिब्बत',0,"By what name is the Brahmaputra known in Tibet?",['Sangpo (Tsangpo)','Dihang','Lohit','Padma'],"Tsangpo; Dihang in Arunachal."],
+['निम्न में से कौन-सी नदी',3,"Which of the following rivers does not flow west into the Arabian Sea?",['Tapti','Sabarmati','Mahi','Mahanadi'],"The Mahanadi falls into the Bay of Bengal."]
+],
+'अर्थव्यवस्था':[
+['रेपो',1,"The repo rate is the rate at which—",['Banks lend to customers','RBI lends to banks','Banks lend to RBI','Government lends to banks'],"RBI lends short-term funds to banks."],
+['कथनों',0,"Consider the statements:\n1. Reducing the CRR increases the lending capacity of banks.\n2. SLR is maintained with the RBI in cash.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Banks maintain SLR themselves in liquid assets."],
+['भारत में नोट',1,"Who has the authority to print currency notes in India (except ₹1)?",['Ministry of Finance','RBI','SBI','NABARD'],"RBI (RBI Act, 1934)."],
+['योजना',1,"Which institution replaced the Planning Commission?",['Finance Commission','NITI Aayog','National Development Council','CAG'],"NITI Aayog, 2015."],
+['GST',1,"When was GST implemented in India?",['1 April 2016','1 July 2017','1 April 2018','26 January 2017'],"1 July 2017."],
+['राजकोषीय',0,"Fiscal deficit = ?",['Total expenditure − total receipts (excluding borrowings)','Revenue expenditure − revenue receipts','Total receipts − total expenditure','Capital expenditure − capital receipts'],"Excess of total expenditure over total receipts excluding borrowings."],
+['RBI के',1,"Which index does the RBI use for inflation targeting?",['WPI','CPI','GDP deflator','IIP'],"Consumer Price Index (CPI)."],
+['मनरेगा',1,"In which year was the MGNREGA law enacted?",['2000','2005','2009','2013'],"2005."],
+['भारत के GDP',2,"Which sector has the largest share in India's GDP?",['Agriculture','Industry','Services','Mining'],"The services sector."],
+['कथनों',2,"Consider the statements:\n1. The Marginal Standing Facility (MSF) rate is generally higher than the repo rate.\n2. Reverse repo is the rate at which the RBI borrows money from banks.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Both statements are correct."],
+['भारत में हरित',1,"Whose name is mainly associated with the Green Revolution in India?",['Verghese Kurien','M.S. Swaminathan','V. Kurien','Jagjivan Ram'],"Dr. M.S. Swaminathan."],
+['IMF',2,"Where is the IMF headquartered?",['New York','Geneva','Washington D.C.','Paris'],"Washington D.C."],
+['निम्न में से कौन-सा प्रत्यक्ष',1,"Which of the following is a direct tax?",['GST','Income tax','Customs duty','Excise duty'],"Income tax is a direct tax."],
+['"स्टैगफ्लेशन',1,"What does \"stagflation\" mean?",['High growth with low inflation','High inflation with economic stagnation / high unemployment','Recession with low prices','Stable prices'],"Stagnation + inflation."],
+['भारत की पहली',2,"When did India's first Five-Year Plan begin?",['1947','1950','1951','1956'],"1951–56."],
+['न्यूनतम',1,"Who recommends the Minimum Support Price (MSP)?",['NITI Aayog','CACP','NABARD','FCI'],"Commission for Agricultural Costs and Prices (CACP)."],
+['निम्न में से कौन-सी पूँजीगत',1,"Which of the following is a capital receipt?",['Tax revenue','Recovery of loans','Dividends','Interest receipts'],"Recovery of loans reduces assets, hence a capital receipt."],
+['प्रधानमंत्री',1,"When was the Pradhan Mantri Jan Dhan Yojana launched?",['2012','2014','2016','2018'],"August 2014."],
+['RBI का',1,"Where is the RBI headquartered?",['New Delhi','Mumbai','Kolkata','Chennai'],"Mumbai."]
+],
+'पर्यावरण':[
+['रामसर',1,"The Ramsar Convention relates to—",['Forests','Wetlands','Desertification','Ozone'],"Wetland conservation."],
+['मॉन्ट्रियल',2,"The Montreal Protocol relates to—",['Climate change','Biodiversity','Ozone layer depletion','Wetlands'],"Control of ozone-depleting substances."],
+['ओज़ोन',1,"In which layer of the atmosphere is the ozone layer located?",['Troposphere','Stratosphere','Mesosphere','Exosphere'],"Stratosphere."],
+['"प्रोजेक्ट',1,"When was \"Project Tiger\" launched?",['1969','1973','1980','1992'],"1973."],
+['क्योटो',1,"The Kyoto Protocol relates to—",['Ozone','Reduction of greenhouse gas emissions','Wetlands','Biodiversity'],"Reduction of greenhouse gases."],
+['पेरिस',1,"The Paris Agreement (2015) aims to limit global temperature rise to how much above pre-industrial levels?",['Below 3°C','Well below 2°C','Below 4°C','0.5°C'],"Well below 2°C, pursuing 1.5°C."],
+['भारत का पहला',1,"Which is India's first Biosphere Reserve (1986)?",['Sundarbans','Nilgiri','Nanda Devi','Gulf of Mannar'],"Nilgiri Biosphere Reserve."],
+['IUCN',1,"Where is the IUCN headquartered?",['Paris','Gland (Switzerland)','Nairobi','New York'],"Gland, Switzerland."],
+['कथनों',2,"Consider the statements:\n1. Loktak Lake is a Ramsar site.\n2. Keoladeo (Bharatpur) is a Ramsar site.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Both are Ramsar sites."],
+['मानवजनित',0,"Which gas contributes most to anthropogenic global warming?",['CO₂','Oxygen','Nitrogen','Helium'],"Carbon dioxide."],
+['भारत में कितने',1,"How many biodiversity hotspots are there in India?",['2','4','6','8'],"Himalaya, Indo-Burma, Western Ghats & Sri Lanka, Sundaland (Nicobar)."],
+['भोपाल',0,"Which gas leaked in the Bhopal gas tragedy?",['Methyl isocyanate','Chlorine','Carbon monoxide','Ammonia'],"MIC (December 1984)."],
+['जैविक',2,"In which year was the Convention on Biological Diversity (CBD) adopted?",['1972','1985','1992','2002'],"Rio Earth Summit, 1992."],
+['CITES',0,"CITES relates to—",['Regulation of international trade in wild fauna and flora','Ozone','Law of the sea','Nuclear non-proliferation'],"Regulation of trade in endangered species."],
+['सुंदरबन',1,"In which state are the Sundarbans mangrove forests mainly located?",['Odisha','West Bengal','Gujarat','Tamil Nadu'],"West Bengal (extending into Bangladesh)."],
+['जल में',1,"High BOD in water indicates—",['Water is purer','Higher organic pollution','More oxygen','More salinity'],"Higher BOD = more organic waste."],
+['अम्ल',1,"Acid rain is mainly caused by which gases?",['CO₂ and O₂','SO₂ and NO₂','CH₄ and He','H₂ and N₂'],"Oxides of sulphur and nitrogen."],
+['कथनों',0,"Consider the statements:\n1. Mangroves help protect coastal areas.\n2. Coral reefs are found only in cold waters.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Coral reefs occur in warm, shallow tropical waters."],
+['राष्ट्रीय',2,"When was the National Green Tribunal (NGT) established?",['2000','2005','2010','2015'],"2010."],
+['बेसल',0,"The Basel Convention relates to—",['Transboundary movement of hazardous wastes','Ozone','Wetlands','Desertification'],"Control of hazardous waste."]
+],
+'विज्ञान':[
+['विटामिन C',2,"Deficiency of Vitamin C causes which disease?",['Night blindness','Beriberi','Scurvy','Rickets'],"Scurvy."],
+['हीमोग्लोबिन',2,"Which element is present in haemoglobin?",['Calcium','Iodine','Iron','Sodium'],"Iron."],
+['CRISPR',0,"What is the main use of CRISPR-Cas9?",['Gene editing','Protein digestion','Vaccine delivery','Blood testing'],"Cutting and editing specific DNA sequences."],
+['बल',1,"What is the SI unit of force?",['Joule','Newton','Watt','Pascal'],"Newton."],
+['वायुमंडल',1,"Which gas is present in the largest amount in the atmosphere?",['Oxygen','Nitrogen','Argon','CO₂'],"Nitrogen (~78%)."],
+['रक्त',2,"Which vitamin helps in blood clotting?",['A','D','K','E'],"Vitamin K."],
+['शुद्ध',1,"What is the approximate pH of pure (neutral) water?",['0','7','10','14'],"pH = 7 at 25°C."],
+['निर्वात',1,"What is the approximate speed of light in vacuum?",['3×10⁶ m/s','3×10⁸ m/s','3×10¹⁰ m/s','3×10⁴ m/s'],"3×10⁸ m/s."],
+['पेनिसिलिन',1,"Who discovered penicillin?",['Pasteur','Alexander Fleming','Jenner','Koch'],"1928, Alexander Fleming."],
+['इंसुलिन',1,"Which gland secretes insulin?",['Liver','Pancreas','Thyroid','Adrenal'],"Pancreas (beta cells)."],
+['कथनों',2,"Consider the statements:\n1. Isotopes have the same atomic number.\n2. Isobars have the same mass number.\nWhich of the statements is/are correct?",['1 only','2 only','Both 1 and 2','Neither 1 nor 2'],"Both are correct."],
+['निम्न में से कौन-सी राशि',2,"Which of the following is a scalar quantity?",['Velocity','Force','Speed','Acceleration'],"Speed is a scalar; the rest are vectors."],
+['ध्वनि',2,"In which medium can sound not travel?",['Air','Water','Vacuum','Steel'],"Sound needs a medium."],
+['mRNA',0,"How do mRNA vaccines mainly work?",['By instructing cells to make an antigen protein','By introducing a dead virus','By directly giving antibodies','By altering the virus DNA'],"Cells make the protein, triggering an immune response."],
+['इंद्रधनुष',1,"A rainbow is formed due to—",['Reflection only','Refraction, internal reflection and dispersion','Diffraction only','Polarisation'],"Refraction, reflection and dispersion of light in water droplets."],
+['मानव',2,"How many chambers does the human heart have?",['2','3','4','5'],"Four."],
+['प्राकृतिक',1,"Which is the hardest naturally occurring substance?",['Iron','Diamond','Graphite','Quartz'],"Diamond."],
+['प्रकाश-संश्लेषण',1,"Which is the main pigment in photosynthesis?",['Carotene','Chlorophyll','Xanthophyll','Anthocyanin'],"Chlorophyll."],
+['ओम',0,"Which relation does Ohm's law state?",['V = IR','F = ma','E = mc²','P = IV²'],"Potential difference = current × resistance."],
+['सूर्य',1,"What is the source of the Sun's energy?",['Nuclear fission','Nuclear fusion (hydrogen → helium)','Chemical combustion','Electrolysis'],"Fusion."],
+['DNA',1,"Who developed DNA fingerprinting?",['Watson–Crick','Alec Jeffreys','Mendel','Barbara McClintock'],"1984, Alec Jeffreys."],
+['सार्वत्रिक',1,"Which blood group is the universal donor?",['AB+','O−','A+','B−'],"O negative."]
+]
+};
+
+/* ---------- English for auto-generated Maths / Reasoning / DI ---------- */
+(function(){
+const QR=[
+[/^(\d+) का (\d+)% कितना होगा\?$/,'What is $2% of $1?'],
+[/^एक संख्या (\d+) में (\d+)% की वृद्धि की जाए तो नई संख्या क्या होगी\?$/,'If the number $1 is increased by $2%, what is the new number?'],
+[/^(\d+) में पहले (\d+)% की वृद्धि और फिर (\d+)% की कमी की जाए तो अंतिम मान क्या होगा\?$/,'$1 is first increased by $2% and then decreased by $3%. What is the final value?'],
+[/^₹(\d+) पर (\d+)% वार्षिक साधारण ब्याज से (\d+) वर्ष का ब्याज\?$/,'Simple interest on ₹$1 at $2% p.a. for $3 years?'],
+[/^₹(\d+) पर (\d+)% वार्षिक चक्रवृद्धि ब्याज से 2 वर्ष का चक्रवृद्धि ब्याज\?$/,'Compound interest on ₹$1 at $2% p.a. for 2 years?'],
+[/^(\d+) किमी\/घंटा से (\d+) घंटे में दूरी\?$/,'Distance covered at $1 km/h in $2 hours?'],
+[/^समान दूरी क्रमशः (\d+) और (\d+) किमी\/घंटा की चाल से तय की गई। औसत चाल\?$/,'The same distance is covered at $1 km/h and $2 km/h respectively. What is the average speed?'],
+[/^(\d+) मी लंबी ट्रेन (\d+) किमी\/घंटा से चल रही है। वह खंभे को कितने सेकंड में पार करेगी\?$/,'A $1 m long train runs at $2 km/h. In how many seconds will it cross a pole?'],
+[/^5 संख्याओं का औसत (\d+) है। 4 संख्याओं का योग (\d+) हो तो पाँचवीं संख्या\?$/,'The average of 5 numbers is $1. If the sum of 4 of them is $2, what is the fifth number?'],
+[/^क्रय मूल्य ₹(\d+) पर (\d+)% लाभ से विक्रय मूल्य\?$/,'Selling price if the cost price is ₹$1 and the profit is $2%?'],
+[/^अंकित मूल्य ₹(\d+) पर क्रमागत छूट 20% व 10% के बाद मूल्य\?$/,'Price after successive discounts of 20% and 10% on a marked price of ₹$1?'],
+[/^दो संख्याओं का अनुपात (\d+):(\d+) है, योग (\d+) है। बड़ी संख्या\?$/,'Two numbers are in the ratio $1:$2 and their sum is $3. What is the larger number?'],
+[/^A किसी काम को (\d+) दिन में, B (\d+) दिन में करता है। साथ मिलकर कितने दिन\?$/,'A can do a piece of work in $1 days and B in $2 days. In how many days will they finish it together?'],
+[/^(\d+)x \+ (\d+) = (\d+) हो तो x=\?$/,'If $1x + $2 = $3, then x = ?'],
+[/^पिता की आयु पुत्र की (\d+) गुनी है। (\d+) वर्ष बाद पिता की आयु पुत्र की 2 गुनी हो जाएगी। पुत्र की वर्तमान आयु\?$/,"A father's age is $1 times his son's age. After $2 years the father will be twice as old as the son. What is the son's present age?"],
+[/^एक नल टंकी को (\d+) घंटे में भरता है और दूसरा उसे (\d+) घंटे में खाली करता है। दोनों साथ खुलें तो टंकी कितने घंटे में भरेगी\?$/,'One pipe fills a tank in $1 hours and another empties it in $2 hours. If both are opened together, in how many hours will the tank fill?'],
+[/^नाव की स्थिर जल में चाल (\d+) किमी\/घं और धारा की चाल (\d+) किमी\/घं है। धारा के अनुकूल (\d+) किमी जाने में कितना समय लगेगा\?$/,"A boat's speed in still water is $1 km/h and the speed of the stream is $2 km/h. How long will it take to go $3 km downstream?"],
+[/^(\d+) और (\d+) का म\.स\. \(HCF\)\?$/,'HCF of $1 and $2?'],
+[/^(\d+) और (\d+) का ल\.स\. \(LCM\)\?$/,'LCM of $1 and $2?'],
+[/^एक वर्ग की भुजा (\d+) मी है। उसका क्षेत्रफल \(वर्ग मी\)\?$/,'A square has a side of $1 m. What is its area (sq m)?'],
+[/^आयत की लंबाई (\d+) मी तथा चौड़ाई (\d+) मी है। उसका परिमाप\?$/,'A rectangle has length $1 m and breadth $2 m. What is its perimeter?'],
+[/^त्रिज्या (\d+) सेमी वाले वृत्त का क्षेत्रफल \(π=22\/7\)\?$/,'Area of a circle of radius $1 cm (π = 22/7)?'],
+[/^श्रेणी पूरी करें: (.*), \?$/,'Complete the series: $1, ?'],
+[/^यदि किसी कोड में (\w+) को (\w+) लिखा जाता है, तो (\w+) को कैसे लिखा जाएगा\?$/,'If in a certain code $1 is written as $2, how will $3 be written?'],
+[/^एक व्यक्ति (\d+) किमी पूर्व, फिर (\d+) किमी उत्तर चलता है। प्रारंभिक बिंदु से सीधी दूरी\?$/,'A person walks $1 km east and then $2 km north. What is the straight-line distance from the starting point?'],
+[/^एक कक्षा में A का रैंक ऊपर से (\d+)वाँ और नीचे से (\d+)वाँ है। कुल छात्र कितने हैं\?$/,"In a class, A's rank is $1 from the top and $2 from the bottom. How many students are there in total?"],
+[/^घड़ी में (\d+):(\d+) बजे घंटे व मिनट की सुइयों के बीच छोटा कोण कितना होगा\?$/,'What is the smaller angle between the hour and minute hands at $1:$2?'],
+[/^यदि आज (\S+) है, तो (\d+) दिन बाद कौन-सा दिन होगा\?$/,'If today is $1, what day will it be after $2 days?'],
+[/^2023 में उत्पाद A और B की कुल बिक्री कितनी थी\?$/,'What was the total sales of products A and B in 2023?'],
+[/^उत्पाद C की बिक्री में 2023 से 2024 में कितने प्रतिशत की वृद्धि हुई\?$/,'By what percentage did the sales of product C increase from 2023 to 2024?'],
+[/^2024 में A और B की कुल बिक्री, 2023 में C और D की कुल बिक्री से कितनी अधिक\/कम है\? \(निरपेक्ष अंतर\)$/,'What is the absolute difference between the total sales of A and B in 2024 and the total sales of C and D in 2023?'],
+[/^शिक्षा पर कितना खर्च हुआ\?$/,'How much was spent on education?'],
+[/^भोजन और आवास पर कुल खर्च, शिक्षा पर खर्च से कितना अधिक है\?$/,'By how much is the total spent on food and housing greater than that spent on education?']
+];
+const QD={
+"कथन: सभी कलम पुस्तकें हैं। कुछ पुस्तकें कॉपी हैं।\nनिष्कर्ष: I. कुछ कलम कॉपी हैं। II. कुछ कॉपी पुस्तकें हैं।":"Statements: All pens are books. Some books are copies.\nConclusions: I. Some pens are copies. II. Some copies are books.",
+"कथन: सभी फल सब्ज़ियाँ हैं। सभी सब्ज़ियाँ पौधे हैं।\nनिष्कर्ष: I. सभी फल पौधे हैं। II. कुछ पौधे फल हैं।":"Statements: All fruits are vegetables. All vegetables are plants.\nConclusions: I. All fruits are plants. II. Some plants are fruits.",
+"कथन: कोई शेर हिरण नहीं है। सभी हिरण पशु हैं।\nनिष्कर्ष: I. कोई हिरण शेर नहीं है। II. सभी पशु हिरण हैं।":"Statements: No lion is a deer. All deer are animals.\nConclusions: I. No deer is a lion. II. All animals are deer.",
+"A, B का भाई है। B, C की माँ है। A का C से क्या संबंध है?":"A is the brother of B. B is the mother of C. How is A related to C?",
+"एक महिला की ओर इशारा करके राम ने कहा, \"यह मेरी माँ के इकलौते पुत्र की पत्नी है।\" महिला का राम से क्या संबंध है?":"Pointing to a woman, Ram said, \"She is the wife of my mother's only son.\" How is the woman related to Ram?",
+"A, B का पिता है; C, A की माँ है; D, C का पिता है। D का B से क्या संबंध है?":"A is the father of B; C is the mother of A; D is the father of C. How is D related to B?"};
+const OD={
+'केवल निष्कर्ष II अनुसरण करता है':'Only conclusion II follows','केवल निष्कर्ष I अनुसरण करता है':'Only conclusion I follows','I और II दोनों अनुसरण करते हैं':'Both I and II follow','न I न II अनुसरण करता है':'Neither I nor II follows',
+'मामा':'Maternal uncle','चाचा':'Paternal uncle','पिता':'Father','नाना':'Maternal grandfather','पत्नी':'Wife','बहन':'Sister','माँ':'Mother','भाभी':'Sister-in-law','परदादा':'Great-grandfather','दादा':'Grandfather',
+'सोमवार':'Monday','मंगलवार':'Tuesday','बुधवार':'Wednesday','गुरुवार':'Thursday','शुक्रवार':'Friday','शनिवार':'Saturday','रविवार':'Sunday'};
+const ED={
+'"कुछ पुस्तकें कॉपी हैं" का उलट "कुछ कॉपी पुस्तकें हैं" सही है; I निश्चित नहीं।':'The converse of "Some books are copies" — "Some copies are books" — is valid; I is not certain.',
+'सभी फल→सब्ज़ी→पौधे; "सभी" का उलट "कुछ" सही।':'All fruits → vegetables → plants; the converse of "All" gives "Some", which is valid.',
+'नकारात्मक कथन का सरल उलट सही है; II अतिव्याप्ति है।':'The simple converse of a negative statement is valid; II is an over-generalisation.',
+'C की माँ का भाई = मामा।':"Mother's brother = maternal uncle.",
+'माँ का इकलौता पुत्र = राम स्वयं; उसकी पत्नी = राम की पत्नी।':"Mother's only son = Ram himself; his wife = Ram's wife.",
+'D → C → A → B: परदादा।':'D → C → A → B: great-grandfather.'};
+const ER=[
+[/^हर बार (\d+) जुड़ता है।$/,'$1 is added each time.'],
+[/^वर्ग संख्याएँ; अगला (\d+)²।$/,'Square numbers; the next is $1².'],
+[/^पद = n\(n\+1\) रूप में।$/,'Terms are of the form n(n+1).'],
+[/^हर अक्षर (\d+) स्थान आगे बढ़ता है।$/,'Each letter moves $1 place(s) ahead.'],
+[/^(\d+) ÷ 7 का शेषफल (\d+)।$/,'$1 ÷ 7 leaves remainder $2.'],
+[/^पाइथागोरस प्रमेय।$/,'Pythagoras theorem.']];
+const EW=[['दोनों योग निकालकर अंतर','Find both sums and take the difference'],['अनुकूल चाल','Downstream speed'],['सह-अभाज्य गुणक','Co-prime multipliers'],['एक भाग','One part'],['नई','New value'],['दूरी','Distance'],['चाल','speed'],['समय','time'],['औसत','Average'],['पुत्र','Son'],['पिता','Father'],['मी/से','m/s'],['योग','Sum'],['वृद्धि%','Increase %'],['अंतर','difference'],['पुराना','old value'],['कुल','Total'],['कोण','Angle'],['यहाँ','here'],['।','.']];
+const UN=[[' किमी/घंटा',' km/h'],[' किमी',' km'],[' वर्ग सेमी',' sq cm'],[' मी',' m'],[' सेकंड',' seconds'],[' घंटे',' hours'],[' दिन',' days'],[' वर्ष',' years'],[' करोड़',' crore']];
+const dev=s=>/[\u0900-\u097F]/.test(s);
+function trQ(s){if(QD[s])return QD[s];for(const [re,t] of QR)if(re.test(s))return s.replace(re,t);return null}
+const trO=o=>{if(OD[o])return OD[o];UN.forEach(([a,b])=>{o=o.split(a).join(b)});return o};
+function trE(e){if(!e)return e;if(ED[e])return ED[e];for(const [re,t] of ER)if(re.test(e))return e.replace(re,t);EW.forEach(([a,b])=>{e=e.split(a).join(b)});return dev(e)?undefined:e}
+const trP=p=>p.replace('तालिका: बिक्री (करोड़ ₹)','Table: Sales (₹ crore)').replace(/उत्पाद /g,'Product ').replace('पाई चार्ट: कुल खर्च','Pie chart: total expenditure').replace('का वितरण','distribution').replace('शिक्षा','Education').replace('भोजन','Food').replace('आवास','Housing').replace('अन्य','Others');
+window.enGen=function(q){
+ if(q.s!=='गणित'&&q.s!=='रीज़निंग'&&q.s!=='DI')return null;
+ const Q=trQ(q.q);if(!Q)return null;
+ return{q:Q,p:q.p?trP(q.p):undefined,o:q.o.map(trO),e:trE(q.e)};
+};
+})();
+
+</script>
+
+<script>
 (function(){
 'use strict';
 const ST=['केवल 1','केवल 2','1 और 2 दोनों','न तो 1 न ही 2'];
@@ -159,7 +386,8 @@ stx('cgpsc','CGPSC','छत्तीसगढ़ PCS प्रारंभिक
 
 /* ---- प्रश्न-बैंक: [विषय, कठिनाई 0/1/2, प्रश्न, विकल्प, सही-इंडेक्स, व्याख्या, गद्यांश] ---- */
 const BANK=[];
-const B=(s,d,q,o,a,e,p)=>BANK.push({s:s,d:d,q:q,o:o,a:a,e:e,p:p});
+const ENC={};
+const B=(s,d,q,o,a,e,p)=>{const x={s:s,d:d,q:q,o:o,a:a,e:e,p:p},n=ENC[s]=(ENC[s]||0)+1,t=window.EN_PACK&&EN_PACK[s]&&EN_PACK[s][n-1];if(t&&t[1]===a&&q.startsWith(t[0]))x.en={q:t[2],o:t[3],e:t[4]};BANK.push(x)};
 /* राजव्यवस्था */
 B('राजव्यवस्था',0,'लोकसभा सदस्य बनने की न्यूनतम आयु कितनी है?',['21','25','30','35'],1,'25 वर्ष (अनु. 84)।');
 B('राजव्यवस्था',1,'पंचायती राज को संवैधानिक दर्जा किस संशोधन से मिला?',['61वाँ','73वाँ','74वाँ','86वाँ'],1,'73वाँ संशोधन, 1992।');
@@ -525,7 +753,7 @@ const GEN={
 };
 
 /* ---------- ऐप ---------- */
-const S={view:'home',ex:null,pi:0,tab:'y',lv:'a',shown:{},test:null,result:null,timer:null};
+const S={view:'home',ex:null,pi:0,tab:'y',lv:'a',shown:{},test:null,result:null,timer:null,lang:'hi'};
 const $=id=>document.getElementById(id);
 const getEx=id=>EX.find(e=>e.id===id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -533,6 +761,12 @@ const pad=n=>n<10?'0'+n:''+n;
 const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
 const CARD='rounded-2xl glass border border-slate-200 dark:border-slate-700 ';
 const poolOf=s=>BANK.filter(q=>q.s===s);
+
+/* ---- भाषा (हिंदी / English) ---- */
+S.lang=store('em_lang')==='en'?'en':'hi';
+const loc=q=>{const t=S.lang==='en'&&q.en;if(!t)return{q:q.q,p:q.p,e:q.e,o:q.o};return{q:t.q||q.q,p:t.p||q.p,e:t.e||q.e,o:q.o.map((x,k)=>t.o&&t.o[q.oi[k]]!=null?t.o[q.oi[k]]:x)}};
+const langBtn=()=>'<div class="inline-flex rounded-lg border border-slate-300 dark:border-slate-600 overflow-hidden text-xs font-bold shrink-0">'+[['hi','हिंदी'],['en','English']].map(x=>'<button onclick="setLang(\''+x[0]+'\')" class="px-3 py-1.5 '+(S.lang===x[0]?'bg-[#0f1f4b] text-white':'')+'">'+x[1]+'</button>').join('')+'</div>';
+window.setLang=l=>{S.lang=l;store('em_lang',l);if(S.view==='test')renderTest();else if(S.view==='result')renderResult()};
 
 function meta(exId,pi,t,i,lv){
  const ex=getEx(exId),P=ex.P[pi];let sec=P.S,name,sub=null;
@@ -552,7 +786,7 @@ function build(m){
    else if(GEN[sj]){const g=GEN[sj][ri(r,0,GEN[sj].length-1)](r,d);if(seen[g.q+g.p])continue;seen[g.q+g.p]=1;q=g;q.d=d}
    else{c=poolOf(sj).filter(x=>!used.has(x));if(!c.length)break;q=c[ri(r,0,c.length-1)]}
    used.add(q);made++;
-   const o=shuffle(q.o.map((t,k)=>({t:t,ok:k===q.a})),r);out.push({s:sj,d:q.d,q:q.q,p:q.p,e:q.e,o:o.map(x=>x.t),a:o.findIndex(x=>x.ok)});
+   const o=shuffle(q.o.map((t,k)=>({t:t,ok:k===q.a,k:k})),r);out.push({s:sj,d:q.d,q:q.q,p:q.p,e:q.e,o:o.map(x=>x.t),oi:o.map(x=>x.k),a:o.findIndex(x=>x.ok),en:q.en||(window.enGen?window.enGen(q):null)});
   }
  });
  return out;
@@ -583,7 +817,7 @@ function render(){document.body.classList.toggle('testing',S.view==='test');({ho
 function examCard(e){return '<button onclick="openExam(\''+e.id+'\')" class="card text-left '+CARD+'overflow-hidden"><div class="bg-gradient-to-r '+e.c+' text-white p-4 flex items-center gap-3"><span class="text-4xl">'+e.icon+'</span><div><div class="font-bold text-lg">'+esc(e.name)+'</div><div class="text-xs text-white/90">'+esc(e.sub)+'</div></div></div><div class="p-4 text-xs flex flex-wrap gap-2">'+e.P.map(p=>'<span class="rounded-full bg-slate-100 dark:bg-slate-700 px-3 py-1">'+esc(p.n)+'</span>').join('')+'</div></button>'}
 function renderHome(){
  const G=[['u','मुख्य परीक्षाएँ – UPSC व UPPCS'],['s','राज्य PCS – राज्य-वार'],['o','अन्य प्रतियोगी परीक्षाएँ']];
- let h='<section class="fade-in"><div class="hero relative overflow-hidden rounded-3xl text-white p-6 sm:p-12 mb-8"><div class="absolute top-0 inset-x-0 stripe"></div><div class="relative"><span class="inline-block bg-white/15 rounded-full px-3 py-1 text-xs mb-3">GS + CSAT • 100 प्रश्न • नेगेटिव मार्किंग • हिंदी में</span><h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">UPSC, UPPCS व राज्य PCS<br><span class="text-[#ff9933]">मॉक टेस्ट</span> परीक्षा-पैटर्न के अनुसार</h1><p class="mt-3 text-white/85 max-w-2xl">हर परीक्षा के लिए GS व CSAT पेपर, PYQ पैटर्न सेट, प्रैक्टिस सेट और विषय-वार सेक्शनल टेस्ट – असली परीक्षा जैसे टाइमर व पैलेट के साथ।</p></div></div>';
+ let h='<section class="fade-in"><div class="hero relative overflow-hidden rounded-3xl text-white p-6 sm:p-12 mb-8"><div class="absolute top-0 inset-x-0 stripe"></div><div class="relative"><span class="inline-block bg-white/15 rounded-full px-3 py-1 text-xs mb-3">GS + CSAT • 100 प्रश्न • नेगेटिव मार्किंग • हिंदी व English</span><h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">UPSC, UPPCS व राज्य PCS<br><span class="text-[#ff9933]">मॉक टेस्ट</span> परीक्षा-पैटर्न के अनुसार</h1><p class="mt-3 text-white/85 max-w-2xl">हर परीक्षा के लिए GS व CSAT पेपर, PYQ पैटर्न सेट, प्रैक्टिस सेट और विषय-वार सेक्शनल टेस्ट – असली परीक्षा जैसे टाइमर व पैलेट के साथ। टेस्ट के दौरान हिंदी/English में कभी भी भाषा बदलें।</p></div></div>';
  G.forEach(g=>{const l=EX.filter(e=>e.g===g[0]);h+='<h2 class="text-xl font-bold mb-4 mt-8 border-l-4 border-[#ff9933] pl-3">'+g[1]+'</h2><div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">'+l.map(examCard).join('')+'</div>'});
  h+='<div class="mt-12 grid md:grid-cols-3 gap-5">'+
  [['🎯','असली परीक्षा जैसा अनुभव','निर्धारित समय, नेगेटिव मार्किंग, प्रश्न पैलेट, Mark for Review और ऑटो-सबमिट – ठीक ऑनलाइन परीक्षा की तरह।'],['📊','विषय-वार विश्लेषण','टेस्ट के बाद हर विषय में सही/गलत/अनुत्तरित, सटीकता और हर प्रश्न का स्पष्टीकरण देखें, ताकि कमज़ोर विषय पहचान सकें।'],['🗺️','राज्य-विशेष अभ्यास','MPPSC, RPSC, BPSC, UKPSC, JPSC, CGPSC के लिए अलग पेपर, जिनमें संबंधित राज्य का GK अलग से शामिल है।']].map(x=>'<div class="'+CARD+'p-5"><div class="text-3xl mb-2">'+x[0]+'</div><h3 class="font-bold mb-1">'+x[1]+'</h3><p class="text-sm text-slate-600 dark:text-slate-300">'+x[2]+'</p></div>').join('')+'</div>'+
@@ -591,7 +825,7 @@ function renderHome(){
  [['UPSC','GS पेपर-1','100 प्रश्न, 200 अंक, 2 घंटे, प्रत्येक गलत उत्तर पर 1/3 अंक की कटौती'],['UPSC','CSAT पेपर-2','80 प्रश्न, 200 अंक, 2 घंटे, केवल क्वालिफाइंग (न्यूनतम 33%)'],['UPPCS','GS पेपर-1','150 प्रश्न, 200 अंक, 2 घंटे, 1/3 नेगेटिव मार्किंग'],['UPPCS','CSAT पेपर-2','100 प्रश्न, 200 अंक, 2 घंटे, केवल क्वालिफाइंग (न्यूनतम 33%)']].map(x=>'<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-3 font-semibold">'+x[0]+'</td><td class="p-3">'+x[1]+'</td><td class="p-3">'+x[2]+'</td></tr>').join('')+'</tbody></table></div><p class="text-xs text-slate-500 mt-2">नोट: यहाँ सभी अभ्यास पेपर 100 प्रश्न के बनाए गए हैं। अंतिम पैटर्न व तिथियों के लिए संबंधित आयोग की आधिकारिक अधिसूचना देखें।</p>'+
  '<h2 class="text-xl font-bold mb-4 mt-12 border-l-4 border-[#ff9933] pl-3">तैयारी के उपयोगी सुझाव</h2><div class="'+CARD+'p-5 text-sm space-y-2 text-slate-700 dark:text-slate-300"><p><b>1. पहले सिलेबस, फिर टेस्ट:</b> सेक्शनल टेस्ट से हर विषय की नींव मज़बूत करें, फिर फुल-लेंथ पेपर दें।</p><p><b>2. नेगेटिव मार्किंग समझें:</b> जिस प्रश्न में दो विकल्प पक्के रूप से कट जाएँ, तभी अनुमान लगाएँ; वरना छोड़ना बेहतर है।</p><p><b>3. विश्लेषण सबसे ज़रूरी:</b> टेस्ट से अधिक समय गलत प्रश्नों के विश्लेषण में दें और वही अवधारणा दोबारा पढ़ें।</p><p><b>4. CSAT को हल्के में न लें:</b> UPSC व UPPCS में यह क्वालिफाइंग है, इसलिए गद्यांश, रीज़निंग और गणित का नियमित अभ्यास करें।</p><p><b>5. समय-प्रबंधन:</b> 100 प्रश्न के लिए औसतन 70–75 सेकंड प्रति प्रश्न रखें और कठिन प्रश्न बाद के लिए चिह्नित करें।</p></div>'+
  '<h2 class="text-xl font-bold mb-4 mt-12 border-l-4 border-[#ff9933] pl-3">अक्सर पूछे जाने वाले प्रश्न</h2><div class="space-y-3">'+
- [['क्या यहाँ के प्रश्न असली PYQ हैं?','नहीं। "PYQ पैटर्न" सेट पिछले वर्षों के प्रश्नपत्रों की संरचना, कठिनाई-अनुपात और विषय-वितरण पर आधारित अभ्यास सेट हैं, आयोग के असली प्रश्नपत्र नहीं।'],['क्या टेस्ट देने के लिए रजिस्ट्रेशन चाहिए?','नहीं। कोई लॉगिन नहीं है; आपका स्कोर-इतिहास केवल आपके ब्राउज़र में सहेजा जाता है।'],['प्रश्न में गलती दिखे तो क्या करें?','कृपया टेस्ट का नाम और प्रश्न संख्या के साथ yuthindia33@gmail.com पर लिखें।'],['नेगेटिव मार्किंग कैसे लगती है?','प्रत्येक पेपर के ऊपर दिखाए गए अंक-योजना के अनुसार गलत उत्तर पर निर्धारित अंक कटते हैं; अनुत्तरित प्रश्न पर कोई कटौती नहीं।']].map(x=>'<details class="'+CARD+'p-4"><summary class="font-semibold cursor-pointer">'+x[0]+'</summary><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">'+x[1]+'</p></details>').join('')+'</div></section>';
+ [['क्या यहाँ के प्रश्न असली PYQ हैं?','नहीं। "PYQ पैटर्न" सेट पिछले वर्षों के प्रश्नपत्रों की संरचना, कठिनाई-अनुपात और विषय-वितरण पर आधारित अभ्यास सेट हैं, आयोग के असली प्रश्नपत्र नहीं।'],['क्या टेस्ट देने के लिए रजिस्ट्रेशन चाहिए?','नहीं। कोई लॉगिन नहीं है; आपका स्कोर-इतिहास केवल आपके ब्राउज़र में सहेजा जाता है।'],['क्या प्रश्न हिंदी और English दोनों में मिलेंगे?','हाँ। टेस्ट स्क्रीन और उत्तर-स्पष्टीकरण पेज पर ऊपर "हिंदी | English" बटन से कभी भी भाषा बदल सकते हैं। जिन प्रश्नों का English संस्करण अभी उपलब्ध नहीं है, वे हिंदी में ही दिखेंगे।'],['प्रश्न में गलती दिखे तो क्या करें?','कृपया टेस्ट का नाम और प्रश्न संख्या के साथ yuthindia33@gmail.com पर लिखें।'],['नेगेटिव मार्किंग कैसे लगती है?','प्रत्येक पेपर के ऊपर दिखाए गए अंक-योजना के अनुसार गलत उत्तर पर निर्धारित अंक कटते हैं; अनुत्तरित प्रश्न पर कोई कटौती नहीं।']].map(x=>'<details class="'+CARD+'p-4"><summary class="font-semibold cursor-pointer">'+x[0]+'</summary><p class="mt-2 text-sm text-slate-600 dark:text-slate-300">'+x[1]+'</p></details>').join('')+'</div></section>';
  $('app').innerHTML=h;
  if(!store('em_ck'))$('ck').classList.remove('hidden');
 }
@@ -631,8 +865,8 @@ function palClass(T,i){const a=T.ans[i]!==-1,m=T.marked[i];let b;
 /* टेस्ट स्क्रीन: केवल प्रश्न, विकल्प, टाइमर और पैलेट */
 function renderTest(){
  const T=S.test;if(!T){S.view='home';return render()}
- const q=T.qs[T.cur],sel=T.sel,P=T.meta.P;
- let h='<section class="fade-in"><div class="'+CARD+'flex items-center justify-between gap-3 mb-4 p-3 sticky top-2 z-20"><div class="min-w-0"><div class="font-bold truncate">'+esc(T.meta.name)+'</div><div class="text-xs text-slate-500">प्रश्न '+(T.cur+1)+' / '+T.qs.length+'</div></div><div class="text-center"><div class="text-[10px] uppercase text-slate-500">शेष समय</div><div id="timerBox" class="font-mono text-xl font-extrabold text-rose-600">'+timeStr(T.left)+'</div></div></div>'+
+ const q0=T.qs[T.cur],q=Object.assign({},q0,loc(q0)),sel=T.sel,P=T.meta.P;
+ let h='<section class="fade-in"><div class="'+CARD+'flex items-center justify-between gap-3 mb-4 p-3 sticky top-2 z-20"><div class="min-w-0"><div class="font-bold truncate">'+esc(T.meta.name)+'</div><div class="text-xs text-slate-500">प्रश्न '+(T.cur+1)+' / '+T.qs.length+'</div></div>'+langBtn()+'<div class="text-center"><div class="text-[10px] uppercase text-slate-500">शेष समय</div><div id="timerBox" class="font-mono text-xl font-extrabold text-rose-600">'+timeStr(T.left)+'</div></div></div>'+
  '<div class="grid lg:grid-cols-[1fr_300px] gap-4"><div class="'+CARD+'p-5"><div class="mb-2 text-xs text-slate-500">+'+P.mk+(P.ng?' / −'+P.ng:'')+'</div>'+
  (q.p?'<div class="mb-3 rounded-lg bg-amber-50 dark:bg-slate-700/60 border border-amber-200 dark:border-slate-600 p-3 text-sm whitespace-pre-line">'+esc(q.p)+'</div>':'')+
  '<h2 class="text-lg font-semibold mb-4 whitespace-pre-line">Q'+(T.cur+1)+'. '+esc(q.q)+'</h2><div class="space-y-2">';
@@ -669,8 +903,8 @@ function renderResult(){
  h+='</div><h2 class="text-lg font-bold mb-2">विषय-वार विश्लेषण</h2><div class="'+CARD+'p-4 mb-6 space-y-3">';
  Object.keys(R.by).forEach(s=>{const b=R.by[s],t=b[0]+b[1]+b[2],ac=(b[0]+b[1])?Math.round(b[0]/(b[0]+b[1])*100):0;
   h+='<div><div class="flex justify-between text-sm mb-1"><b>'+esc(s)+'</b><span class="text-slate-500">✔'+b[0]+' ✘'+b[1]+' —'+b[2]+' (सटीकता '+ac+'%)</span></div><div class="h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex"><div class="bg-emerald-500" style="width:'+b[0]/t*100+'%"></div><div class="bg-rose-500" style="width:'+b[1]/t*100+'%"></div></div></div>'});
- h+='</div><div class="flex flex-wrap items-center gap-2 mb-3"><h2 class="text-lg font-bold mr-2">उत्तर व स्पष्टीकरण</h2>'+[['all','सभी'],['w','गलत'],['u','अनुत्तरित']].map(f=>'<button onclick="setF(\''+f[0]+'\')" class="rounded-full px-3 py-1 text-xs font-semibold border '+(R.f===f[0]?'bg-[#0f1f4b] text-white border-[#0f1f4b]':'border-slate-300 dark:border-slate-600')+'">'+f[1]+'</button>').join('')+'</div><div class="space-y-4">';
- R.qs.forEach((q,i)=>{const ua=R.ans[i],ok=ua===q.a,skip=ua===-1;if((R.f==='w'&&(skip||ok))||(R.f==='u'&&!skip))return;
+ h+='</div><div class="flex flex-wrap items-center gap-2 mb-3"><h2 class="text-lg font-bold mr-2">उत्तर व स्पष्टीकरण</h2>'+langBtn()+[['all','सभी'],['w','गलत'],['u','अनुत्तरित']].map(f=>'<button onclick="setF(\''+f[0]+'\')" class="rounded-full px-3 py-1 text-xs font-semibold border '+(R.f===f[0]?'bg-[#0f1f4b] text-white border-[#0f1f4b]':'border-slate-300 dark:border-slate-600')+'">'+f[1]+'</button>').join('')+'</div><div class="space-y-4">';
+ R.qs.forEach((q0,i)=>{const q=Object.assign({},q0,loc(q0)),ua=R.ans[i],ok=ua===q.a,skip=ua===-1;if((R.f==='w'&&(skip||ok))||(R.f==='u'&&!skip))return;
   h+='<div class="'+CARD+'border-l-4 p-4 '+(skip?'!border-l-slate-400':ok?'!border-l-emerald-500':'!border-l-rose-500')+'"><div class="flex justify-between gap-2 mb-2"><p class="font-semibold whitespace-pre-line">Q'+(i+1)+'. '+esc(q.q)+'</p><span class="text-xs font-bold shrink-0 '+(skip?'text-slate-500':ok?'text-emerald-600':'text-rose-600')+'">'+(skip?'Unattempted':ok?'सही ✔':'गलत ✘')+'</span></div>'+(q.p?'<div class="mb-2 rounded bg-slate-100 dark:bg-slate-700/60 p-2 text-xs whitespace-pre-line">'+esc(q.p)+'</div>':'')+'<ul class="space-y-1 text-sm">'+q.o.map((o,k)=>'<li class="rounded px-2 py-1 '+(k===q.a?'bg-emerald-100 dark:bg-emerald-900/50':k===ua?'bg-rose-100 dark:bg-rose-900/50':'')+'">'+'ABCD'[k]+'. '+esc(o)+(k===q.a?' ✔':'')+(k===ua&&k!==q.a?' (आपका उत्तर)':'')+'</li>').join('')+'</ul><p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><b>स्पष्टीकरण:</b> '+esc(q.e||'')+'</p></div>'});
  $('app').innerHTML=h+'</div><div class="mt-6 flex gap-3"><button onclick="retry()" class="rounded-lg bg-[#0f1f4b] hover:opacity-90 text-white px-5 py-2 font-semibold">दोबारा दें</button><button onclick="backToExam()" class="rounded-lg border border-slate-300 dark:border-slate-600 px-5 py-2">टेस्ट सूची</button></div></section>';
 }
@@ -678,10 +912,10 @@ window.retry=()=>startTest(S.result.meta.id);
 window.backToExam=()=>{const m=S.result.meta;S.ex=m.ex;S.pi=m.pi;S.tab=m.t;S.view='exam';S.test=null;render();scrollTo(0,0)};
 
 /* ---------- Public API: असली प्रश्न जोड़ने के लिए ----------
- ExamMock.addQuestions([{s:'राजव्यवस्था', d:2, q:'प्रश्न', o:['A','B','C','D'], a:1, e:'व्याख्या', p:'गद्यांश/डेटा (वैकल्पिक)'}])
+ ExamMock.addQuestions([{s:'राजव्यवस्था', d:2, q:'प्रश्न', o:['A','B','C','D'], a:1, e:'व्याख्या', p:'गद्यांश/डेटा (वैकल्पिक)', en:{q:'English question', o:['A','B','C','D'], e:'English explanation'}}])
  s = विषय-नाम (राजव्यवस्था, इतिहास, भूगोल, अर्थव्यवस्था, पर्यावरण, विज्ञान, UP GK, MP GK, राजस्थान GK, बिहार GK, उत्तराखंड GK, झारखंड GK, छत्तीसगढ़ GK, गद्यांश)
- d = 0 सरल / 1 मध्यम / 2 कठिन */
-window.ExamMock={addQuestions:arr=>{let n=0;(arr||[]).forEach(x=>{if(x&&x.q&&Array.isArray(x.o)&&x.o.length===4&&x.a>=0&&x.a<4&&x.s){BANK.push({s:x.s,d:x.d>=0&&x.d<=2?x.d:1,q:x.q,o:x.o,a:x.a,e:x.e||'',p:x.p});n++}});return n}};
+ d = 0 सरल / 1 मध्यम / 2 कठिन ; en = वैकल्पिक English संस्करण */
+window.ExamMock={addQuestions:arr=>{let n=0;(arr||[]).forEach(x=>{if(x&&x.q&&Array.isArray(x.o)&&x.o.length===4&&x.a>=0&&x.a<4&&x.s){BANK.push({s:x.s,d:x.d>=0&&x.d<=2?x.d:1,q:x.q,o:x.o,a:x.a,e:x.e||'',p:x.p,en:x.en});n++}});return n}};
 
 if(store('em_dark')){document.documentElement.classList.add('dark');$('darkBtn').textContent='☀️'}
 addEventListener('beforeunload',e=>{if(S.view==='test'&&S.test&&!S.test.done){e.preventDefault();e.returnValue=''}});
