@@ -1,147 +1,98 @@
 #!/usr/bin/env python3
-"""ExamMock Pro patch.  Use:  python patch_exammock.py index.html
-Creates index_updated.html. Aborts safely if any target text is not found exactly once."""
+"""Adds IBPS AFO + ICAR AIEEA-PG exams (Hindi + English) to ExamMock.
+Use:  python patch_agri_exams.py index.html   (index_agri.html banegi)
+patch_exammock.py pehle ya baad mein, dono order mein chalega."""
 import sys
 
-GENH_JS = r'''
-/* ---- कठिन (Tough) जनरेटर: केवल कठिन स्तर पर प्रयुक्त ---- */
-const GENH={
-'गणित':[
- (r,d)=>{const sp=pk(r,[[40,50],[60,66],[36,54],[45,63]]),t=ri(r,6,18),L=(sp[0]+sp[1])*5/18*t,a=Math.floor(L/2);return mc(r,'गणित','दो ट्रेनें, जिनकी लंबाई '+a+' मी व '+(L-a)+' मी है, विपरीत दिशाओं में '+sp[0]+' व '+sp[1]+' किमी/घंटा की चाल से चल रही हैं। वे एक-दूसरे को कितने सेकंड में पार करेंगी?',t,1,'',' सेकंड','सापेक्ष चाल = '+(sp[0]+sp[1])+'×5/18 मी/से; समय = कुल लंबाई ÷ सापेक्ष चाल।')},
- (r,d)=>{const p=pk(r,[10,20,30]),X=ri(r,5,40)*100;return mc(r,'गणित','एक व्यापारी ने दो वस्तुएँ ₹'+X+' प्रत्येक में बेचीं; एक पर '+p+'% लाभ और दूसरी पर '+p+'% हानि हुई। कुल मिलाकर प्रतिशत हानि कितनी रही?',p*p/100,Math.max(1,p/10),'','%','समान % लाभ-हानि पर सदैव हानि = p²/100 % = '+p*p/100+'%।')},
- (r,d)=>{const w=pk(r,[[12,15,20,10],[10,15,30,10],[20,30,60,20],[6,12,12,6]]);return mc(r,'गणित','A व B मिलकर किसी काम को '+w[0]+' दिन में, B व C '+w[1]+' दिन में तथा C व A '+w[2]+' दिन में पूरा करते हैं। तीनों साथ मिलकर कितने दिन में पूरा करेंगे?',w[3],2,'',' दिन','2(A+B+C) का एक दिन का काम = 1/'+w[0]+'+1/'+w[1]+'+1/'+w[2]+'।')},
- (r,d)=>{const R=pk(r,[5,10,20]),P=ri(r,1,15)*2000,v=P*R*R/10000;return mc(r,'गणित','₹'+P+' पर '+R+'% वार्षिक दर से 2 वर्ष के चक्रवृद्धि ब्याज और साधारण ब्याज का अंतर?',v,Math.max(2,Math.round(v/8)),'₹','','अंतर = P(R/100)²।')}],
-'रीज़निंग':[
- (r,d)=>{const a=ri(r,2,20),b=ri(r,2,20),k=ri(r,2,7),m=ri(r,3,9);return mc(r,'रीज़निंग','श्रेणी पूरी करें: '+[a,b,a+k,b+m,a+2*k,b+2*m].join(', ')+', ?',a+3*k,k,'','','दो श्रेणियाँ एकांतर क्रम में; विषम स्थान पर हर बार '+k+' जुड़ता है।')},
- (r,d)=>{const t=pk(r,[
-  ['कथन: कुछ A, B हैं। कोई B, C नहीं है।\nनिष्कर्ष: I. कुछ A, C नहीं हैं। II. कोई A, C नहीं है।',['केवल निष्कर्ष I अनुसरण करता है','केवल निष्कर्ष II अनुसरण करता है','I और II दोनों अनुसरण करते हैं','न I न II अनुसरण करता है'],'कुछ A, B हैं और कोई B, C नहीं ⇒ वे A, C नहीं हैं (I सही); सभी A के लिए निश्चित नहीं (II गलत)।'],
-  ['कथन: सभी A, B हैं। कुछ B, C हैं।\nनिष्कर्ष: I. कुछ A, C हैं। II. कुछ C, A हैं।',['न I न II अनुसरण करता है','केवल निष्कर्ष I अनुसरण करता है','केवल निष्कर्ष II अनुसरण करता है','I और II दोनों अनुसरण करते हैं'],'B के जिन सदस्यों का C से संबंध है, वे A हों यह निश्चित नहीं; दोनों निष्कर्ष अनिश्चित।']]);
-  return{s:'रीज़निंग',d:2,q:t[0],o:t[1],a:0,e:t[2]}},
- (r,d)=>{const x=ri(r,2,10),k=ri(r,1,3);return mc(r,'रीज़निंग','एक व्यक्ति '+x+' किमी पूर्व, फिर '+4*k+' किमी उत्तर, फिर '+(x+3*k)+' किमी पश्चिम चलता है। प्रारंभिक बिंदु से उसकी सीधी दूरी?',5*k,k,'',' किमी','शुद्ध पश्चिम = '+3*k+' किमी, उत्तर = '+4*k+' किमी ⇒ दूरी = '+5*k+' किमी।')}],
-'DI':[
- (r,d)=>{const a=[0,1,2].map(()=>3*ri(r,5,30)),b=[0,1,2].map(()=>3*ri(r,5,30)),p='तालिका: उत्पादन (हज़ार टन) – 2022, 2023, 2024\nX: '+a.join(', ')+'\nY: '+b.join(', '),v=Math.abs(a[0]+a[1]+a[2]-b[0]-b[1]-b[2])/3||3;return mc(r,'DI','तीन वर्षों में X के औसत उत्पादन और Y के औसत उत्पादन का निरपेक्ष अंतर (हज़ार टन) कितना है?',v,Math.max(2,Math.round(v/4)),'','','दोनों के योग का अंतर ÷ 3।',p)}]
-};
+JS = r'''
+/* ===== नई कृषि परीक्षाएँ: IBPS AFO व ICAR (हिंदी + English) ===== */
+(function(){
+const A=(s,d,hq,ho,a,he,eq,eo,ee)=>O.push({s:s,d:d,q:hq,o:ho,a:a,e:he,en:{q:eq,o:eo||ho,e:ee}});
+/* शस्य विज्ञान */
+A('शस्य विज्ञान',1,'सोयाबीन का उत्पत्ति-स्थान माना जाता है—',['भारत','चीन','ब्राज़ील','मेक्सिको'],1,'उद्गम पूर्वी एशिया (चीन) है।','Soybean is believed to have originated in—',['India','China','Brazil','Mexico'],'It originated in East Asia (China).');
+A('शस्य विज्ञान',1,'निम्न में से कौन-सी C₄ फसल है?',['गेहूँ','चावल','मक्का','चना'],2,'मक्का, गन्ना व ज्वार C₄ पौधे हैं।','Which of the following is a C₄ crop?',['Wheat','Rice','Maize','Gram'],'Maize, sugarcane and sorghum are C₄ plants.');
+A('शस्य विज्ञान',1,'धान की SRI पद्धति का पूरा नाम क्या है?',['धान सघनीकरण प्रणाली','धान सिंचाई सूचकांक','धान उत्पादन सूचकांक','धान रोपण योजना'],0,'System of Rice Intensification।','What is the full form of SRI in rice cultivation?',['System of Rice Intensification','Soil Rice Index','Seed Rice Improvement','Standard Rice Irrigation'],'System of Rice Intensification.');
+A('शस्य विज्ञान',2,'बाजरे का वानस्पतिक नाम है—',['Sorghum bicolor','Pennisetum glaucum','Eleusine coracana','Setaria italica'],1,'बाजरा = Pennisetum glaucum।','The botanical name of pearl millet (bajra) is—',null,'Bajra = Pennisetum glaucum.');
+A('शस्य विज्ञान',1,'सस्य-सघनता (Cropping Intensity) का सूत्र है—',['(सकल फसली क्षेत्र ÷ शुद्ध बोया क्षेत्र) × 100','(शुद्ध बोया क्षेत्र ÷ सकल फसली क्षेत्र) × 100','सकल फसली क्षेत्र − शुद्ध बोया क्षेत्र','कुल उत्पादन ÷ कुल क्षेत्र'],0,'सकल फसली क्षेत्र/शुद्ध बोया क्षेत्र × 100।','The formula for Cropping Intensity is—',['(Gross cropped area ÷ Net sown area) × 100','(Net sown area ÷ Gross cropped area) × 100','Gross cropped area − Net sown area','Total production ÷ Total area'],'Gross cropped area / Net sown area × 100.');
+A('शस्य विज्ञान',2,'रोपाई वाले धान में प्रयुक्त ब्यूटाक्लोर किस प्रकार का शाकनाशी है?',['उद्भव-पूर्व (Pre-emergence)','उद्भव-पश्चात (Post-emergence)','संपर्क शाकनाशी','धूम्रक'],0,'रोपाई के 3–5 दिन बाद उद्भव-पूर्व प्रयोग।','Butachlor used in transplanted rice is a—',['Pre-emergence herbicide','Post-emergence herbicide','Contact herbicide','Fumigant'],'Applied 3–5 days after transplanting as pre-emergence.');
+A('शस्य विज्ञान',1,'गेहूँ में सिंचाई की सर्वाधिक क्रांतिक अवस्था कौन-सी है?',['ताज-मूल (CRI) अवस्था','दुग्धावस्था','पकने की अवस्था','अंकुरण'],0,'बुवाई के लगभग 21 दिन बाद।','Which is the most critical stage for irrigation in wheat?',['Crown Root Initiation (CRI)','Milk stage','Ripening stage','Germination'],'About 21 days after sowing.');
+/* मृदा विज्ञान */
+A('मृदा विज्ञान',1,'अधिकांश पोषक तत्वों की उपलब्धता के लिए मृदा का आदर्श pH परास लगभग है—',['4.0–5.0','6.0–7.0','8.5–9.5','10–11'],1,'6–7 pH पर अधिकांश पोषक तत्व उपलब्ध होते हैं।','The ideal soil pH range for availability of most nutrients is about—',null,'Most nutrients are available at pH 6–7.');
+A('मृदा विज्ञान',2,'क्षेत्र क्षमता (Field Capacity) पर मृदा-जल तनाव लगभग कितना होता है?',['−1/3 बार','−15 बार','0 बार','−100 बार'],0,'क्षेत्र क्षमता ≈ −1/3 बार; स्थायी म्लानि बिंदु ≈ −15 बार।','The soil-water tension at Field Capacity is about—',['−1/3 bar','−15 bar','0 bar','−100 bar'],'Field capacity ≈ −1/3 bar; permanent wilting point ≈ −15 bar.');
+A('मृदा विज्ञान',2,'अमोनिया को नाइट्राइट में बदलने वाला जीवाणु कौन-सा है?',['नाइट्रोसोमोनास','नाइट्रोबैक्टर','राइज़ोबियम','एज़ोटोबैक्टर'],0,'नाइट्रोसोमोनास: NH₄⁺→NO₂⁻; नाइट्रोबैक्टर: NO₂⁻→NO₃⁻।','Which bacterium converts ammonia to nitrite?',['Nitrosomonas','Nitrobacter','Rhizobium','Azotobacter'],'Nitrosomonas: NH₄⁺→NO₂⁻; Nitrobacter: NO₂⁻→NO₃⁻.');
+A('मृदा विज्ञान',2,'काली मृदा (रेगुर) में प्रमुख मृत्तिका खनिज कौन-सा है?',['काओलिनाइट','मॉन्टमोरिलोनाइट','इलाइट','क्लोराइट'],1,'मॉन्टमोरिलोनाइट; इसी से फैलने-सिकुड़ने का गुण।','The dominant clay mineral of black (regur) soil is—',['Kaolinite','Montmorillonite','Illite','Chlorite'],'Montmorillonite, causing swelling and shrinking.');
+A('मृदा विज्ञान',2,'धनायन विनिमय क्षमता (CEC) की इकाई है—',['cmol(p⁺)/kg','dS/m','mg/L','ppm'],0,'सेंटीमोल प्रोटॉन-आवेश प्रति किग्रा मृदा।','The unit of Cation Exchange Capacity (CEC) is—',null,'Centimoles of charge per kg of soil.');
+A('मृदा विज्ञान',2,'लवणीय मृदा की विद्युत चालकता (EC) सामान्यतः कितनी होती है?',['4 dS/m से अधिक','2 dS/m से कम','1 dS/m से कम','0.5 dS/m'],0,'लवणीय: EC > 4 dS/m, pH < 8.2।','The electrical conductivity (EC) of a saline soil is generally—',['More than 4 dS/m','Less than 2 dS/m','Less than 1 dS/m','0.5 dS/m'],'Saline soil: EC > 4 dS/m, pH < 8.2.');
+A('मृदा विज्ञान',1,'ह्यूमस का C:N अनुपात लगभग कितना होता है?',['10:1','40:1','80:1','100:1'],0,'स्थिर ह्यूमस में लगभग 10:1।','The C:N ratio of humus is approximately—',null,'About 10:1 in stable humus.');
+/* उद्यान विज्ञान */
+A('उद्यान विज्ञान',1,'आम की नियमित फलन वाली संकर किस्म कौन-सी है?',['दशहरी','लंगड़ा','आम्रपाली','चौसा'],2,'आम्रपाली = दशहरी × नीलम; बौनी व नियमित फलन।','Which is a regular-bearing hybrid mango variety?',['Dashehari','Langra','Amrapali','Chausa'],'Amrapali = Dashehari × Neelam; dwarf and regular bearing.');
+A('उद्यान विज्ञान',1,'पपेन एंजाइम पपीते के किस भाग से प्राप्त होता है?',['कच्चे फल के लेटेक्स से','पत्ती से','बीज से','जड़ से'],0,'कच्चे फल पर चीरा लगाकर निकला दूध।','Papain enzyme is obtained from which part of papaya?',['Latex of the raw fruit','Leaf','Seed','Root'],'Latex tapped from raw fruit.');
+A('उद्यान विज्ञान',1,'केले का व्यावसायिक प्रवर्धन सामान्यतः किससे होता है?',['बीज','चूषक (सकर)','कलम','ग्राफ्टिंग'],1,'सकर/पुत्री प्रकंद; अब ऊतक संवर्धन भी।','Banana is commercially propagated generally by—',['Seed','Suckers','Cuttings','Grafting'],'Suckers/rhizomes; tissue culture is also used now.');
+A('उद्यान विज्ञान',1,'टमाटर के लाल रंग का मुख्य वर्णक कौन-सा है?',['लाइकोपीन','कैरोटीन-A','ज़ैंथोफिल','एंथोसायनिन'],0,'लाइकोपीन।','The main pigment responsible for the red colour of tomato is—',['Lycopene','Carotene-A','Xanthophyll','Anthocyanin'],'Lycopene.');
+A('उद्यान विज्ञान',2,'सेब के लिए सामान्यतः शीतन (7°C से कम) की आवश्यकता कितनी होती है?',['100–200 घंटे','1000–1500 घंटे','50 घंटे','कोई नहीं'],1,'किस्म के अनुसार भिन्न; सामान्यतः 1000–1500 घंटे।','The usual chilling requirement (below 7°C) for apple is—',['100–200 hours','1000–1500 hours','50 hours','None'],'Varies by cultivar; generally 1000–1500 hours.');
+A('उद्यान विज्ञान',2,'फूलगोभी में "व्हिपटेल" विकार किस तत्व की कमी से होता है?',['मोलिब्डेनम','बोरॉन','जिंक','आयरन'],0,'मोलिब्डेनम की कमी (अम्लीय मृदा में)।','"Whiptail" disorder in cauliflower is caused by deficiency of—',['Molybdenum','Boron','Zinc','Iron'],'Molybdenum deficiency (in acidic soils).');
+A('उद्यान विज्ञान',1,'गुलाब के प्रवर्धन की सर्वाधिक प्रचलित विधि कौन-सी है?',['टी-बडिंग','बीज','एयर-लेयरिंग','कंद'],0,'चश्मा/टी-बडिंग।','The most common method of propagating rose is—',['T-budding','Seed','Air layering','Tubers'],'T-budding.');
+/* पादप संरक्षण */
+A('पादप संरक्षण',1,'आलू का अगेती झुलसा (अर्ली ब्लाइट) किस रोगकारक से होता है?',['अल्टरनेरिया सोलेनाई','फाइटोफ्थोरा इन्फेस्टैंस','राइज़ोक्टोनिया सोलेनाई','पक्सिनिया'],0,'अगेती झुलसा: Alternaria solani; पछेती: Phytophthora infestans।','Early blight of potato is caused by—',['Alternaria solani','Phytophthora infestans','Rhizoctonia solani','Puccinia'],'Early blight: Alternaria solani; late blight: Phytophthora infestans.');
+A('पादप संरक्षण',2,'धान का भूरा फुदका (Brown Plant Hopper) किस कीट-गण का है?',['हेमिप्टेरा','लेपिडॉप्टेरा','कोलियोप्टेरा','डिप्टेरा'],0,'हेमिप्टेरा (रस चूसने वाले कीट)।','Brown Plant Hopper of rice belongs to order—',['Hemiptera','Lepidoptera','Coleoptera','Diptera'],'Hemiptera (sap-sucking insects).');
+A('पादप संरक्षण',1,'ट्राइकोग्रामा का उपयोग किस रूप में होता है?',['अंड परजीवी (जैव-नियंत्रक)','कवकनाशी','शाकनाशी','वृद्धि नियामक'],0,'अंडों में परजीवी बनकर कीट-नियंत्रण।','Trichogramma is used as a—',['Egg parasitoid (biocontrol agent)','Fungicide','Herbicide','Growth regulator'],'Parasitises insect eggs for pest control.');
+A('पादप संरक्षण',1,'नीम-आधारित कीटनाशकों का मुख्य सक्रिय घटक कौन-सा है?',['एज़ाडिरैक्टिन','पाइरेथ्रिन','रोटेनोन','निकोटीन'],0,'एज़ाडिरैक्टिन।','The main active ingredient of neem-based pesticides is—',['Azadirachtin','Pyrethrin','Rotenone','Nicotine'],'Azadirachtin.');
+A('पादप संरक्षण',2,'धान के तुंग्रो रोग का वाहक कौन-सा कीट है?',['हरा फुदका','सफ़ेद मक्खी','माहू','थ्रिप्स'],0,'हरा पर्णफुदका (Nephotettix virescens)।','The vector of rice tungro disease is—',['Green leafhopper','Whitefly','Aphid','Thrips'],'Green leafhopper (Nephotettix virescens).');
+A('पादप संरक्षण',1,'भिंडी के पीत शिरा मोज़ेक रोग का वाहक कौन-सा कीट है?',['सफ़ेद मक्खी','माहू','दीमक','टिड्डा'],0,'सफ़ेद मक्खी (Bemisia tabaci)।','The vector of Yellow Vein Mosaic disease of okra is—',['Whitefly','Aphid','Termite','Grasshopper'],'Whitefly (Bemisia tabaci).');
+A('पादप संरक्षण',2,'कवकनाशी कार्बेन्डाज़िम किस प्रकार का है?',['प्रणालीगत','संपर्क','धूम्रक','प्रतिकर्षी'],0,'प्रणालीगत (बेन्ज़िमिडाज़ोल वर्ग)।','The fungicide carbendazim is a—',['Systemic fungicide','Contact fungicide','Fumigant','Repellent'],'Systemic (benzimidazole group).');
+/* आनुवंशिकी व पादप प्रजनन */
+A('आनुवंशिकी व पादप प्रजनन',2,'अर्ध-बौनी गेहूँ किस्मों में बौनेपन का स्रोत कौन-सी किस्म थी?',['नोरिन-10','सोनारा-64','लर्मा रोजो','कल्याण सोना'],0,'नोरिन-10 (Rht जीन)।','The source of dwarfing in semi-dwarf wheat varieties was—',['Norin-10','Sonora-64','Lerma Rojo','Kalyan Sona'],'Norin-10 (Rht genes).');
+A('आनुवंशिकी व पादप प्रजनन',1,'मेंडल के द्विसंकर संकरण में F₂ का फीनोटाइप अनुपात क्या है?',['3:1','9:3:3:1','1:2:1','1:1'],1,'9:3:3:1।','The F₂ phenotypic ratio in Mendel\u2019s dihybrid cross is—',null,'9:3:3:1.');
+A('आनुवंशिकी व पादप प्रजनन',1,'ट्रिटिकेल किन दो फसलों का संकर है?',['गेहूँ × राई','गेहूँ × जौ','धान × गेहूँ','मक्का × ज्वार'],0,'Triticum × Secale।','Triticale is a hybrid of—',['Wheat × Rye','Wheat × Barley','Rice × Wheat','Maize × Sorghum'],'Triticum × Secale.');
+A('आनुवंशिकी व पादप प्रजनन',2,'संकर ओज (Heterosis) का सर्वप्रथम व्यापक व्यावसायिक उपयोग किस फसल में हुआ?',['मक्का','धान','गेहूँ','चना'],0,'मक्का (डबल-क्रॉस संकर)।','Heterosis was first widely commercialised in—',['Maize','Rice','Wheat','Gram'],'Maize (double-cross hybrids).');
+A('आनुवंशिकी व पादप प्रजनन',1,'कोल्चिसिन का उपयोग पौधों में किसलिए होता है?',['गुणसूत्र संख्या दोगुनी करने','रोग-प्रतिरोध बढ़ाने','सूखा सहनशीलता','बीज-सुषुप्ति तोड़ने'],0,'बहुगुणिता (पॉलीप्लॉइडी) प्रेरित करता है।','Colchicine is used in plants to—',['Double the chromosome number','Increase disease resistance','Increase drought tolerance','Break seed dormancy'],'Induces polyploidy.');
+A('आनुवंशिकी व पादप प्रजनन',2,'निम्न में से कौन-सी विधि स्वपरागित फसलों में अधिक प्रयुक्त होती है?',['वंशावली (पेडिग्री) विधि','पुनरावर्ती चयन','संश्लेषित किस्म','टॉप-क्रॉस'],0,'वंशावली, बल्क व बैकक्रॉस विधियाँ।','Which method is mainly used in self-pollinated crops?',['Pedigree method','Recurrent selection','Synthetic variety','Top-cross'],'Pedigree, bulk and backcross methods.');
+A('आनुवंशिकी व पादप प्रजनन',2,'पहली पीढ़ी की Bt कपास में कौन-सा जीन प्रयुक्त हुआ?',['Cry1Ac','Cry3A','nptII','bar'],0,'Bacillus thuringiensis का Cry1Ac जीन।','Which gene was used in first-generation Bt cotton?',null,'Cry1Ac gene of Bacillus thuringiensis.');
+/* पशुपालन व मत्स्य */
+A('पशुपालन व मत्स्य',1,'भारत का सर्वाधिक दुग्ध उत्पादक राज्य (हाल के वर्षों में) कौन-सा है?',['उत्तर प्रदेश','राजस्थान','गुजरात','पंजाब'],0,'उत्तर प्रदेश। (नवीनतम आँकड़े जाँच लें।)','Which state has been the largest milk producer in India in recent years?',['Uttar Pradesh','Rajasthan','Gujarat','Punjab'],'Uttar Pradesh. (Check the latest figures.)');
+A('पशुपालन व मत्स्य',2,'भारतीय प्रमुख कार्प में "कतला" किस स्तर की आहार-आदत वाली मछली है?',['सतह-आहारी','स्तंभ-आहारी','तल-आहारी','परजीवी'],0,'कतला सतह, रोहू स्तंभ व मृगल तल-आहारी।','"Catla" among Indian major carps feeds at the—',['Surface','Column','Bottom','Parasitic level'],'Catla – surface; rohu – column; mrigal – bottom feeder.');
+A('पशुपालन व मत्स्य',1,'गाय के मदचक्र (Estrous cycle) की औसत अवधि कितनी होती है?',['7 दिन','14 दिन','21 दिन','28 दिन'],2,'लगभग 21 दिन।','The average length of the estrous cycle in a cow is—',['7 days','14 days','21 days','28 days'],'About 21 days.');
+A('पशुपालन व मत्स्य',1,'थनैला (मैस्टाइटिस) रोग किससे संबंधित है?',['थन/अयन की सूजन','गुर्दे का रोग','यकृत का रोग','फेफड़ों का रोग'],0,'अयन का संक्रमण/सूजन।','Mastitis is related to—',['Inflammation of the udder','Kidney disease','Liver disease','Lung disease'],'Infection/inflammation of the udder.');
+A('पशुपालन व मत्स्य',1,'खुरपका-मुँहपका रोग का कारक क्या है?',['विषाणु','जीवाणु','कवक','प्रोटोज़ोआ'],0,'एफ्थोवायरस (विषाणु)।','The causal agent of Foot-and-Mouth Disease is a—',['Virus','Bacterium','Fungus','Protozoan'],'Aphthovirus (a virus).');
+A('पशुपालन व मत्स्य',1,'ब्रॉयलर मुर्गी की सामान्य विपणन आयु कितनी होती है?',['6–7 सप्ताह','12 सप्ताह','20 सप्ताह','1 वर्ष'],0,'लगभग 6–7 सप्ताह।','The usual marketing age of a broiler is—',['6–7 weeks','12 weeks','20 weeks','1 year'],'About 6–7 weeks.');
+A('पशुपालन व मत्स्य',2,'"कम्पोजिट फिश कल्चर" का आशय क्या है?',['एक तालाब में भिन्न स्तरों पर आहार लेने वाली कई प्रजातियों का पालन','केवल एक प्रजाति का पालन','मछली व धान का अलग-अलग पालन','केवल झींगा पालन'],0,'भोजन-स्तरों के अनुसार कतला, रोहू, मृगल आदि साथ पाले जाते हैं।','"Composite fish culture" means—',['Rearing several species feeding at different levels in one pond','Rearing a single species','Separate rearing of fish and paddy','Only prawn farming'],'Catla, rohu, mrigal etc. are reared together according to feeding zones.');
+/* कृषि अर्थशास्त्र व प्रसार */
+A('कृषि अर्थशास्त्र व प्रसार',2,'PMFBY में खरीफ खाद्य फसलों के लिए किसान द्वारा देय अधिकतम प्रीमियम कितना है?',['2%','5%','1%','10%'],0,'खरीफ 2%, रबी 1.5%, वाणिज्यिक/बागवानी 5%।','Maximum premium payable by farmers for kharif food crops under PMFBY is—',['2%','5%','1%','10%'],'Kharif 2%, rabi 1.5%, commercial/horticultural 5%.');
+A('कृषि अर्थशास्त्र व प्रसार',1,'कृषि विज्ञान केंद्र (KVK) का मुख्य कार्य क्या है?',['प्रौद्योगिकी का प्रशिक्षण, प्रदर्शन व परीक्षण','फसल बीमा करना','ऋण वितरण','बाज़ार-मूल्य तय करना'],0,'प्रशिक्षण, अग्रिम पंक्ति प्रदर्शन (FLD) व OFT।','The main function of a Krishi Vigyan Kendra (KVK) is—',['Training, demonstration and testing of technology','Crop insurance','Loan disbursement','Fixing market prices'],'Training, Front Line Demonstrations and OFTs.');
+A('कृषि अर्थशास्त्र व प्रसार',2,'ICAR (तत्कालीन ICAR) की स्थापना किस वर्ष हुई?',['1905','1929','1947','1966'],1,'1929 (रॉयल कमीशन ऑन एग्रीकल्चर की सिफारिश पर)।','In which year was ICAR established?',['1905','1929','1947','1966'],'1929 (on the recommendation of the Royal Commission on Agriculture).');
+A('कृषि अर्थशास्त्र व प्रसार',2,'NABARD की स्थापना किस समिति की सिफारिश पर हुई?',['शिवरामन समिति','नरसिम्हम समिति','चक्रवर्ती समिति','सरकारिया आयोग'],0,'शिवरामन समिति (1979)।','NABARD was set up on the recommendation of the—',['Shivaraman Committee','Narasimham Committee','Chakravarty Committee','Sarkaria Commission'],'Shivaraman Committee (1979).');
+A('कृषि अर्थशास्त्र व प्रसार',2,'अल्पकालिक सहकारी ऋण की त्रि-स्तरीय संरचना का शीर्ष कौन-सा है?',['राज्य सहकारी बैंक','ज़िला केंद्रीय सहकारी बैंक','प्राथमिक कृषि ऋण समिति (PACS)','NABARD'],0,'राज्य सहकारी बैंक → DCCB → PACS।','The apex of the three-tier short-term cooperative credit structure is the—',['State Cooperative Bank','District Central Cooperative Bank','Primary Agricultural Credit Society (PACS)','NABARD'],'State Cooperative Bank → DCCB → PACS.');
+A('कृषि अर्थशास्त्र व प्रसार',1,'प्रसार शिक्षा में "प्रदर्शन" (Demonstration) का मुख्य उद्देश्य क्या है?',['नई तकनीक का व्यावहारिक परिणाम दिखाना','ऋण देना','भूमि मापना','बीमा करना'],0,'"देखकर विश्वास" का सिद्धांत।','The main purpose of a demonstration in extension education is to—',['Show the practical results of a new technology','Give loans','Measure land','Provide insurance'],'Based on the principle of "seeing is believing".');
+A('कृषि अर्थशास्त्र व प्रसार',1,'सीमांत कृषक की भू-जोत सीमा क्या है?',['1 हेक्टेयर से कम','1–2 हेक्टेयर','2–4 हेक्टेयर','4–10 हेक्टेयर'],0,'सीमांत: < 1 हे.; लघु: 1–2 हे.।','A marginal farmer holds land of—',['Less than 1 hectare','1–2 hectares','2–4 hectares','4–10 hectares'],'Marginal: < 1 ha; small: 1–2 ha.');
+
+/* ---- परीक्षाएँ ---- */
+const PK25=[['कृषि',4],['शस्य विज्ञान',3],['मृदा विज्ञान',3],['उद्यान विज्ञान',3],['पादप संरक्षण',3],['आनुवंशिकी व पादप प्रजनन',3],['पशुपालन व मत्स्य',3],['कृषि अर्थशास्त्र व प्रसार',3]];
+const PK50=[['कृषि',8],['शस्य विज्ञान',6],['मृदा विज्ञान',6],['उद्यान विज्ञान',6],['पादप संरक्षण',6],['आनुवंशिकी व पादप प्रजनन',6],['पशुपालन व मत्स्य',6],['कृषि अर्थशास्त्र व प्रसार',6]];
+const IC=[['कृषि',36],['शस्य विज्ञान',12],['मृदा विज्ञान',12],['उद्यान विज्ञान',12],['पादप संरक्षण',12],['आनुवंशिकी व पादप प्रजनन',12],['पशुपालन व मत्स्य',12],['कृषि अर्थशास्त्र व प्रसार',12]];
+window.EXTRA_GROUPS.forEach(g=>{if(g[0]==='a')g[1]='कृषि परीक्षाएँ (UPSSSC AGTA, IFFCO, IBPS AFO, ICAR)'});
+window.EXTRA_EXAMS.push(
+{id:'ibps_afo',g:'a',name:'IBPS AFO',sub:'कृषि क्षेत्र अधिकारी (Scale-I) – नया पैटर्न: प्रारंभिक में कृषि (PK) शामिल',icon:'🏦',c:'from-indigo-800 to-blue-600',mix:[0,.15,.85],
+ tags:'ibps afo agriculture field officer so specialist officer bank कृषि क्षेत्र अधिकारी',
+ P:[{n:'प्रारंभिक – अंग्रेज़ी, रीज़निंग, गणित',q:75,m:60,mk:1,ng:.25,t:20,S:[['अंग्रेज़ी',25],['रीज़निंग',25],['गणित',25]]},
+    {n:'प्रारंभिक – Professional Knowledge (कृषि)',q:25,m:20,mk:2,ng:.5,t:15,S:PK25},
+    {n:'मुख्य – Professional Knowledge (वस्तुनिष्ठ)',q:50,m:40,mk:2,ng:.5,t:15,S:PK50}]},
+{id:'icar',g:'a',name:'ICAR AIEEA (PG)',sub:'कृषि स्नातकोत्तर प्रवेश – 120 प्रश्न, 480 अंक, −1 नेगेटिव',icon:'🔬',c:'from-emerald-800 to-cyan-700',mix:[0,.15,.85],
+ tags:'icar aieea pg nta jrf agriculture entrance कृषि स्नातकोत्तर आईसीएआर',
+ P:[{n:'AIEEA-PG मिश्रित कृषि पेपर',q:120,m:120,mk:4,ng:1,t:15,S:IC}]}
+);
+})();
 
 '''
 
-H_JS = r'''
-/* ---- अतिरिक्त कठिन (Tough) प्रश्न ---- */
-const H=(s,q,o,a,e)=>BANK.push({s:s,d:2,q:q,o:o,a:a,e:e});
-H('राजव्यवस्था','"मिनी संविधान" किस संविधान संशोधन को कहा जाता है?',['42वाँ','44वाँ','24वाँ','73वाँ'],0,'42वें संशोधन (1976) ने संविधान में व्यापक परिवर्तन किए।');
-H('राजव्यवस्था','कथनों पर विचार कीजिए:\n1. संविधान संशोधन विधेयक केवल संसद में पुरःस्थापित हो सकता है, राज्य विधानमंडल में नहीं।\n2. प्रत्येक संविधान संशोधन के लिए आधे राज्यों का अनुसमर्थन आवश्यक है।\nसही कथन कौन-सा/से है/हैं?',ST,0,'अनु. 368: अनुसमर्थन केवल संघीय ढाँचे से जुड़े प्रावधानों के लिए आवश्यक है।');
-H('राजव्यवस्था','राष्ट्रीय आपातकाल के आधार के रूप में "सशस्त्र विद्रोह" शब्द किस संशोधन से जोड़ा गया?',['38वाँ','42वाँ','44वाँ','52वाँ'],2,'44वें संशोधन ने "आंतरिक अशांति" के स्थान पर "सशस्त्र विद्रोह" रखा।');
-H('राजव्यवस्था','के.एस. पुट्टस्वामी (2017) मामले में निजता का अधिकार मुख्यतः किस अनुच्छेद का अंग माना गया?',['अनु. 14','अनु. 19','अनु. 21','अनु. 32'],2,'जीवन व दैहिक स्वतंत्रता (अनु. 21)।');
-H('राजव्यवस्था','अनु. 143 के अंतर्गत राष्ट्रपति किससे परामर्श माँग सकता है?',['महान्यायवादी','सर्वोच्च न्यायालय','वित्त आयोग','निर्वाचन आयोग'],1,'सर्वोच्च न्यायालय का परामर्शी क्षेत्राधिकार।');
-H('राजव्यवस्था','किस मामले में कहा गया कि संसद मौलिक अधिकारों में संशोधन नहीं कर सकती (बाद में यह निर्णय पलटा गया)?',['शंकरी प्रसाद','गोलकनाथ','बेरुबारी','केशवानंद भारती'],1,'गोलकनाथ (1967); केशवानंद भारती (1973) में पलटा गया।');
-H('इतिहास','1919 के अधिनियम की द्वैध शासन व्यवस्था में निम्न में से कौन-सा विषय "आरक्षित" था?',['शिक्षा','स्थानीय स्वशासन','वित्त व भू-राजस्व','कृषि'],2,'आरक्षित: वित्त, भू-राजस्व, कानून-व्यवस्था; हस्तांतरित: शिक्षा, स्थानीय स्वशासन आदि।');
-H('इतिहास','अशोक के किस बृहत् शिलालेख में कलिंग युद्ध का वर्णन है?',['प्रथम','चतुर्थ','त्रयोदश (13वाँ)','द्वादश (12वाँ)'],2,'13वें शिलालेख में।');
-H('इतिहास','इलाहाबाद (प्रयाग) प्रशस्ति के रचयिता कौन थे?',['कालिदास','हरिषेण','बाणभट्ट','विशाखदत्त'],1,'हरिषेण, समुद्रगुप्त के दरबारी कवि।');
-H('इतिहास','कैबिनेट मिशन (1946) के संबंध में कथनों पर विचार कीजिए:\n1. उसने पाकिस्तान की पृथक राज्य की माँग अस्वीकार कर दी।\n2. उसने संविधान सभा के गठन की योजना प्रस्तुत की।\nसही कथन कौन-सा/से है/हैं?',ST,2,'दोनों कथन सही हैं।');
-H('इतिहास','सहायक संधि स्वीकार करने वाला प्रथम प्रमुख भारतीय शासक कौन था?',['टीपू सुल्तान','हैदराबाद का निज़ाम','अवध का नवाब','पेशवा'],1,'1798 में निज़ाम (लॉर्ड वेलेजली)।');
-H('इतिहास','कालक्रमानुसार व्यवस्थित कीजिए:\n1. बंगाल विभाजन 2. मॉर्ले-मिंटो सुधार 3. मुस्लिम लीग की स्थापना 4. दिल्ली दरबार (राजधानी-परिवर्तन घोषणा)',['1-3-2-4','1-2-3-4','3-1-2-4','1-3-4-2'],0,'1905, 1906, 1909, 1911।');
-H('भूगोल','डॉगर बैंक किस जलराशि में स्थित है?',['उत्तरी सागर','बाल्टिक सागर','भूमध्य सागर','काला सागर'],0,'उत्तरी सागर का प्रसिद्ध मत्स्य क्षेत्र।');
-H('भूगोल','विश्व की अत्यधिक वर्षा वाला स्थान मौसिनराम किस पहाड़ी श्रेणी में है?',['खासी','गारो','जयंतिया','मिज़ो'],0,'खासी पहाड़ियाँ, मेघालय।');
-H('भूगोल','"मानसून विच्छेद" (Break in Monsoon) का अर्थ है—',['मानसून का लौटना','वर्षा-ऋतु में कई दिनों का शुष्क अंतराल','चक्रवात का आना','पश्चिमी विक्षोभ'],1,'मानसूनी गर्त के हिमालय की ओर खिसकने से शुष्क अंतराल।');
-H('भूगोल','भारत में सबसे लंबी तटरेखा वाला राज्य कौन-सा है?',['गुजरात','तमिलनाडु','आंध्र प्रदेश','महाराष्ट्र'],0,'गुजरात।');
-H('भूगोल','कथनों पर विचार कीजिए:\n1. माजुली, ब्रह्मपुत्र में स्थित विश्व के सबसे बड़े नदी-द्वीपों में है।\n2. चिल्का झील भारत की सबसे बड़ी मीठे पानी की झील है।\nसही कथन कौन-सा/से है/हैं?',ST,0,'चिल्का खारे/लवणीय पानी की लैगून है।');
-H('अर्थव्यवस्था','लॉरेंज वक्र किसे मापने में प्रयुक्त होता है?',['मुद्रास्फीति','आय/संपत्ति की असमानता','बेरोज़गारी','व्यापार-संतुलन'],1,'वितरण की असमानता (गिनी गुणांक इसी से)।');
-H('अर्थव्यवस्था','फिलिप्स वक्र किन दो चरों के संबंध को दर्शाता है?',['मुद्रास्फीति व बेरोज़गारी','GDP व निर्यात','ब्याज दर व बचत','कर व व्यय'],0,'मुद्रास्फीति और बेरोज़गारी का (अल्पकालिक) व्युत्क्रम संबंध।');
-H('अर्थव्यवस्था','RBI की मौद्रिक नीति समिति (MPC) में कुल कितने सदस्य होते हैं?',['4','6','7','9'],1,'छह सदस्य: 3 RBI से, 3 केंद्र सरकार द्वारा नामित।');
-H('अर्थव्यवस्था','कथनों पर विचार कीजिए:\n1. GST परिषद की अध्यक्षता केंद्रीय वित्त मंत्री करते हैं।\n2. GST परिषद का गठन अनु. 279A के अंतर्गत हुआ है।\nसही कथन कौन-सा/से है/हैं?',ST,2,'दोनों सही।');
-H('पर्यावरण','नागोया प्रोटोकॉल किससे संबंधित है?',['आनुवंशिक संसाधनों तक पहुँच व लाभ-साझाकरण','ओज़ोन संरक्षण','आर्द्रभूमि','परमाणु सुरक्षा'],0,'CBD के अंतर्गत ABS।');
-H('पर्यावरण','कार्टाजेना प्रोटोकॉल किस विषय पर है?',['जैव-सुरक्षा (GM जीवों का सुरक्षित हस्तांतरण)','ओज़ोन','जलवायु परिवर्तन','मरुस्थलीकरण'],0,'CBD के अंतर्गत जैव-सुरक्षा।');
-H('पर्यावरण','निम्न में से किस गैस की प्रति अणु ग्लोबल वार्मिंग क्षमता (GWP) सर्वाधिक है?',['CO₂','CH₄','N₂O','SF₆'],3,'SF₆ अत्यधिक GWP वाली गैस है।');
-H('विज्ञान','ट्रांसफ़ॉर्मर किस सिद्धांत पर कार्य करता है?',['स्व-प्रेरण','अन्योन्य (पारस्परिक) प्रेरण','प्रकाश-विद्युत प्रभाव','ओम का नियम'],1,'दो कुंडलियों के बीच अन्योन्य प्रेरण।');
-H('विज्ञान','कथनों पर विचार कीजिए:\n1. UV-C किरणें ओज़ोन परत द्वारा लगभग पूर्णतः अवशोषित हो जाती हैं।\n2. UV-C पृथ्वी की सतह तक सर्वाधिक मात्रा में पहुँचती है।\nसही कथन कौन-सा/से है/हैं?',ST,0,'UV-C वायुमंडल में ही अवशोषित हो जाती है।');
-H('विज्ञान','ड्यूटीरियम (भारी हाइड्रोजन) के नाभिक में क्या होता है?',['1 प्रोटॉन, 1 न्यूट्रॉन','1 प्रोटॉन, 2 न्यूट्रॉन','2 प्रोटॉन, 1 न्यूट्रॉन','केवल 1 प्रोटॉन'],0,'ड्यूटीरियम = ¹H का समस्थानिक, द्रव्यमान संख्या 2।');
-H('UP GK','उत्तर प्रदेश का राजकीय पुष्प कौन-सा है?',['कमल','पलाश (ढाक)','गुलाब','गेंदा'],1,'पलाश।');
-H('UP GK','गोरखपुर की गीता प्रेस की स्थापना किस वर्ष हुई?',['1918','1923','1931','1947'],1,'1923।');
-H('UP GK','निम्न में से कौन-सा जिला नेपाल की सीमा से नहीं लगता?',['महराजगंज','पीलीभीत','सोनभद्र','बहराइच'],2,'सोनभद्र की सीमा मध्य प्रदेश, छत्तीसगढ़, झारखंड व बिहार से लगती है।');
-
-'''
-
-STX_NEW = ("const stx=(id,name,sub,icon,c,gk,tags,o)=>{o=o||{};const P=[gs('GS प्रारंभिक – '+name,o.S||GS_ST(gk),o.gs)];"
-           "if(!o.nocsat)P.push(cs('CSAT – '+name,o.c100,o.csat));"
-           "return{id:id,g:'s',name:name,sub:sub,icon:icon,c:c,mix:[.1,.4,.5],tags:tags,P:P}};")
-
-EDITS = [
- # ---- पेपर-पैटर्न (वास्तविक प्रश्न-संख्या / अंक / नेगेटिव) ----
- ("const CS=[['गद्यांश',30],['रीज़निंग',30],['गणित',25],['DI',15]];",
-  "const CS=[['गद्यांश',30],['रीज़निंग',30],['गणित',25],['DI',15]];const CS80=[['गद्यांश',24],['रीज़निंग',24],['गणित',20],['DI',12]];"),
- ("const gs=(n,S,t)=>({n:n,q:100,m:120,mk:2,ng:.67,t:t||10,S:S});",
-  "const gs=(n,S,o)=>Object.assign({n:n,q:S.reduce((a,x)=>a+x[1],0),m:120,mk:2,ng:.67,t:10,S:S},o||{});"),
- ("const cs=n=>({n:n,q:100,m:120,mk:2,ng:.67,t:30,S:CS});",
-  "const cs=(n,full,ov)=>Object.assign(full?{n:n,q:100,m:120,mk:2,ng:.67,t:30,S:CS}:{n:n,q:80,m:120,mk:2.5,ng:.83,t:30,S:CS80},ov||{});"),
- ("const stx=(id,name,sub,icon,c,gk,tags)=>({id:id,g:'s',name:name,sub:sub,icon:icon,c:c,mix:[.1,.4,.5],tags:tags,P:[gs('GS प्रारंभिक – '+name,GS_ST(gk)),cs('CSAT – '+name)]});",
-  STX_NEW),
- ("const GS_UP=[['राजव्यवस्था',15],['इतिहास',18],['भूगोल',15],['अर्थव्यवस्था',13],['पर्यावरण',8],['विज्ञान',11],['UP GK',20]];",
-  "const GS_UP=[['राजव्यवस्था',22],['इतिहास',27],['भूगोल',22],['अर्थव्यवस्था',19],['पर्यावरण',12],['विज्ञान',16],['UP GK',32]];"),
- ("sub:'प्रारंभिक – GS पेपर-1 व CSAT पेपर-2 (100-100 प्रश्न)',icon:'🏛️'",
-  "sub:'प्रारंभिक – GS पेपर-1 (100 प्रश्न) व CSAT पेपर-2 (80 प्रश्न)',icon:'🏛️'"),
- ("sub:'प्रारंभिक – GS पेपर-1 व CSAT पेपर-2 (100-100 प्रश्न)',icon:'🏰'",
-  "sub:'प्रारंभिक – GS पेपर-1 (150 प्रश्न) व CSAT पेपर-2 (100 प्रश्न)',icon:'🏰'"),
- ("P:[gs('GS पेपर-1',GS_UP),cs('CSAT पेपर-2')]}",
-  "P:[gs('GS पेपर-1',GS_UP,{mk:4/3,ng:4/9}),cs('CSAT पेपर-2',true)]}"),
- ("'MP GK','mppsc मध्य प्रदेश mp pcs')",
-  "'MP GK','mppsc मध्य प्रदेश mp pcs',{c100:1,gs:{ng:.5},csat:{ng:.5}})"),
- ("'राजस्थान RAS प्रारंभिक'", "'राजस्थान RAS प्रारंभिक – केवल GS (150 प्रश्न, CSAT नहीं)'"),
- ("'राजस्थान GK','rpsc ras rajasthan राजस्थान')",
-  "'राजस्थान GK','rpsc ras rajasthan राजस्थान',{nocsat:1,S:[['राजव्यवस्था',22],['इतिहास',30],['भूगोल',22],['अर्थव्यवस्था',16],['पर्यावरण',8],['विज्ञान',14],['राजस्थान GK',28],['गणित',10]],gs:{m:180,mk:4/3,ng:4/9}})"),
- ("'बिहार PCS प्रारंभिक'", "'बिहार PCS प्रारंभिक – केवल GS (150 प्रश्न, CSAT नहीं)'"),
- ("'बिहार GK','bpsc bihar बिहार')",
-  "'बिहार GK','bpsc bihar बिहार',{nocsat:1,S:[['राजव्यवस्था',22],['इतिहास',28],['भूगोल',22],['अर्थव्यवस्था',16],['पर्यावरण',10],['विज्ञान',16],['बिहार GK',20],['गणित',16]],gs:{mk:1,ng:.25}})"),
- ("'उत्तराखंड GK','ukpsc uttarakhand उत्तराखंड ukpcs')",
-  "'उत्तराखंड GK','ukpsc uttarakhand उत्तराखंड ukpcs',{c100:1,S:[['राजव्यवस्था',22],['इतिहास',28],['भूगोल',22],['अर्थव्यवस्था',18],['पर्यावरण',10],['विज्ञान',14],['उत्तराखंड GK',36]],gs:{mk:4/3,ng:4/9}})"),
- ("'छत्तीसगढ़ GK','cgpsc chhattisgarh छत्तीसगढ़')",
-  "'छत्तीसगढ़ GK','cgpsc chhattisgarh छत्तीसगढ़',{c100:1,gs:{ng:.5},csat:{ng:.5}})"),
- ("P:[gs('GS पेपर-1',GS_U),cs('CSAT पेपर-2')]}", "P:[gs('GS पेपर-1',GS_U),cs('CSAT पेपर-2')]}"),  # UPSC: 100 + 80 (defaults)
-
- # ---- कठिनाई (Group-C को छोड़कर सब कठिन) ----
- ("const LM=[[.7,.25,.05],[.25,.55,.2],[.05,.3,.65]];",
-  "const LM=[[.7,.25,.05],[.25,.55,.2],[.05,.3,.65]];const LMT=[[.2,.5,.3],[.05,.35,.6],[0,.15,.85]];"),
- ("(window.EXTRA_EXAMS||[]).forEach(e=>EX.push(e));",
-  "(window.EXTRA_EXAMS||[]).forEach(e=>EX.push(e));\nEX.forEach(e=>{if(e.id!=='upsssc_c')e.mix=[0,.15,.85]});"),
- ("mix:lvl<0?ex.mix:LM[lvl]", "mix:lvl<0?ex.mix:(ex.id==='upsssc_c'?LM[lvl]:LMT[lvl])"),
-
- # ---- उपलब्ध प्रश्नों के अनुसार वास्तविक संख्या व समय ----
- ("const n=sec.reduce((a,x)=>a+x[1],0);",
-  "sec=sec.map(x=>[x[0],GEN[x[0]]?x[1]:Math.min(x[1],poolOf(x[0]).length)]).filter(x=>x[1]>0);const n=sec.reduce((a,x)=>a+x[1],0);"),
- ("min:t==='s'?Math.max(10,Math.round(P.m*n/P.q)):P.m,marks:n*P.mk,",
-  "min:n>=P.q?P.m:Math.max(10,Math.round(P.m*n/P.q)),marks:nr(n*P.mk),"),
- ("let c=poolOf(sj).filter(x=>!used.has(x)&&x.d===d);",
-  "let c=[];for(const dd of (d===2?[2,1,0]:d===1?[1,2,0]:[0,1,2])){c=poolOf(sj).filter(x=>!used.has(x)&&x.d===dd);if(c.length)break}"),
- ("const g=GEN[sj][ri(r,0,GEN[sj].length-1)](r,d);",
-  "const LG=(d===2&&GENH[sj]&&r()<.6)?GENH[sj]:GEN[sj];const g=LG[ri(r,0,LG.length-1)](r,d);"),
- ("else{c=poolOf(sj).filter(x=>!used.has(x));if(!c.length)break;q=c[ri(r,0,c.length-1)]}", "else break;"),
- ("/* ---------- ऐप ---------- */", GENH_JS + "/* ---------- ऐप ---------- */"),
- ("(window.EXTRA_Q||[]).forEach(x=>BANK.push({s:x.s,d:x.d,q:x.q,o:x.o,a:x.a,e:x.e,en:x.en}));",
-  "(window.EXTRA_Q||[]).forEach(x=>BANK.push({s:x.s,d:x.d,q:x.q,o:x.o,a:x.a,e:x.e,en:x.en}));\n" + H_JS),
-
- # ---- अंक-प्रदर्शन (भिन्न अंकों के लिए) ----
- ("+P.mk+' अंक</span>", "+nr(P.mk)+' अंक</span>"),
- ("'➖ '+P.ng+' नेगेटिव'", "'➖ '+nr(P.ng)+' नेगेटिव'"),
- ("+P.mk+(P.ng?' / −'+P.ng:'')+", "+nr(P.mk)+(P.ng?' / −'+nr(P.ng):'')+"),
- ("m.marks=qs.length*m.P.mk;", "m.marks=nr(qs.length*m.P.mk);"),
- ("max:T.qs.length*P.mk,", "max:nr(T.qs.length*P.mk),"),
-
- # ---- पेज-टेक्स्ट व चेतावनी-बॉक्स ----
- ("GS + CSAT • 100 प्रश्न • नेगेटिव मार्किंग • हिंदी व English",
-  "GS + CSAT • परीक्षा-पैटर्न के अनुसार • नेगेटिव मार्किंग • हिंदी व English"),
- ("नोट: यहाँ सभी अभ्यास पेपर 100 प्रश्न के बनाए गए हैं। अंतिम पैटर्न व तिथियों के लिए संबंधित आयोग की आधिकारिक अधिसूचना देखें।",
-  "नोट: जिन विषयों का प्रश्न-बैंक अभी छोटा है, वहाँ टेस्ट में उपलब्ध प्रश्न ही दिए जाते हैं और समय उसी अनुपात में घटाया जाता है (परीक्षा-पृष्ठ पर यह साफ़ लिखा रहता है)। अंतिम पैटर्न व तिथियों के लिए संबंधित आयोग की आधिकारिक अधिसूचना देखें।"),
- ("h+='<div class=\"flex gap-2 overflow-x-auto pb-2 mb-3\">'+TABS",
-  "const m0=meta(e.id,S.pi,'y',0,'p');if(m0.n<P.q)h+='<div class=\"rounded-xl bg-amber-50 dark:bg-slate-700/60 border border-amber-300 dark:border-slate-600 p-3 mb-3 text-xs\">⚠ आधिकारिक पैटर्न '+P.q+' प्रश्न / '+P.m+' मिनट का है; प्रश्न-बैंक में इस पेपर के लिए अभी '+m0.n+' प्रश्न उपलब्ध हैं, इसलिए टेस्ट '+m0.n+' प्रश्न / '+m0.min+' मिनट का रखा गया है।</div>';\n h+='<div class=\"flex gap-2 overflow-x-auto pb-2 mb-3\">'+TABS"),
-]
+ANCHOR = "window.EXTRA_Q=O;"
 
 def main():
     src = sys.argv[1] if len(sys.argv) > 1 else 'index.html'
     s = open(src, encoding='utf-8').read()
-    for i, (old, new) in enumerate(EDITS):
-        c = s.count(old)
-        if c != 1:
-            sys.exit(f'RUKO: edit #{i+1} ke liye text {c} baar mila (1 hona chahiye):\n{old[:90]}')
-        s = s.replace(old, new)
-    out = src.rsplit('.', 1)[0] + '_updated.html'
+    if s.count(ANCHOR) != 1:
+        sys.exit(f'RUKO: "{ANCHOR}" {s.count(ANCHOR)} baar mila (1 hona chahiye).')
+    s = s.replace(ANCHOR, JS + ANCHOR)
+    out = src.rsplit('.', 1)[0] + '_agri.html'
     open(out, 'w', encoding='utf-8').write(s)
     print('Done ->', out)
 
